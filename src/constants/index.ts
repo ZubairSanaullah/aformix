@@ -155,14 +155,42 @@ export const testimonials = [
 export const faqs = [
   {
     question: "What is your typical project timeline?",
-    answer: "Timelines vary by project complexity, but a standard website typically takes 4-6 weeks."
+    answer: "Timelines vary by project complexity, but a standard website typically takes 4-6 weeks. Larger enterprise or custom software projects can take longer depending on scope."
   },
   {
     question: "Do you offer post-launch support?",
-    answer: "Yes, we provide maintenance and support packages to keep your site running smoothly."
+    answer: "Yes, we provide maintenance, updates, and support packages to keep your application secure and performing well after launch."
   },
   {
     question: "Can you help with SEO?",
-    answer: "Absolutely, we integrate SEO best practices into every project we build."
+    answer: "Absolutely, we integrate SEO best practices into the architecture, content structure, and performance optimizations of every website."
+  },
+  {
+    question: "How do you manage project communication?",
+    answer: "We use transparent communication channels like email, project management tools, and regular status calls to keep you informed at every step."
+  },
+  {
+    question: "Which technologies do you specialize in?",
+    answer: "We specialize in modern web stacks including React, TypeScript, Node.js, Express, MongoDB, and responsive UI frameworks."
+  },
+  {
+    question: "Will my website be mobile responsive?",
+    answer: "Yes, every site we build is optimized for mobile, tablet, and desktop with responsive design and performance-first best practices."
+  },
+  {
+    question: "How do you handle revisions?",
+    answer: "We include revision rounds in our process and work collaboratively to refine the design and functionality until it matches your vision."
+  },
+  {
+    question: "Do you provide e-commerce solutions?",
+    answer: "Yes, we build secure, scalable e-commerce experiences using trusted platforms and custom checkout flows tailored to your business."
+  },
+  {
+    question: "How do you protect my data and privacy?",
+    answer: "Security is built into every project through encrypted data handling, secure authentication, and strong hosting practices."
+  },
+  {
+    question: "What does your onboarding process look like?",
+    answer: "We start with a discovery session to align on goals, then move into planning, design, development, and launch milestones with clear checkpoints."
   }
 ];
