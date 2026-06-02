@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
+import Divider from "./Divider";
 
 const LoadingSpinner: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -47,6 +48,7 @@ const LoadingSpinner: React.FC = () => {
           animation: progress 2s infinite ease-in-out;
         }
       `}</style>
+      <Divider />
     </div>
   );
 };

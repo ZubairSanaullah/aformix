@@ -1,5 +1,6 @@
 import React from "react";
 import { techStack } from "../constants";
+import Divider from "./Divider";
 
 const logoMap: Record<string, string> = {
   "HTML5": "html5",
@@ -49,6 +50,7 @@ const TechMarquee: React.FC = () => {
           );
         })}
       </div>
+      <Divider />
     </div>
   );
 };

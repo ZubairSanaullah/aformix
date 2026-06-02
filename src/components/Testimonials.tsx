@@ -1,6 +1,7 @@
 import React from "react";
 import { testimonials } from "../constants";
 import { Quote, Star } from "lucide-react";
+import Divider from "./Divider";
 
 const Testimonials: React.FC = () => {
   return (
@@ -33,6 +34,7 @@ const Testimonials: React.FC = () => {
           ))}
         </div>
       </div>
+      <Divider />
     </section>
   );
 };

@@ -15,7 +15,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="bg-slate-950 pt-32 pb-16 border-t border-white/5 relative overflow-hidden w-full flex justify-center">
       {/* Footer Aurora */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-30"></div>
+      {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-30"></div> */}
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full">
         <div className="grid lg:grid-cols-[1.1fr_1fr_1fr_0.8fr] gap-12 lg:gap-8 mb-24">
@@ -103,6 +103,7 @@ const Footer: React.FC = () => {
         </div>
 
       </div>
+      {/* <Divider /> */}
     </footer>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { projects } from "../constants";
 import { ArrowUpRight } from "lucide-react";
+import Divider from "./Divider";
 
 const Portfolio: React.FC = () => {
   const [showAllProjects, setShowAllProjects] = useState(false);
@@ -76,6 +77,7 @@ const Portfolio: React.FC = () => {
           </button>
         </div>
       </div>
+      <Divider />
     </section>
   );
 };

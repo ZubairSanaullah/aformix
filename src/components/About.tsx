@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShieldCheck, Globe, ChartNoAxesCombined } from "lucide-react";
 import { CiMobile1 } from "react-icons/ci";
+import Divider from "./Divider";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -177,6 +178,7 @@ const About: React.FC = () => {
           ))}
         </div>
       </div>
+      <Divider />
     </section>
   );
 };

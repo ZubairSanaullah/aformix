@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { faqs } from "../constants";
-import { ChevronDown } from "lucide-react";
-
+import { ChevronDown } from "lucide-react";import Divider from "./Divider";
 const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [visibleItems, setVisibleItems] = useState<boolean[]>(Array(faqs.length).fill(false));
@@ -50,7 +49,7 @@ const FAQ: React.FC = () => {
             return (
               <div
                 key={index}
-                ref={(el) => (itemRefs.current[index] = el)}
+                ref={(el) => { itemRefs.current[index] = el; }}
                 data-index={index}
                 className={`group relative overflow-hidden rounded-[2rem] border border-white/10 bg-slate-950/90 shadow-2xl shadow-slate-950/30 transition-all duration-700 ease-out transform-gpu ${
                   isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -85,6 +84,7 @@ const FAQ: React.FC = () => {
           })}
         </div>
       </div>
+      {/* <Divider /> */}
     </section>
   );
 };

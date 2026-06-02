@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ArrowRight } from "lucide-react";
+import Divider from "./Divider";
 
 const Hero: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -59,6 +60,7 @@ const Hero: React.FC = () => {
           />
         </div>
       </div>
+      <Divider />
     </section>
   );
 };

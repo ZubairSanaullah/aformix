@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { services } from "../constants";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import Divider from "./Divider";
 
 const Services: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement | null>(null);
@@ -133,6 +134,7 @@ const Services: React.FC = () => {
           </div>
         </div>
       </div>
+      <Divider />
     </section>
   );
 };
