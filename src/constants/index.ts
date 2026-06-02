@@ -5,6 +5,7 @@ export const navLinks = [
   { name: "Company", href: "#company" },
   { name: "Pricing", href: "#pricing" },
   { name: "Contact", href: "#contact" },
+  { name: "Privacy", href: "/privacy-policy" },
 ];
 
 export const techStack = [

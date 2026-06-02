@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { navLinks } from "../constants";
 import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Briefcase, Activity, Users, ChevronDown, Code, Smartphone } from "lucide-react";
 
@@ -90,15 +91,24 @@ const Navbar: React.FC = () => {
                   setHoveredMenu(link.name);
                 }}
               >
-                <a
-                  href={link.href}
-                  className="nav-link flex items-center gap-1.5 group-hover:opacity-50 hover:!opacity-100 transition-opacity"
-                >
-                  {link.name}
-                  {['Products', 'Services', 'Company'].includes(link.name) && (
-                    <ChevronDown size={14} className={`transition-transform duration-300 ${hoveredMenu === link.name ? 'rotate-180 text-[var(--color-primary)]' : 'text-[var(--color-text-muted)]'}`} />
-                  )}
-                </a>
+                {link.href.startsWith("/") ? (
+                  <Link
+                    to={link.href}
+                    className="nav-link flex items-center gap-1.5 group-hover:opacity-50 hover:!opacity-100 transition-opacity"
+                  >
+                    {link.name}
+                  </Link>
+                ) : (
+                  <a
+                    href={link.href}
+                    className="nav-link flex items-center gap-1.5 group-hover:opacity-50 hover:!opacity-100 transition-opacity"
+                  >
+                    {link.name}
+                    {['Products', 'Services', 'Company'].includes(link.name) && (
+                      <ChevronDown size={14} className={`transition-transform duration-300 ${hoveredMenu === link.name ? 'rotate-180 text-[var(--color-primary)]' : 'text-[var(--color-text-muted)]'}`} />
+                    )}
+                  </a>
+                )}
 
                 {/* Dropdown Menu */}
                 {['Products', 'Services', 'Company'].includes(link.name) && (

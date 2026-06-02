@@ -1,6 +1,5 @@
 import React from "react";
 import { MessageCircle } from "lucide-react";
-import Divider from "./Divider";
 
 const WhatsAppBtn: React.FC = () => {
   return (

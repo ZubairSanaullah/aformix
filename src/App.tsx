@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -12,8 +13,23 @@ import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import WhatsAppBtn from "./components/WhatsAppBtn";
+import PrivacyPolicyPage from "./Pages/PrivacyPolicy";
 import { ArrowUp } from "lucide-react";
 import useReveal from "./hooks/useReveal";
+
+const HomeContent: React.FC = () => (
+  <>
+    <Hero />
+    <TechMarquee />
+    <About />
+    <Portfolio />
+    <Services />
+    <WhyChooseUs />
+    <Testimonials />
+    <Pricing />
+    <FAQ />
+  </>
+);
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -50,17 +66,11 @@ const App: React.FC = () => {
       {loading && <LoadingSpinner />}
       <div className={`transition-opacity duration-1000 ${loading ? "opacity-0" : "opacity-100"} overflow-x-hidden relative w-full flex flex-col items-center`}>
         <Navbar />
-        <main className="relative w-full">
-          <Hero />
-          <TechMarquee />
-          <About />
-          <Portfolio />
-          <Services />
-          <WhyChooseUs />
-          <Testimonials />
-          <Pricing />
-          <FAQ />
-          {/* <Contact /> */}
+        <main className="relative w-full overflow-x-hidden">
+          <Routes>
+            <Route path="/" element={<HomeContent />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+          </Routes>
         </main>
         <Footer />
         <WhatsAppBtn />
