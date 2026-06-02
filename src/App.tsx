@@ -64,9 +64,9 @@ const App: React.FC = () => {
   return (
     <>
       {loading && <LoadingSpinner />}
-      <div className={`transition-opacity duration-1000 ${loading ? "opacity-0" : "opacity-100"} overflow-x-hidden relative w-full flex flex-col items-center`}>
+      <div className={`transition-opacity duration-1000 ${loading ? "opacity-0" : "opacity-100"} relative w-full`}>
         <Navbar />
-        <main className="relative w-full overflow-x-hidden">
+        <main className="relative w-full">
           <Routes>
             <Route path="/" element={<HomeContent />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
@@ -77,7 +77,7 @@ const App: React.FC = () => {
         <button
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className={`fixed right-8 bottom-25 z-[100] w-14 h-14 bg-primary text-white rounded-full flex items-center justify-center shadow-lg transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${
+          className={`fixed right-8 bottom-28 z-[90] w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/25 transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${
             showScrollTop
               ? "opacity-100 translate-y-0 pointer-events-auto"
               : "opacity-0 translate-y-4 pointer-events-none"

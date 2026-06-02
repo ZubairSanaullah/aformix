@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { navLinks } from "../constants";
 import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Briefcase, Activity, Users, ChevronDown, Code, Smartphone } from "lucide-react";
+import logoImg from "../assets/logo.png";
 
 type Theme = "light" | "dark" | "system";
 
@@ -65,9 +66,9 @@ const Navbar: React.FC = () => {
             : "bg-transparent"
         }`}>
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-            <img src="/src/assets/logo.png" alt="logo" className="w-7 cursor-pointer hover:scale-95 transition-transform" />
-            <p className="text-xl text-white font-light transition-colors duration-500">Aformix</p>
+          <a href="/" className="flex items-center gap-2 group">
+            <img src={logoImg} alt="logo" className="w-7 cursor-pointer hover:scale-95 transition-transform" />
+              <p className="text-xl text-[var(--color-text)] font-light transition-colors duration-500">Aformix</p>
           </a>
 
           {/* Desktop Links */}
@@ -246,7 +247,7 @@ const Navbar: React.FC = () => {
           <div className="md:hidden">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-12 h-12 rounded-xl glass-effect flex items-center justify-center text-white"
+              className="w-12 h-12 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)]"
             >
               {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -262,7 +263,7 @@ const Navbar: React.FC = () => {
             <a
               key={link.name}
               href={link.href}
-              className="text-2xl font-black text-white hover:text-primary transition-colors"
+              className="text-2xl font-black text-[var(--color-text)] hover:text-primary transition-colors"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}

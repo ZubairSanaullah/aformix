@@ -110,7 +110,7 @@ const Services: React.FC = () => {
           >
             {services.map((service) => {
               return (
-                <div key={service.id} className="service-card card-premium min-w-[400px] max-w-[400px] h-[520px] flex-shrink-0 group">
+                <div key={service.id} className="service-card card-premium min-w-[300px] sm:min-w-[380px] max-w-[380px] h-[480px] sm:h-[520px] flex-shrink-0 group">
                   <div className="service-card-image-wrapper">
                     <img
                       src={serviceImages[service.id]}
