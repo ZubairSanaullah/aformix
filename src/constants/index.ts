@@ -149,6 +149,13 @@ export const testimonials = [
     role: "Product Manager, HealthFlow",
     content: "The hospital system they built has streamlined our operations significantly. Highly recommend!",
     avatar: "https://i.pravatar.cc/150?u=2"
+  },
+  {
+    id: 3,
+    name: "Ali Khan",
+    role: "Founder, CreativePulse",
+    content: "They delivered our product ahead of schedule with exceptional quality. The collaboration was seamless from start to finish.",
+    avatar: "https://i.pravatar.cc/150?u=3"
   }
 ];
 

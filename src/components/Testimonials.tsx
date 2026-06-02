@@ -11,25 +11,23 @@ const Testimonials: React.FC = () => {
           <h2 className="heading-2">Trusted by Global <br /> <span className="gradient-text">Innovators</span></h2>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-10">
-          {testimonials.map((t) => (
-            <div key={t.id} className="card-premium flex flex-col justify-between">
+        <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+          {testimonials.slice(0, 3).map((t) => (
+            <div key={t.id} className="card-premium bg-slate-950/80 border border-white/10 shadow-2xl shadow-black/20 p-8 rounded-[2rem] flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1">
               <div>
-                <div className="flex gap-1 text-secondary mb-8">
-                  {[1,2,3,4,5].map(i => <Star key={i} size={18} fill="currentColor" />)}
+                <div className="flex gap-1 text-secondary mb-6">
+                  {[1,2,3,4,5].map((i) => (
+                    <Star key={i} size={18} fill="currentColor" />
+                  ))}
                 </div>
-                <Quote className="text-primary opacity-20 mb-6" size={56} />
-                <p className="text-2xl font-bold text-white leading-relaxed mb-10 italic">
+                <Quote className="text-primary opacity-15 mb-6" size={52} />
+                <p className="text-xl md:text-2xl font-semibold text-white leading-relaxed mb-10 italic">
                   "{t.content}"
                 </p>
               </div>
-              
-              <div className="flex items-center gap-6 pt-8 border-t border-white/5">
-                <img src={t.avatar} alt={t.name} className="w-16 h-16 rounded-2xl border border-white/10" />
-                <div>
-                  <h4 className="text-xl font-bold text-white">{t.name}</h4>
-                  <p className="text-slate-500 font-medium">{t.role}</p>
-                </div>
+              <div className="mt-4">
+                <p className="text-base text-slate-300 mb-2">— {t.name}</p>
+                <p className="text-sm text-slate-500">{t.role}</p>
               </div>
             </div>
           ))}
