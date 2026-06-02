@@ -64,7 +64,7 @@ const Services: React.FC = () => {
   };
 
   return (
-    <section id="services" className="section-padding relative overflow-hidden w-full">
+    <section id="services" className="reveal section-padding relative overflow-hidden w-full">
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-secondary/5 rounded-full blur-[120px] -z-10"></div>
 
       <div className="max-w-7xl mx-auto relative z-10 px-6 md:px-12 lg:px-24">

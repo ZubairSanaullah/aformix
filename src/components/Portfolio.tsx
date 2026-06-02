@@ -8,7 +8,7 @@ const Portfolio: React.FC = () => {
   const visibleProjects = showAllProjects ? projects : projects.slice(0, 3);
 
   return (
-    <section id="works" className="section-padding relative w-full overflow-hidden">
+    <section id="works" className="reveal section-padding relative w-full overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-slate-950/80 to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative">
         <div className="flex flex-col items-center mb-20 text-center">

@@ -6,7 +6,7 @@ const WhatsAppBtn: React.FC = () => {
   return (
     <>
       <a
-        href="https://wa.me/1234567890" // User can change this later
+        href="https://wa.me/+923019170936" 
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-8 right-8 z-[100] w-14 h-14 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-all duration-300 group"
@@ -16,7 +16,7 @@ const WhatsAppBtn: React.FC = () => {
           Chat with us!
         </span>
       </a>
-      <Divider />
+      {/* <Divider /> */}
     </>
   );
 };

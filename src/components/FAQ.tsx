@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { faqs } from "../constants";
-import { ChevronDown } from "lucide-react";import Divider from "./Divider";
+import { ChevronDown } from "lucide-react";
+
 const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [visibleItems, setVisibleItems] = useState<boolean[]>(Array(faqs.length).fill(false));
@@ -33,7 +34,7 @@ const FAQ: React.FC = () => {
   }, []);
 
   return (
-    <section id="faq" className="section-padding bg-slate-950/80 w-full">
+    <section id="faq" className="reveal section-padding bg-slate-950/80 w-full">
       <div className="relative max-w-4xl mx-auto px-6 md:px-12">
         <div className="text-center mb-20 relative z-10">
           <h2 className="heading-2">Got Questions?</h2>

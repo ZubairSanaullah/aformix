@@ -23,7 +23,7 @@ const Hero: React.FC = () => {
   return (
     <section
       ref={containerRef}
-      className="min-h-screen flex flex-col items-center justify-center pt-32 overflow-hidden relative w-full text-center"
+      className="reveal min-h-screen flex flex-col items-center justify-center pt-32 overflow-hidden relative w-full text-center"
     >
       {/* Aurora Background Glows */}
       <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-primary/20 rounded-full blur-[150px] -z-10 animate-glow"></div>

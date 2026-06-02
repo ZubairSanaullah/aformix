@@ -13,7 +13,7 @@ const socialLinks = [
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-slate-950 pt-32 pb-16 border-t border-white/5 relative overflow-hidden w-full flex justify-center">
+    <footer className="reveal bg-slate-950 pt-32 pb-16 border-t border-white/5 relative overflow-hidden w-full flex justify-center">
       {/* Footer Aurora */}
       {/* <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-30"></div> */}
 

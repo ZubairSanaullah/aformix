@@ -84,7 +84,7 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="section-padding relative overflow-hidden w-full bg-slate-950/50">
+    <section id="about" ref={sectionRef} className="reveal section-padding relative overflow-hidden w-full bg-slate-950/50">
       <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-slate-950 to-transparent pointer-events-none"></div>
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative">
         <div className="mb-16 text-center about-animate">

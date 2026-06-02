@@ -5,7 +5,7 @@ import Divider from "./Divider";
 
 const Testimonials: React.FC = () => {
   return (
-    <section className="section-padding relative w-full">
+    <section className="reveal section-padding relative w-full">
        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         <div className="flex flex-col items-center mb-20 text-center">
           <span className="text-primary font-black tracking-widest uppercase mb-4 block">Testimonials</span>

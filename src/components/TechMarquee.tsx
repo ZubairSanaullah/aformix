@@ -22,12 +22,12 @@ const logoMap: Record<string, string> = {
 
 const TechMarquee: React.FC = () => {
   return (
-    <div className="py-20 bg-slate-950 border-y border-white/5 overflow-hidden relative">
-      <h1 className="heading-2 animate-text mb-10">
+    <section className="reveal py-20 bg-slate-950 border-y border-white/5 overflow-hidden relative">
+      <h1 className="heading-2 primary mb-10">
         Our Tech Stack
       </h1>
-      <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none"></div>
-      <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none"></div>
+      {/* <div className="absolute inset-y-0 left-0 w-40 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none"></div>
+      <div className="absolute inset-y-0 right-0 w-40 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none"></div> */}
       <div className="flex animate-marquee whitespace-nowrap gap-16 md:gap-24 items-center">
         {[...techStack, ...techStack, ...techStack].map((tech, index) => {
           const logoSlug = logoMap[tech];
@@ -51,7 +51,7 @@ const TechMarquee: React.FC = () => {
         })}
       </div>
       <Divider />
-    </div>
+    </section>
   );
 };
 

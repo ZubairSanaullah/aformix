@@ -11,7 +11,7 @@ const WhyChooseUs: React.FC = () => {
   ];
 
   return (
-    <section className="section-padding w-full bg-slate-950/80">
+    <section className="reveal section-padding w-full bg-slate-950/80">
       <div className="max-w-6xl mx-auto px-6 md:px-10">
         <div className="text-center mb-10">
           <p className="text-secondary font-semibold uppercase tracking-[0.3em] mb-3">Why Choose Us</p>
