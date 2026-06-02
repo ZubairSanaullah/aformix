@@ -14,6 +14,7 @@ import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import WhatsAppBtn from "./components/WhatsAppBtn";
 import PrivacyPolicyPage from "./Pages/PrivacyPolicy";
+import TermsOfService from "./Pages/TermsOfService";
 import { ArrowUp } from "lucide-react";
 import useReveal from "./hooks/useReveal";
 
@@ -70,6 +71,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/" element={<HomeContent />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
           </Routes>
         </main>
         <Footer />

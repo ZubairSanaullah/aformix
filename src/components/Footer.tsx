@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
             <p>&copy; {new Date().getFullYear()} AFORMIX ALL RIGHTS RESERVED.</p>
             <div className="flex gap-4">
               <a href="/privacy-policy" className="hover:text-[var(--color-text)] transition-colors">PRIVACY POLICY</a>
-              <a href="#" className="hover:text-[var(--color-text)] transition-colors">TERMS OF SERVICE</a>
+              <a href="/terms-of-service" className="hover:text-[var(--color-text)] transition-colors">TERMS OF SERVICE</a>
             </div>
           </div>
 
