@@ -74,8 +74,8 @@ const TermsOfService: React.FC = () => {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(sectionId);
+      element.scrollIntoView({ behavior: 'smooth' });
       if (isMobile) setSidebarOpen(false);
     }
   };
@@ -132,7 +132,7 @@ const TermsOfService: React.FC = () => {
             {sidebarOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </motion.button>
 
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
             {/* Hero Section */}
             <motion.section
               initial={{ opacity: 0, y: 20 }}
@@ -239,7 +239,7 @@ const TermsOfService: React.FC = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.1 }}
                       viewport={{ once: true, margin: '-100px' }}
-                      className="scroll-mt-32"
+                      className="scroll-mt-40"
                     >
                       {/* Section Header */}
                       <motion.div
