@@ -152,6 +152,8 @@ html.light .glass-effect {
   border-radius: 1rem;
   transition: all 0.3s;
   box-shadow: 0 4px 24px rgba(39, 185, 144, 0.2);
+  border: none;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
@@ -163,17 +165,39 @@ html.light .glass-effect {
   transform: scale(0.95);
 }
 
+html.light .btn-primary {
+  box-shadow: 0 4px 16px rgba(39, 185, 144, 0.15);
+}
+
+html.light .btn-primary:hover {
+  box-shadow: 0 8px 24px rgba(39, 185, 144, 0.25);
+}
+
 .btn-outline {
   padding: 0.75rem 2rem;
-  border: 1px solid var(--color-border);
+  border: 1.5px solid var(--color-border);
   color: var(--color-text);
   font-weight: 700;
   border-radius: 1rem;
   transition: all 0.4s;
   background: transparent;
+  cursor: pointer;
 }
 
 .btn-outline:hover {
+  color: white;
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+html.light .btn-outline {
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+html.light .btn-outline:hover,
+html.light .btn-primary:hover,
+html.light button:hover {
   color: white;
   background-color: var(--color-primary);
   border-color: var(--color-primary);
@@ -288,12 +312,21 @@ html.light .card-premium:hover {
 
 /* ─── Portfolio Cards ─────────────────────────────────── */
 .portfolio-gradient {
-  background: linear-gradient(
-    to top,
-    var(--color-surface) 0%,
-    var(--color-surface) 15%,
-    transparent 100%
-  );
+  background: transparent;
+}
+
+html.light .portfolio-gradient {
+  background: transparent;
+}
+
+html.light .portfolio-title {
+  color: white;
+}
+
+html.light .portfolio-view-link:hover {
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+  color: #ffffff !important;
 }
 
 /* ─── Service Cards ─────────────────────────────────── */
@@ -472,13 +505,13 @@ html.light .input-field option {
 }
 
 .services-slider-container::-webkit-scrollbar-thumb {
-  background: rgba(39, 185, 144, 0.3);
+  background: var(--color-primary);
   border-radius: 9999px;
 }
 
 .services-slider-container {
   scrollbar-width: thin;
-  scrollbar-color: rgba(39, 185, 144, 0.3) transparent;
+  scrollbar-color: var(--color-primary) transparent;
 }
 
 .slider-nav-btn {
@@ -515,14 +548,14 @@ html.light .slider-nav-btn {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(39, 185, 144, 0.25);
+  background-color: var(--color-primary);
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: padding-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(39, 185, 144, 0.45);
+  background-color: var(--color-secondary);
   background-clip: padding-box;
 }
 

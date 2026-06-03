@@ -43,7 +43,7 @@ const Portfolio: React.FC = () => {
                   {isFeatured && (
                     <span className="mb-3 inline-flex text-xs uppercase tracking-[0.4em] text-primary">Featured project</span>
                   )}
-                  <h3 className={`font-black text-[var(--color-text)] leading-tight ${isFeatured ? "text-4xl md:text-[3rem]" : "text-3xl"}`}>
+                  <h3 className={`portfolio-title font-black text-[var(--color-text)] leading-tight ${isFeatured ? "text-4xl md:text-[3rem]" : "text-3xl"}`}>
                     {project.title}
                   </h3>
                   <div className="mt-8 flex items-center justify-between gap-4">
@@ -51,7 +51,7 @@ const Portfolio: React.FC = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 rounded-full border border-[var(--color-border)] glass-effect px-5 py-3 text-sm font-semibold text-[var(--color-text)] transition hover:bg-primary hover:text-white hover:border-primary"
+                      className="portfolio-view-link inline-flex items-center gap-3 rounded-full border border-[var(--color-border)] glass-effect px-5 py-3 text-sm font-semibold text-[var(--color-text)] transition hover:bg-primary hover:text-white hover:border-primary"
                     >
                       View project
                       <ArrowUpRight size={18} />

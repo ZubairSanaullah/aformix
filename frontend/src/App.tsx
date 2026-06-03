@@ -16,6 +16,7 @@ import WhatsAppBtn from "./components/WhatsAppBtn";
 import PrivacyPolicyPage from "./Pages/PrivacyPolicy";
 import TermsOfService from "./Pages/TermsOfService";
 import LoginPage from "./Pages/Login";
+import CookieConsent from "./components/CookieConsent";
 import { ArrowUp } from "lucide-react";
 import useReveal from "./hooks/useReveal";
 import Contact from "./components/Contact";
@@ -80,6 +81,7 @@ const App: React.FC = () => {
           </Routes>
         </main>
         <Footer />
+        <CookieConsent />
         <WhatsAppBtn />
         <button
           onClick={scrollToTop}

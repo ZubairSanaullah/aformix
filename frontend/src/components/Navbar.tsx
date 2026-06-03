@@ -2,17 +2,18 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router";
 import { navLinks } from "../constants";
 import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Briefcase, Activity, Users, ChevronDown, Code, Smartphone } from "lucide-react";
+import { useTheme } from "../contexts/ThemeContext";
 import logoImg from "../assets/logo.png";
 
 type Theme = "light" | "dark" | "system";
 
 const Navbar: React.FC = () => {
+  const { theme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [hoverStyle, setHoverStyle] = useState({ left: 0, width: 0, opacity: 0 });
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
-  const [theme, setTheme] = useState<Theme>("system");
   const [user, setUser] = useState<any>(null);
   const lastScrollY = useRef(0);
   const navigate = useNavigate();
@@ -50,26 +51,6 @@ const Navbar: React.FC = () => {
     window.dispatchEvent(new Event("authStateChange"));
     navigate("/login");
   };
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme") as Theme | null;
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-  }, []);
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
-
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-      root.classList.add(systemTheme);
-    } else {
-      root.classList.add(theme);
-    }
-    localStorage.setItem("theme", theme);
-  }, [theme]);
 
   useEffect(() => {
     const handleScroll = () => {

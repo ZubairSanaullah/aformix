@@ -52,11 +52,10 @@ const Hero: React.FC = () => {
 
         {/* Illustration Canvas / Dummy Picture */}
         <div className="w-full mx-auto rounded-3xl glass-effect p-3 mt-8 sm:mt-12 md:mt-16 relative group overflow-hidden border border-white/10 shadow-2xl animate-text h-[min(68vh,780px)]">
-          <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-transparent to-transparent opacity-60 z-10 pointer-events-none rounded-3xl"></div>
           <img
             src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=2000"
             alt="Illustration Placeholder"
-            className="w-full h-full object-cover rounded-2xl opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+            className="w-full h-full object-cover rounded-2xl opacity-100 group-hover:scale-105 transition-all duration-700"
           />
         </div>
       </div>
