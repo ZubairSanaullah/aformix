@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useTheme } from '../contexts/ThemeContext';
 import {
   BookOpen,
   Zap,
@@ -44,7 +43,6 @@ const iconMap: { [key: string]: React.ReactNode } = {
 };
 
 const TermsOfService: React.FC = () => {
-  const { theme } = useTheme();
   const [activeSection, setActiveSection] = useState<string>('introduction');
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showScrollTop, setShowScrollTop] = useState<boolean>(false);

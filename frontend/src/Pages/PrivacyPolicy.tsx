@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
-import { useTheme } from "../contexts/ThemeContext";
 import {
   ClipboardCheck,
   Cookie,
@@ -226,7 +225,6 @@ const PolicyBadge: React.FC<{ text: string }> = ({ text }) => (
 );
 
 const PrivacyPolicyPage: React.FC = () => {
-  const { theme } = useTheme();
   const [activeSection, setActiveSection] = useState("overview");
   const [scrollProgress, setScrollProgress] = useState(0);
   const [copied, setCopied] = useState(false);

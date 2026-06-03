@@ -5,8 +5,6 @@ import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Briefcase, Activity, U
 import { useTheme } from "../contexts/ThemeContext";
 import logoImg from "../assets/logo.png";
 
-type Theme = "light" | "dark" | "system";
-
 const Navbar: React.FC = () => {
   const { theme, setTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
