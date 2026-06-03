@@ -28,7 +28,21 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  const apiUrl = import.meta.env.VITE_API_URL || "";
+  const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "/_/backend" : "");
+
+  const parseJsonResponse = async (response: Response) => {
+    const contentType = response.headers.get("content-type") || "";
+    if (contentType.includes("application/json")) {
+      return await response.json();
+    }
+
+    const text = await response.text();
+    try {
+      return text ? JSON.parse(text) : {};
+    } catch {
+      return { message: text || response.statusText };
+    }
+  };
 
   const handleLoginSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,7 +60,7 @@ const LoginPage: React.FC = () => {
         body: JSON.stringify({ email: loginEmail, password: loginPassword }),
       });
 
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
       if (!response.ok) {
         throw new Error(data.message || "Login failed. Please try again.");
       }
@@ -94,7 +108,7 @@ const LoginPage: React.FC = () => {
         }),
       });
 
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
       if (!response.ok) {
         throw new Error(data.message || "Registration failed. Please try again.");
       }
@@ -130,7 +144,7 @@ const LoginPage: React.FC = () => {
         body: JSON.stringify({ email: otpEmail, otp }),
       });
 
-      const data = await response.json();
+      const data = await parseJsonResponse(response);
       if (!response.ok) {
         throw new Error(data.message || "OTP verification failed. Please try again.");
       }

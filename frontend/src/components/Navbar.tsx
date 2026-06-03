@@ -15,6 +15,7 @@ const Navbar: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const lastScrollY = useRef(0);
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "/_/backend" : "");
 
   const checkAuth = () => {
     const storedUser = localStorage.getItem("user");
@@ -37,7 +38,7 @@ const Navbar: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/logout`, {
+      await fetch(`${apiUrl}/api/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
