@@ -55,14 +55,18 @@ const clientOrigins = process.env.CLIENT_URL
   ? process.env.CLIENT_URL.split(",").map((origin) => origin.trim()).filter(Boolean)
   : [];
 
-app.use(
-  cors({
-    origin: clientOrigins,
-    credentials: true,
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+const corsOptions = {
+  origin: clientOrigins.length > 0 ? clientOrigins : true,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+if (clientOrigins.length === 0) {
+  console.warn("⚠️ CLIENT_URL is not set, CORS will allow all origins. Set CLIENT_URL in production to restrict allowed origins.");
+}
+
+app.use(cors(corsOptions));
 
 app.use("/api/auth", signupLimiter, loginLimiter, authRoutes);
 app.use("/api/", apiLimiter);
