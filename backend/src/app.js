@@ -69,8 +69,8 @@ if (clientOrigins.length === 0) {
 
 app.use(cors(corsOptions));
 
-app.use(["/api/auth", "/_/backend/api/auth"], signupLimiter, loginLimiter, authRoutes);
-app.use(["/api/", "/_/backend/api/"], apiLimiter);
+app.use(["/api/auth", "/_/backend/api/auth", "/auth"], signupLimiter, loginLimiter, authRoutes);
+app.use(["/api/", "/_/backend/api/", "/"], apiLimiter);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Aformix backend is running." });
