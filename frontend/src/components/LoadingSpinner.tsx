@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
+import logo from "../assets/logo.png";
 
 const LoadingSpinner: React.FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -31,7 +32,7 @@ const LoadingSpinner: React.FC = () => {
           ref={logoRef}
           className="flex flex-col items-center gap-3"
         >
-          <img src="/src/assets/logo.png" alt="Aformix" className="w-14 h-14 object-contain" />
+          <img src={logo} alt="Aformix" className="w-14 h-14 object-contain" />
           <span className="text-3xl font-black tracking-wider text-[var(--color-text)]">
             AFORMIX
           </span>

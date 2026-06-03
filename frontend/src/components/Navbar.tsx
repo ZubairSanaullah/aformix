@@ -76,7 +76,7 @@ const Navbar: React.FC = () => {
       } ${isScrolled ? "py-4" : "py-8"}`}
     >
       <div className="max-w-7xl mx-auto px-6 w-full pointer-events-auto">
-        <div className={`flex items-center justify-between px-8 py-4 rounded-3xl transition-all duration-500 ${
+        <div className={`flex items-center justify-between px-4 md:px-8 py-3 md:py-4 rounded-3xl transition-all duration-500 ${
           isScrolled 
             ? "bg-[var(--color-bg)] shadow-2xl border border-[var(--color-glass-border)]" 
             : "bg-transparent"
