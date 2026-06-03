@@ -28,7 +28,7 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "/_/backend" : "");
+  const apiUrl = import.meta.env.VITE_API_URL || "";
 
   const parseJsonResponse = async (response: Response) => {
     const contentType = response.headers.get("content-type") || "";

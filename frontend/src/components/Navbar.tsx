@@ -15,7 +15,7 @@ const Navbar: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const lastScrollY = useRef(0);
   const navigate = useNavigate();
-  const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? "/_/backend" : "");
+  const apiUrl = import.meta.env.VITE_API_URL || "";
 
   const checkAuth = () => {
     const storedUser = localStorage.getItem("user");
