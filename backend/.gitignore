@@ -4,3 +4,40 @@ node_modules/
 npm-debug.log*
 logs/
 coverage/
+
+# Build / runtime
+dist/
+build/
+
+# Local env files
+.env.local
+.env.*.local
+
+# Editor and OS files
+.idea/
+.vscode/
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime files
+pids/
+*.pid
+*.seed
+
+# Misc caches
+.cache/
+.parcel-cache/
+.vite/
+.turbo/
+
+# Optional: serverless
+.serverless/
+
+# Temporary uploads
+uploads/
+tmp/
