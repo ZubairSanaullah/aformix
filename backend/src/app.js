@@ -11,6 +11,7 @@ import { serve } from "inngest/express";
 import inngest from "./config/inngest.js";
 
 const app = express();
+app.set("trust proxy", 1);
 
 // General API limiter
 const apiLimiter = rateLimit({

@@ -13,5 +13,10 @@ export default async function handler(req, res) {
     }
   }
   
+  // Strip the /_/backend prefix added by Vercel rewrites/experimentalServices
+  if (req.url && req.url.startsWith('/_/backend')) {
+    req.url = req.url.replace('/_/backend', '');
+  }
+  
   return app(req, res);
 }
