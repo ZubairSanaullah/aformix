@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useTheme } from '../contexts/ThemeContext';
 import {
   BookOpen,
   Zap,
@@ -43,6 +44,7 @@ const iconMap: { [key: string]: React.ReactNode } = {
 };
 
 const TermsOfService: React.FC = () => {
+  const { theme } = useTheme();
   const [activeSection, setActiveSection] = useState<string>('introduction');
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const [showScrollTop, setShowScrollTop] = useState<boolean>(false);
@@ -107,17 +109,17 @@ const TermsOfService: React.FC = () => {
 
       {/* Scroll Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 z-50"
+        className="fixed top-0 left-0 h-1 bg-gradient-to-r from-primary via-secondary to-accent z-50"
         style={{ width: `${scrollProgress}%` }}
       />
 
-      <div className="min-h-screen bg-black text-gray-50">
+      <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-300">
         {/* Animated Background */}
         <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-purple-600/20 rounded-full blur-3xl animate-pulse delay-700" />
-          <div className="absolute top-1/2 right-0 w-96 h-96 bg-pink-600/10 rounded-full blur-3xl animate-pulse delay-1000" />
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(59,130,246,0.03),transparent,rgba(168,85,247,0.03))]" />
+          <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-secondary/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '0.7s'}} />
+          <div className="absolute top-1/2 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
+          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-primary)/3,transparent,var(--color-secondary)/3)]" />
         </div>
 
         {/* Content */}
@@ -125,7 +127,7 @@ const TermsOfService: React.FC = () => {
           {/* Mobile Menu Toggle */}
           <motion.button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="lg:hidden fixed top-24 left-4 z-40 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/30 hover:border-blue-400/50 transition-colors"
+            className="lg:hidden fixed top-24 left-4 z-40 p-2 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/30 hover:border-primary/50 transition-colors"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
@@ -145,7 +147,7 @@ const TermsOfService: React.FC = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
               >
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
                   Terms of Service
                 </h1>
               </motion.div>
@@ -154,7 +156,7 @@ const TermsOfService: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-lg md:text-xl text-gray-300 mb-4 max-w-3xl mx-auto"
+                className="text-lg md:text-xl text-[var(--color-text-muted)] mb-4 max-w-3xl mx-auto"
               >
                 Legal agreement between Aformix and clients using our web development and digital solutions services.
               </motion.p>
@@ -163,7 +165,7 @@ const TermsOfService: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.6, duration: 0.6 }}
-                className="text-sm text-gray-400"
+                className="text-sm text-[var(--color-text-muted)]"
               >
                 Last Updated: {TERMS_OF_SERVICE_DATA.lastUpdated}
               </motion.p>
@@ -173,7 +175,7 @@ const TermsOfService: React.FC = () => {
                 initial={{ opacity: 0, scaleX: 0 }}
                 animate={{ opacity: 1, scaleX: 1 }}
                 transition={{ delay: 0.8, duration: 0.8 }}
-                className="h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent mt-8 max-w-md mx-auto"
+                className="h-1 bg-gradient-to-r from-transparent via-primary to-transparent mt-8 max-w-md mx-auto"
               />
             </motion.section>
 
@@ -190,10 +192,10 @@ const TermsOfService: React.FC = () => {
                     className="lg:col-span-1"
                   >
                     <motion.div
-                      className="sticky top-32 p-6 rounded-2xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20 backdrop-blur-xl"
-                      whileHover={{ borderColor: 'rgba(59, 130, 246, 0.4)' }}
+                      className="sticky top-32 p-6 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 border border-primary/20 backdrop-blur-xl transition-colors duration-300"
+                      whileHover={{ borderColor: 'var(--color-primary)' }}
                     >
-                      <h3 className="text-sm font-semibold text-gray-300 mb-4 uppercase tracking-wider">
+                      <h3 className="text-sm font-semibold text-[var(--color-text)] mb-4 uppercase tracking-wider">
                         Quick Navigation
                       </h3>
                       <nav className="space-y-2">
@@ -207,8 +209,8 @@ const TermsOfService: React.FC = () => {
                               onClick={() => scrollToSection(sectionId)}
                               className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-300 flex items-center gap-2 group ${
                                 isActive
-                                  ? 'bg-gradient-to-r from-blue-500/30 to-purple-500/30 text-blue-300 border border-blue-500/50'
-                                  : 'text-gray-400 hover:text-gray-300 hover:bg-blue-500/10'
+                                  ? 'bg-gradient-to-r from-primary/30 to-secondary/30 text-primary border border-primary/50'
+                                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-primary/10'
                               }`}
                               whileHover={{ x: 4 }}
                             >
@@ -246,14 +248,14 @@ const TermsOfService: React.FC = () => {
                         className="flex items-start gap-4 mb-6"
                         whileHover={{ x: 4 }}
                       >
-                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400 flex-none">
+                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/30 flex items-center justify-center text-primary flex-none transition-colors duration-300">
                           {section.icon ? iconMap[section.icon] : <BookOpen className="w-6 h-6" />}
                         </div>
                         <div>
-                          <h2 className="text-3xl md:text-4xl font-bold text-white mb-2">
+                          <h2 className="text-3xl md:text-4xl font-bold text-[var(--color-text)] mb-2">
                             {section.title}
                           </h2>
-                          <div className="h-1 w-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+                          <div className="h-1 w-16 bg-gradient-to-r from-primary to-secondary rounded-full" />
                         </div>
                       </motion.div>
 
@@ -264,9 +266,9 @@ const TermsOfService: React.FC = () => {
                           whileInView={{ opacity: 1 }}
                           transition={{ delay: 0.2, duration: 0.6 }}
                           viewport={{ once: true }}
-                          className="bg-gradient-to-br from-blue-500/5 to-purple-500/5 border border-blue-500/20 rounded-2xl p-6 md:p-8 backdrop-blur-xl mb-6"
+                          className="bg-gradient-to-br from-primary/5 to-secondary/5 border border-primary/20 rounded-2xl p-6 md:p-8 backdrop-blur-xl mb-6 transition-colors duration-300"
                         >
-                          <p className="text-gray-300 leading-relaxed whitespace-pre-wrap text-sm md:text-base">
+                          <p className="text-[var(--color-text-muted)] leading-relaxed whitespace-pre-wrap text-sm md:text-base">
                             {section.content}
                           </p>
                         </motion.div>
@@ -282,13 +284,13 @@ const TermsOfService: React.FC = () => {
                               whileInView={{ opacity: 1, y: 0 }}
                               transition={{ delay: subIndex * 0.1, duration: 0.4 }}
                               viewport={{ once: true }}
-                              className="group p-6 rounded-xl border border-blue-500/20 bg-gradient-to-br from-blue-500/5 to-purple-500/5 hover:border-blue-500/50 hover:bg-gradient-to-br hover:from-blue-500/10 hover:to-purple-500/10 transition-all duration-300 cursor-pointer"
+                              className="group p-6 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5 hover:border-primary/50 hover:bg-gradient-to-br hover:from-primary/10 hover:to-secondary/10 transition-all duration-300 cursor-pointer"
                               whileHover={{ y: -4 }}
                             >
-                              <h4 className="text-lg font-semibold text-blue-300 mb-2 group-hover:text-blue-200 transition-colors">
+                              <h4 className="text-lg font-semibold text-primary mb-2 group-hover:text-accent transition-colors">
                                 {subsection.name}
                               </h4>
-                              <p className="text-gray-400 text-sm leading-relaxed">
+                              <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">
                                 {subsection.description}
                               </p>
                             </motion.div>
@@ -306,14 +308,14 @@ const TermsOfService: React.FC = () => {
                               whileInView={{ opacity: 1, x: 0 }}
                               transition={{ delay: itemIndex * 0.08, duration: 0.4 }}
                               viewport={{ once: true }}
-                              className="flex gap-4 p-4 rounded-lg bg-gradient-to-r from-blue-500/10 to-transparent border border-blue-500/20 hover:border-blue-500/40 transition-all duration-300 group"
+                              className="flex gap-4 p-4 rounded-lg bg-gradient-to-r from-primary/10 to-transparent border border-primary/20 hover:border-primary/40 transition-all duration-300 group"
                             >
-                              <div className="flex-shrink-0 w-1 h-1 bg-gradient-to-b from-blue-400 to-purple-400 rounded-full mt-2" />
+                              <div className="flex-shrink-0 w-1 h-1 bg-gradient-to-b from-primary to-secondary rounded-full mt-2" />
                               <div className="flex-1">
-                                <h4 className="font-semibold text-gray-200 group-hover:text-blue-300 transition-colors">
+                                <h4 className="font-semibold text-[var(--color-text)] group-hover:text-primary transition-colors">
                                   {item.title || item.name || item.condition}
                                 </h4>
-                                <p className="text-gray-400 text-sm mt-1">
+                                <p className="text-[var(--color-text-muted)] text-sm mt-1">
                                   {item.description}
                                 </p>
                               </div>
@@ -329,7 +331,7 @@ const TermsOfService: React.FC = () => {
                           whileInView={{ scaleX: 1 }}
                           transition={{ delay: 0.3, duration: 0.6 }}
                           viewport={{ once: true }}
-                          className="h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent mt-16"
+                          className="h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent mt-16"
                         />
                       )}
                     </motion.section>
@@ -344,18 +346,18 @@ const TermsOfService: React.FC = () => {
                     className="mt-20"
                   >
                     <div className="relative group">
-                      <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 via-secondary/20 to-accent/20 rounded-2xl blur-xl group-hover:blur-2xl transition-all duration-300" />
 
                       <motion.div
-                        className="relative bg-gradient-to-br from-blue-500/10 to-purple-500/10 border-2 border-blue-500/30 rounded-2xl p-8 md:p-12 text-center backdrop-blur-xl"
-                        whileHover={{ borderColor: 'rgba(59, 130, 246, 0.6)' }}
+                        className="relative bg-gradient-to-br from-primary/10 to-secondary/10 border-2 border-primary/30 rounded-2xl p-8 md:p-12 text-center backdrop-blur-xl transition-colors duration-300"
+                        whileHover={{ borderColor: 'var(--color-primary)' }}
                       >
                         <motion.h3
                           initial={{ opacity: 0 }}
                           whileInView={{ opacity: 1 }}
                           transition={{ delay: 0.2, duration: 0.6 }}
                           viewport={{ once: true }}
-                          className="text-2xl md:text-3xl font-bold text-white mb-4"
+                          className="text-2xl md:text-3xl font-bold text-[var(--color-text)] mb-4"
                         >
                           Need Clarification About These Terms?
                         </motion.h3>
@@ -365,7 +367,7 @@ const TermsOfService: React.FC = () => {
                           whileInView={{ opacity: 1 }}
                           transition={{ delay: 0.3, duration: 0.6 }}
                           viewport={{ once: true }}
-                          className="text-gray-300 mb-8 max-w-2xl mx-auto"
+                          className="text-[var(--color-text-muted)] mb-8 max-w-2xl mx-auto"
                         >
                           Our team is here to answer any questions about our Terms of Service or any aspect of our services.
                         </motion.p>
@@ -375,7 +377,7 @@ const TermsOfService: React.FC = () => {
                             href="mailto:legal@aformix.com"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-8 py-3 rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300 flex items-center gap-2"
+                            className="px-8 py-3 rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-semibold hover:shadow-lg transition-all duration-300 flex items-center gap-2"
                           >
                             <Mail className="w-5 h-5" />
                             Contact Legal Team
@@ -385,7 +387,7 @@ const TermsOfService: React.FC = () => {
                             onClick={() => copyToClipboard('legal@aformix.com')}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-8 py-3 rounded-lg border border-blue-500/50 text-blue-300 font-semibold hover:bg-blue-500/10 transition-all duration-300 flex items-center gap-2"
+                            className="px-8 py-3 rounded-lg border border-primary/50 text-primary font-semibold hover:bg-primary/10 transition-all duration-300 flex items-center gap-2"
                           >
                             {copied ? (
                               <>
@@ -401,7 +403,7 @@ const TermsOfService: React.FC = () => {
                           </motion.button>
                         </div>
 
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm text-[var(--color-text-muted)]">
                           Response time: {TERMS_OF_SERVICE_DATA.contactInfo.hours}
                         </p>
                       </motion.div>
@@ -411,24 +413,24 @@ const TermsOfService: React.FC = () => {
               </motion.div>
             </div>
           </div>
-        </div>
 
-        {/* Scroll to Top Button */}
-        <AnimatePresence>
-          {showScrollTop && (
-            <motion.button
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              onClick={scrollToTop}
-              className="fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white shadow-lg shadow-blue-500/50 hover:shadow-blue-500/70 transition-all duration-300 flex items-center justify-center"
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-            >
-              <ArrowUp className="w-6 h-6" />
-            </motion.button>
-          )}
-        </AnimatePresence>
+          {/* Scroll to Top Button */}
+          <AnimatePresence>
+            {showScrollTop && (
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                onClick={scrollToTop}
+                className="fixed bottom-8 right-8 z-40 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <ArrowUp className="w-6 h-6" />
+              </motion.button>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
     </>
   );

@@ -14,12 +14,12 @@ const socialLinks = [
 
 const Footer: React.FC = () => {
   return (
-    <footer className="reveal pt-32 pb-16 border-t border-[var(--color-border)] relative overflow-hidden w-full flex justify-center" style={{ backgroundColor: "var(--color-surface)" }}>
-      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 w-full">
-        <div className="grid lg:grid-cols-[1.1fr_1fr_1fr_0.8fr] gap-12 lg:gap-8 mb-24">
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h4 className="text-[var(--color-text)] font-black uppercase tracking-widest text-xs mb-10">Products</h4>
-            <ul className="space-y-5 text-left">
+    <footer className="reveal pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 border-t border-[var(--color-border)] relative overflow-hidden w-full flex justify-center" style={{ backgroundColor: "var(--color-surface)" }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 w-full">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_0.8fr] gap-6 sm:gap-8 lg:gap-8 mb-16 sm:mb-24">
+          <div className="flex flex-col items-start text-left">
+            <h4 className="text-[var(--color-text)] font-black uppercase tracking-widest text-xs mb-6 sm:mb-10">Products</h4>
+            <ul className="space-y-3 sm:space-y-5 text-left">
               {[
                 { label: "SaaS Platforms", href: "#" },
                 { label: "E-commerce", href: "#" },
@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
                 { label: "Design Systems", href: "#" },
               ].map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all block">
+                  <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all block text-sm sm:text-base">
                     {item.label}
                   </a>
                 </li>
@@ -35,9 +35,9 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h4 className="text-[var(--color-text)] font-black uppercase tracking-widest text-xs mb-10">Solutions</h4>
-            <ul className="space-y-5 text-left">
+          <div className="flex flex-col items-start text-left">
+            <h4 className="text-[var(--color-text)] font-black uppercase tracking-widest text-xs mb-6 sm:mb-10">Solutions</h4>
+            <ul className="space-y-3 sm:space-y-5 text-left">
               {[
                 { label: "Enterprise", href: "#" },
                 { label: "SaaS Templates", href: "#" },
@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
                 { label: "Analytics", href: "#" },
               ].map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all block">
+                  <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all block text-sm sm:text-base">
                     {item.label}
                   </a>
                 </li>
@@ -53,9 +53,9 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-            <h4 className="text-[var(--color-text)] font-black uppercase tracking-widest text-xs mb-10">Company</h4>
-            <ul className="space-y-5">
+          <div className="flex flex-col items-start text-left">
+            <h4 className="text-[var(--color-text)] font-black uppercase tracking-widest text-xs mb-6 sm:mb-10">Company</h4>
+            <ul className="space-y-3 sm:space-y-5">
               {[
                 { label: "About Us", href: "#" },
                 { label: "Careers", href: "#" },
@@ -63,7 +63,7 @@ const Footer: React.FC = () => {
                 { label: "Contact", href: "#contact" },
               ].map((item) => (
                 <li key={item.label}>
-                  <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all">
+                  <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all text-sm sm:text-base">
                     {item.label}
                   </a>
                 </li>
@@ -71,30 +71,30 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          <div className="flex flex-col items-center lg:items-end text-center lg:text-right">
-            <img src={logoImg} alt="Aformix logo" className="w-8 mb-10 object-contain hover:scale-90 transition-all duration-300" />
+          <div className="col-span-2 sm:col-span-1 lg:col-span-1 flex flex-col items-start lg:items-end text-left lg:text-right">
+            <img src={logoImg} alt="Aformix logo" className="w-6 sm:w-8 mb-6 sm:mb-10 object-contain hover:scale-90 transition-all duration-300" />
           </div>
         </div>
 
-        <div className="pt-12 border-t border-[var(--color-border)] flex flex-col md:flex-row items-center justify-between gap-6 text-[var(--color-text-muted)] font-bold text-xs">
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-center md:text-left">
-            <p>&copy; {new Date().getFullYear()} AFORMIX ALL RIGHTS RESERVED.</p>
-            <div className="flex gap-4">
-              <a href="/privacy-policy" className="hover:text-[var(--color-text)] transition-colors">PRIVACY POLICY</a>
-              <a href="/terms-of-service" className="hover:text-[var(--color-text)] transition-colors">TERMS OF SERVICE</a>
+        <div className="pt-8 sm:pt-12 border-t border-[var(--color-border)] flex flex-col gap-6 sm:gap-8 md:gap-6 text-[var(--color-text-muted)] font-bold text-xs">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 lg:gap-8">
+            <p className="text-xs sm:text-sm">&copy; {new Date().getFullYear()} AFORMIX ALL RIGHTS RESERVED.</p>
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+              <a href="/privacy-policy" className="hover:text-[var(--color-text)] transition-colors text-xs sm:text-sm">PRIVACY POLICY</a>
+              <a href="/terms-of-service" className="hover:text-[var(--color-text)] transition-colors text-xs sm:text-sm">TERMS OF SERVICE</a>
             </div>
           </div>
 
-          <div className="flex items-center gap-0.5 sm:gap-3 relative">
+          <div className="flex items-center gap-2 sm:gap-3 relative flex-wrap">
             {socialLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-primary transition-all duration-300 relative group border border-[var(--color-border)] rounded-full"
+                className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:border-primary transition-all duration-300 relative group border border-[var(--color-border)] rounded-full"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <link.icon size={20} className="group-hover:text-primary group-hover:scale-110 transition-all duration-300" />
+                <link.icon size={16} className="sm:size-5 group-hover:text-primary group-hover:scale-110 transition-all duration-300" />
               </a>
             ))}
           </div>

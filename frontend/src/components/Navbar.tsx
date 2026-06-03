@@ -72,11 +72,11 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-[100] transition-transform duration-500 ease-in-out flex justify-center ${
+      className={`fixed top-0 left-0 w-full z-[100] transition-transform duration-500 ease-in-out flex justify-center pointer-events-none ${
         isVisible ? "translate-y-0" : "-translate-y-full"
       } ${isScrolled ? "py-4" : "py-8"}`}
     >
-      <div className="max-w-7xl mx-auto px-6 w-full">
+      <div className="max-w-7xl mx-auto px-6 w-full pointer-events-auto">
         <div className={`flex items-center justify-between px-8 py-4 rounded-3xl transition-all duration-500 ${
           isScrolled 
             ? "bg-[var(--color-bg)] shadow-2xl border border-[var(--color-glass-border)]" 
@@ -90,7 +90,7 @@ const Navbar: React.FC = () => {
 
           {/* Desktop Links */}
           <div
-            className="hidden md:flex items-center gap-8 group relative"
+            className="hidden md:flex items-center gap-4 lg:gap-8 group relative flex-1 justify-center"
             onMouseLeave={() => {
               setHoverStyle((prev) => ({ ...prev, opacity: 0 }));
               setHoveredMenu(null);
@@ -234,11 +234,11 @@ const Navbar: React.FC = () => {
             />
           </div>
 
-          <div className="hidden md:flex items-center gap-6">
+          <div className="hidden md:flex items-center gap-3 lg:gap-6 flex-shrink-0">
             {/* Theme Toggle */}
             <div className="relative group/theme">
-              <button className="w-10 h-10 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)] hover:text-primary transition-colors cursor-pointer">
-                {theme === "light" ? <Sun size={18} /> : theme === "dark" ? <Moon size={18} /> : <Monitor size={18} />}
+              <button className="w-9 lg:w-10 h-9 lg:h-10 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)] hover:text-primary transition-colors cursor-pointer flex-shrink-0">
+                {theme === "light" ? <Sun size={16} className="lg:w-[18px] lg:h-[18px]" /> : theme === "dark" ? <Moon size={16} className="lg:w-[18px] lg:h-[18px]" /> : <Monitor size={16} className="lg:w-[18px] lg:h-[18px]" />}
               </button>
               {/* Dropdown */}
               <div className="absolute right-0 top-full mt-2 w-32 py-2 rounded-xl glass-effect opacity-0 invisible group-hover/theme:opacity-100 group-hover/theme:visible transition-all duration-300 flex flex-col z-50 overflow-hidden">
@@ -250,7 +250,7 @@ const Navbar: React.FC = () => {
 
             {user ? (
               <div className="relative group/profile">
-                <button className="w-10 h-10 rounded-full glass-effect flex items-center justify-center text-[var(--color-text)] font-bold uppercase hover:ring-2 hover:ring-primary transition-all cursor-pointer">
+                <button className="w-9 lg:w-10 h-9 lg:h-10 rounded-full glass-effect flex items-center justify-center text-[var(--color-text)] font-bold uppercase hover:ring-2 hover:ring-primary transition-all cursor-pointer text-xs lg:text-sm flex-shrink-0">
                   {user.name ? user.name[0] : "U"}
                 </button>
                 <div className="absolute right-0 top-full mt-2 w-48 py-2 rounded-xl glass-effect opacity-0 invisible group-hover/profile:opacity-100 group-hover/profile:visible transition-all duration-300 flex flex-col z-50 overflow-hidden">
@@ -266,13 +266,13 @@ const Navbar: React.FC = () => {
             ) : (
               <>
                 <Link to="/login">
-                  <button className="btn-outline flex items-center gap-2 !py-2.5 !px-6 text-sm cursor-pointer">
+                  <button className="btn-outline hidden lg:flex items-center gap-2 !py-2.5 !px-4 lg:!px-6 text-xs lg:text-sm cursor-pointer flex-shrink-0">
                     Login
                   </button>
                 </Link>
                 <a href="#contact">
-                  <button className="btn-primary flex items-center gap-2 !py-2.5 !px-6 text-sm cursor-pointer">
-                    Get Started <ArrowRight size={16} />
+                  <button className="btn-primary hidden lg:flex items-center gap-2 !py-2.5 !px-4 lg:!px-6 text-xs lg:text-sm cursor-pointer flex-shrink-0">
+                    Get Started <ArrowRight size={14} className="lg:w-4 lg:h-4" />
                   </button>
                 </a>
               </>
@@ -292,55 +292,55 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden absolute top-full left-0 w-full px-6 transition-all duration-500 overflow-hidden ${isMobileMenuOpen ? "max-h-[500px] py-4 opacity-100" : "max-h-0 py-0 opacity-0"
+      <div className={`md:hidden absolute top-full left-0 w-full px-6 pointer-events-auto transition-all duration-500 overflow-hidden ${isMobileMenuOpen ? "max-h-[600px] py-4 opacity-100" : "max-h-0 py-0 opacity-0 pointer-events-none"
         }`}>
-        <div className="glass-effect rounded-3xl p-8 flex flex-col gap-6">
+        <div className="glass-effect rounded-3xl p-6 sm:p-8 flex flex-col gap-4 sm:gap-6">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-2xl font-black text-[var(--color-text)] hover:text-primary transition-colors"
+              className="px-4 py-3 sm:px-6 sm:py-4 text-lg sm:text-xl font-bold text-[var(--color-text)] hover:text-primary hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}
             </a>
           ))}
-          <div className="h-px bg-white/10 w-full"></div>
+          <div className="h-px bg-[var(--color-border)] w-full"></div>
           
           {/* Mobile Theme Toggle */}
-          <div className="flex items-center justify-between">
-            <p className="text-[var(--color-text)] font-medium">Theme</p>
-            <div className="flex gap-2">
-              <button onClick={() => setTheme("light")} className={`p-2 rounded-lg glass-effect transition-colors ${theme === 'light' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Sun size={20} /></button>
-              <button onClick={() => setTheme("dark")} className={`p-2 rounded-lg glass-effect transition-colors ${theme === 'dark' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Moon size={20} /></button>
-              <button onClick={() => setTheme("system")} className={`p-2 rounded-lg glass-effect transition-colors ${theme === 'system' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Monitor size={20} /></button>
+          <div className="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
+            <p className="text-[var(--color-text)] font-semibold text-sm sm:text-base">Theme</p>
+            <div className="flex gap-2 sm:gap-3">
+              <button onClick={() => setTheme("light")} className={`p-2 sm:p-3 rounded-lg glass-effect transition-all duration-300 ${theme === 'light' ? 'text-primary border border-primary' : 'text-[var(--color-text)] border border-[var(--color-border)]'}`}><Sun size={18} /></button>
+              <button onClick={() => setTheme("dark")} className={`p-2 sm:p-3 rounded-lg glass-effect transition-all duration-300 ${theme === 'dark' ? 'text-primary border border-primary' : 'text-[var(--color-text)] border border-[var(--color-border)]'}`}><Moon size={18} /></button>
+              <button onClick={() => setTheme("system")} className={`p-2 sm:p-3 rounded-lg glass-effect transition-all duration-300 ${theme === 'system' ? 'text-primary border border-primary' : 'text-[var(--color-text)] border border-[var(--color-border)]'}`}><Monitor size={18} /></button>
             </div>
           </div>
 
           {user ? (
-            <div className="flex flex-col gap-4 border-t border-[var(--color-glass-border)] pt-6 mt-2">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-full glass-effect flex items-center justify-center text-xl font-bold uppercase text-[var(--color-text)] shrink-0 border border-[var(--color-glass-border)]">
+            <div className="flex flex-col gap-3 sm:gap-4 border-t border-[var(--color-glass-border)] pt-4 sm:pt-6 mt-2">
+              <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full glass-effect flex items-center justify-center text-base sm:text-lg font-bold uppercase text-[var(--color-text)] shrink-0 border border-[var(--color-glass-border)]">
                   {user.name ? user.name[0] : "U"}
                 </div>
-                <div className="overflow-hidden">
-                  <p className="font-semibold text-[var(--color-text)] truncate">{user.name}</p>
-                  <p className="text-sm text-[var(--color-text-muted)] truncate">{user.email}</p>
+                <div className="overflow-hidden min-w-0">
+                  <p className="font-semibold text-[var(--color-text)] truncate text-sm sm:text-base">{user.name}</p>
+                  <p className="text-xs sm:text-sm text-[var(--color-text-muted)] truncate">{user.email}</p>
                 </div>
               </div>
-              <button onClick={() => { setIsMobileMenuOpen(false); handleLogout(); }} className="btn-outline w-full !text-red-500 !border-red-500/30 hover:!bg-red-500/10 cursor-pointer">
+              <button onClick={() => { setIsMobileMenuOpen(false); handleLogout(); }} className="btn-outline w-full !text-red-500 !border-red-500/30 hover:!bg-red-500/10 cursor-pointer mx-4 sm:mx-6">
                 Logout
               </button>
             </div>
           ) : (
-            <>
+            <div className="flex flex-col gap-3 sm:gap-4 border-t border-[var(--color-glass-border)] pt-4 sm:pt-6 mt-2 px-4 sm:px-6">
               <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="btn-primary w-full cursor-pointer">Login</button>
+                <button className="btn-primary w-full cursor-pointer text-sm sm:text-base py-2.5 sm:py-3">Login</button>
               </Link>
               <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="btn-primary w-full cursor-pointer">Get Started</button>
+                <button className="btn-primary w-full cursor-pointer text-sm sm:text-base py-2.5 sm:py-3">Get Started</button>
               </a>
-            </>
+            </div>
           )}
         </div>
       </div>
