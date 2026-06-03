@@ -1,0 +1,16 @@
+﻿{
+  "compilerOptions": {
+    "composite": true,
+    "module": "esnext",
+    "moduleResolution": "bundler",
+    "target": "esnext",
+    "lib": ["ESNext"],
+    "types": ["node"],
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["vite.config.ts", "node_modules"],
+  "references": [
+    { "path": "./tsconfig.app.json" }
+  ]
+}
