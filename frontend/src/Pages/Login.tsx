@@ -29,7 +29,10 @@ const LoginPage: React.FC = () => {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
 
-  const apiUrl = import.meta.env.VITE_API_URL || "";
+  const baseApiUrl = import.meta.env.VITE_API_URL || "";
+  const apiUrl = baseApiUrl.includes("vercel.app") && !baseApiUrl.includes("/_/backend") 
+    ? `${baseApiUrl}/_/backend` 
+    : baseApiUrl;
 
   const parseJsonResponse = async (response: Response) => {
     const contentType = response.headers.get("content-type") || "";
