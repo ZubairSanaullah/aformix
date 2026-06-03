@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import { X } from "lucide-react";
 
 type AuthMode = "login" | "signup" | "verify-otp";
 
@@ -164,8 +165,14 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center py-24 px-6">
-      <div className="max-w-md w-full glass-effect rounded-3xl p-10 shadow-2xl border border-[var(--color-glass-border)]">
+    <section className="min-h-screen flex items-center justify-center py-24 px-6 relative">
+      <div className="max-w-md w-full glass-effect rounded-3xl p-10 shadow-2xl border border-[var(--color-glass-border)] relative">
+        <button
+          onClick={() => navigate("/")}
+          className="absolute top-4 right-4 p-2 text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors rounded-full hover:bg-white/5 md:hidden"
+        >
+          <X size={24} />
+        </button>
         {mode === "login" && (
           <>
             <h1 className="text-3xl font-bold mb-2 text-[var(--color-text)]">Login</h1>

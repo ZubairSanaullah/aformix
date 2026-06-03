@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Routes, Route } from "react-router";
+import { Routes, Route, useLocation } from "react-router";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -66,11 +66,16 @@ const App: React.FC = () => {
 
   useReveal();
 
+  const location = useLocation();
+  const isLoginPage = location.pathname === "/login";
+
   return (
     <>
       {loading && <LoadingSpinner />}
       <div className={`transition-opacity duration-1000 ${loading ? "opacity-0" : "opacity-100"} relative w-full`}>
-        <Navbar />
+        <div className={isLoginPage ? "hidden md:block" : ""}>
+          <Navbar />
+        </div>
         <main className="relative w-full">
           <Routes>
             <Route path="/" element={<HomeContent />} />
@@ -80,7 +85,9 @@ const App: React.FC = () => {
             <Route path="/login" element={<LoginPage />} />
           </Routes>
         </main>
-        <Footer />
+        <div className={isLoginPage ? "hidden md:block" : ""}>
+          <Footer />
+        </div>
         <CookieConsent />
         <WhatsAppBtn />
         <button
