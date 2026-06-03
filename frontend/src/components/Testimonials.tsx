@@ -14,7 +14,7 @@ const Testimonials: React.FC = () => {
 
         <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
           {testimonials.slice(0, 3).map((t) => (
-            <div key={t.id} className="card-premium bg-slate-950/80 border border-white/10 shadow-2xl shadow-black/20 p-8 rounded-[2rem] flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1">
+            <div key={t.id} className="card-premium border border-[var(--color-glass-border)] shadow-2xl p-8 rounded-[2rem] flex flex-col justify-between transition-transform duration-300 hover:-translate-y-1">
               <div>
                 <div className="flex gap-1 text-secondary mb-6">
                   {[1,2,3,4,5].map((i) => (
@@ -22,13 +22,13 @@ const Testimonials: React.FC = () => {
                   ))}
                 </div>
                 <Quote className="text-primary opacity-15 mb-6" size={52} />
-                <p className="text-xl md:text-2xl font-semibold text-white leading-relaxed mb-10 italic">
+                <p className="text-xl md:text-2xl font-semibold text-[var(--color-text)] leading-relaxed mb-10 italic">
                   "{t.content}"
                 </p>
               </div>
               <div className="mt-4">
-                <p className="text-base text-slate-300 mb-2">— {t.name}</p>
-                <p className="text-sm text-slate-500">{t.role}</p>
+                <p className="text-base text-[var(--color-text)] mb-2">— {t.name}</p>
+                <p className="text-sm text-[var(--color-text-muted)]">{t.role}</p>
               </div>
             </div>
           ))}

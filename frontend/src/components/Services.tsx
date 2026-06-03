@@ -71,7 +71,7 @@ const Services: React.FC = () => {
         <div className="mb-12 flex flex-col gap-6 lg:gap-0 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <h2 className="heading-2">World-Class Solutions</h2>
-            <p className="text-slate-400 max-w-2xl text-lg">
+            <p className="text-[var(--color-text-muted)] max-w-2xl text-lg">
               From custom architectures to enterprise-scale systems, we deliver technology that empowers your business to scale effortlessly.
             </p>
           </div>

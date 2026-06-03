@@ -49,7 +49,7 @@ const Pricing: React.FC = () => {
         <div className="mb-12 text-center">
           <p className="text-sm uppercase tracking-[0.35em] text-primary">Pricing plans</p>
           <h2 className="heading-2">Flexible packages for every stage</h2>
-          <p className="max-w-2xl mx-auto text-slate-400 text-lg">
+          <p className="max-w-2xl mx-auto text-[var(--color-text-muted)] text-lg">
             Choose the right plan for your business and get the support you need to build, launch, and scale with confidence.
           </p>
         </div>
@@ -64,14 +64,14 @@ const Pricing: React.FC = () => {
                 {plan.title}
               </span>
               <div className="mt-8">
-                <p className="text-5xl font-black tracking-tight">{plan.price}</p>
-                <p className="mt-4 text-slate-400 leading-relaxed">{plan.description}</p>
+                <p className="text-5xl font-black tracking-tight text-[var(--color-text)]">{plan.price}</p>
+                <p className="mt-4 text-[var(--color-text-muted)] leading-relaxed">{plan.description}</p>
               </div>
 
               <ul className="mt-8 space-y-4">
                 {plan.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-3 text-slate-300">
-                    <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary" />
+                  <li key={feature} className="flex items-start gap-3 text-[var(--color-text)]">
+                    <span className="mt-1 h-2.5 w-2.5 rounded-full bg-primary shrink-0" />
                     <span>{feature}</span>
                   </li>
                 ))}

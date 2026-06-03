@@ -18,6 +18,7 @@ import TermsOfService from "./Pages/TermsOfService";
 import LoginPage from "./Pages/Login";
 import { ArrowUp } from "lucide-react";
 import useReveal from "./hooks/useReveal";
+import Contact from "./components/Contact";
 
 const HomeContent: React.FC = () => (
   <>
@@ -30,6 +31,7 @@ const HomeContent: React.FC = () => (
     <Testimonials />
     <Pricing />
     <FAQ />
+    <Contact />
   </>
 );
 
@@ -71,6 +73,7 @@ const App: React.FC = () => {
         <main className="relative w-full">
           <Routes>
             <Route path="/" element={<HomeContent />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/login" element={<LoginPage />} />

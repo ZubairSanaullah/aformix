@@ -84,8 +84,8 @@ const About: React.FC = () => {
   ];
 
   return (
-    <section id="about" ref={sectionRef} className="reveal section-padding relative overflow-hidden w-full bg-slate-950/50">
-      <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-slate-950 to-transparent pointer-events-none"></div>
+    <section id="about" ref={sectionRef} className="reveal section-padding relative overflow-hidden w-full">
+      <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[var(--color-bg)] to-transparent pointer-events-none"></div>
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative">
         <div className="mb-16 text-center about-animate">
           <span className="text-primary font-black tracking-[0.35em] uppercase">Why Aformix</span>
@@ -97,23 +97,23 @@ const About: React.FC = () => {
 
         <div className="grid gap-14 xl:grid-cols-[1.05fr_0.95fr] items-start">
           <div className="space-y-8 about-animate">
-            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border border-white/10 bg-slate-950/50">
+            <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border border-[var(--color-glass-border)] glass-effect">
               <div className="relative overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop"
                   alt="Design and development teamwork"
                   className="w-full aspect-[4/5] object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)]/90 via-transparent to-transparent"></div>
               </div>
 
-              <div className="absolute left-8 right-8 bottom-8 rounded-[2.5rem] border border-white/10 bg-slate-950/90 p-8 backdrop-blur-xl shadow-2xl">
+              <div className="absolute left-8 right-8 bottom-8 rounded-[2.5rem] border border-[var(--color-glass-border)] glass-effect p-8 shadow-2xl">
                 <div className="inline-flex items-center gap-3 rounded-full bg-white/5 px-4 py-2 text-sm text-slate-200 font-semibold mb-4">
                   {/* <Sparkles size={18} className="text-primary" /> */}
                   End-to-end strategy + delivery
                 </div>
-                <h3 className="text-3xl font-black text-white mb-4">Crafting distinctive digital products that scale.</h3>
-                <p className="text-slate-400 leading-relaxed">
+                <h3 className="text-3xl font-black text-[var(--color-text)] mb-4">Crafting distinctive digital products that scale.</h3>
+                <p className="text-[var(--color-text-muted)] leading-relaxed">
                   We turn complex challenges into refined digital experiences with polished UI, secure backend systems, and measurable growth playbooks.
                 </p>
               </div>
@@ -125,8 +125,8 @@ const About: React.FC = () => {
                   <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-4">
                     <item.icon size={24} />
                   </div>
-                  <h4 className="text-xl font-semibold text-white mb-2">{item.title}</h4>
-                  <p className="text-slate-400 leading-relaxed">{item.description}</p>
+                  <h4 className="text-xl font-semibold text-[var(--color-text)] mb-2">{item.title}</h4>
+                  <p className="text-[var(--color-text-muted)] leading-relaxed">{item.description}</p>
                 </div>
               ))}
             </div>
@@ -135,10 +135,10 @@ const About: React.FC = () => {
           <div className="space-y-8 about-animate">
             <div className="rounded-[3rem] border border-white/10 bg-slate-950/80 p-10 shadow-2xl glass-effect">
               <span className="text-primary uppercase tracking-[0.35em] font-black text-sm">Our mission</span>
-              <h3 className="mt-6 text-4xl font-black text-white leading-tight">
+              <h3 className="mt-6 text-4xl font-black text-[var(--color-text)] leading-tight">
                 Launch premium experiences that feel effortless and perform flawlessly.
               </h3>
-              <p className="mt-6 text-slate-400 text-lg leading-relaxed">
+              <p className="mt-6 text-[var(--color-text-muted)] text-lg leading-relaxed">
                 We partner with ambitious founders and product teams to design, build, and evolve web platforms that give your business a decisive advantage.
               </p>
             </div>
@@ -147,22 +147,22 @@ const About: React.FC = () => {
               <div className="flex items-start gap-4">
                 <div className="min-w-[3rem] h-12 rounded-2xl bg-primary/10 text-primary grid place-items-center font-bold">1</div>
                 <div>
-                  <h4 className="text-xl font-semibold text-white">Design with clarity</h4>
-                  <p className="text-slate-400 leading-relaxed">Research-led interfaces that make complex products feel intuitive.</p>
+                  <h4 className="text-xl font-semibold text-[var(--color-text)]">Design with clarity</h4>
+                  <p className="text-[var(--color-text-muted)] leading-relaxed">Research-led interfaces that make complex products feel intuitive.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="min-w-[3rem] h-12 rounded-2xl bg-primary/10 text-primary grid place-items-center font-bold">2</div>
                 <div>
-                  <h4 className="text-xl font-semibold text-white">Develop with precision</h4>
-                  <p className="text-slate-400 leading-relaxed">Robust, scalable architecture built for performance and stability.</p>
+                  <h4 className="text-xl font-semibold text-[var(--color-text)]">Develop with precision</h4>
+                  <p className="text-[var(--color-text-muted)] leading-relaxed">Robust, scalable architecture built for performance and stability.</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <div className="min-w-[3rem] h-12 rounded-2xl bg-primary/10 text-primary grid place-items-center font-bold">3</div>
                 <div>
-                  <h4 className="text-xl font-semibold text-white">Grow with confidence</h4>
-                  <p className="text-slate-400 leading-relaxed">Continuous improvement and strategic support beyond launch.</p>
+                  <h4 className="text-xl font-semibold text-[var(--color-text)]">Grow with confidence</h4>
+                  <p className="text-[var(--color-text-muted)] leading-relaxed">Continuous improvement and strategic support beyond launch.</p>
                 </div>
               </div>
             </div>
@@ -173,7 +173,7 @@ const About: React.FC = () => {
           {stats.map((item, index) => (
             <div key={index} className="glass-effect rounded-[2rem] border border-white/10 p-8 text-center shadow-2xl">
               <p className="stat-number text-4xl font-black text-primary mb-3">0</p>
-              <p className="text-white leading-relaxed">{item.label}</p>
+              <p className="text-[var(--color-text)] leading-relaxed">{item.label}</p>
             </div>
           ))}
         </div>

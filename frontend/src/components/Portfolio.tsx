@@ -9,12 +9,12 @@ const Portfolio: React.FC = () => {
 
   return (
     <section id="works" className="reveal section-padding relative w-full overflow-hidden">
-      <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-slate-950/80 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 top-0 h-72 bg-gradient-to-b from-[var(--color-bg)]/80 to-transparent pointer-events-none" />
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative">
         <div className="flex flex-col items-center mb-20 text-center">
           <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Our Portfolio</span>
           <h2 className="heading-2 mb-6">Recent Work That Drives Results</h2>
-          <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+          <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
             Explore a curated selection of projects built for growth, engagement, and polished digital experiences.
           </p>
         </div>
@@ -26,7 +26,7 @@ const Portfolio: React.FC = () => {
             return (
               <article
                 key={project.id}
-                className={`group relative overflow-hidden rounded-[2.5rem] border border-white/10 bg-slate-950/90 shadow-2xl shadow-slate-950/40 transition-all duration-500 ${
+                className={`group relative overflow-hidden rounded-[2.5rem] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl transition-all duration-500 hover:-translate-y-2 ${
                   isFeatured ? "md:col-span-2 md:row-span-2 min-h-[560px]" : "min-h-[420px]"
                 }`}
               >
@@ -35,15 +35,15 @@ const Portfolio: React.FC = () => {
                   alt={project.title}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/40 to-transparent" />
+                <div className="absolute inset-0 portfolio-gradient" />
                 <div className="absolute inset-x-0 bottom-0 z-20 p-8 flex h-full flex-col justify-end">
-                  <div className="mb-4 inline-flex items-center rounded-full border border-white/10 bg-slate-950/70 px-4 py-2 text-[0.65rem] uppercase tracking-[0.35em] text-slate-200 shadow-lg shadow-slate-950/20">
+                  <div className="mb-4 inline-flex items-center rounded-full border border-[var(--color-border)] glass-effect px-4 py-2 text-[0.65rem] uppercase tracking-[0.35em] text-[var(--color-text)] shadow-sm">
                     {project.category}
                   </div>
                   {isFeatured && (
                     <span className="mb-3 inline-flex text-xs uppercase tracking-[0.4em] text-primary">Featured project</span>
                   )}
-                  <h3 className={`font-black text-white leading-tight ${isFeatured ? "text-4xl md:text-[3rem]" : "text-3xl"}`}>
+                  <h3 className={`font-black text-[var(--color-text)] leading-tight ${isFeatured ? "text-4xl md:text-[3rem]" : "text-3xl"}`}>
                     {project.title}
                   </h3>
                   <div className="mt-8 flex items-center justify-between gap-4">
@@ -51,12 +51,12 @@ const Portfolio: React.FC = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-3 rounded-full bg-white/10 px-5 py-3 text-sm font-semibold text-white transition hover:bg-primary hover:text-white"
+                      className="inline-flex items-center gap-3 rounded-full border border-[var(--color-border)] glass-effect px-5 py-3 text-sm font-semibold text-[var(--color-text)] transition hover:bg-primary hover:text-white hover:border-primary"
                     >
                       View project
                       <ArrowUpRight size={18} />
                     </a>
-                    <span className="text-slate-400 text-sm">
+                    <span className="text-[var(--color-text-muted)] text-sm">
                       {isFeatured ? "Top case study" : "Project preview"}
                     </span>
                   </div>
@@ -67,7 +67,7 @@ const Portfolio: React.FC = () => {
         </div>
 
         <div className="mt-12 flex flex-col items-center gap-4">
-          <p className="text-slate-400 text-center">Showing {visibleProjects.length} of {projects.length} projects.</p>
+          <p className="text-[var(--color-text-muted)] text-center">Showing {visibleProjects.length} of {projects.length} projects.</p>
           <button
             type="button"
             className="btn-primary"

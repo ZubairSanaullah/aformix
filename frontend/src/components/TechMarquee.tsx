@@ -42,7 +42,7 @@ const TechMarquee: React.FC = () => {
                 <img
                   src={`https://cdn.simpleicons.org/${logoSlug}/white`}
                   alt={`${tech} logo`}
-                  className="h-12 w-12 md:h-14 md:w-14 object-contain group-hover:scale-110 transition-all duration-500"
+                  className="h-12 w-12 md:h-14 md:w-14 object-contain group-hover:scale-110 transition-all duration-500 light-mode-invert"
                 />
               ) : (
                 <span className="text-2xl md:text-4xl font-black text-[var(--color-text-muted)] group-hover:text-[var(--color-text)] transition-colors">{tech}</span>

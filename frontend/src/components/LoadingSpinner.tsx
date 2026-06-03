@@ -24,8 +24,7 @@ const LoadingSpinner: React.FC = () => {
   return (
     <div
       ref={containerRef}
-      className="fixed inset-0 z-[9999] flex items-center justify-center"
-      style={{ background: "linear-gradient(135deg, #0a0a1a 0%, #0f172a 50%, #0a0a1a 100%)" }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-[var(--color-bg)]"
     >
       <div className="flex flex-col items-center gap-8">
         <div
@@ -33,14 +32,14 @@ const LoadingSpinner: React.FC = () => {
           className="flex flex-col items-center gap-3"
         >
           <img src="/src/assets/logo.png" alt="Aformix" className="w-14 h-14 object-contain" />
-          <span className="text-3xl font-black tracking-wider text-white">
+          <span className="text-3xl font-black tracking-wider text-[var(--color-text)]">
             AFORMIX
           </span>
         </div>
-        <div className="w-48 h-1 bg-white/10 rounded-full overflow-hidden">
+        <div className="w-48 h-1 bg-[var(--color-border)] rounded-full overflow-hidden">
           <div className="h-full rounded-full animate-progress" style={{ background: "linear-gradient(90deg, var(--color-primary), var(--color-secondary))" }}></div>
         </div>
-        <p className="text-sm text-white/40 tracking-widest uppercase">Loading</p>
+        <p className="text-sm text-[var(--color-text-muted)] tracking-widest uppercase">Loading</p>
       </div>
       <style>{`
         @keyframes progress {
