@@ -6,8 +6,10 @@ export default defineConfig({
   resolve: {
     alias: {
       'rolldown/parseAst': 'rolldown/dist/parse-ast-index.mjs',
+      'react-router-dom': 'react-router-dom/dist/index.mjs',
     },
   },
+  // let Vite handle dependency optimization automatically
   server: {
     proxy: {
       "/api": {

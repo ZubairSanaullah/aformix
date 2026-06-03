@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 type AuthMode = "login" | "signup" | "verify-otp";
 
@@ -52,6 +52,10 @@ const LoginPage: React.FC = () => {
       }
 
       setMessage(data.message || "Login successful. Redirecting...");
+      if (data.user) {
+        localStorage.setItem("user", JSON.stringify(data.user));
+        window.dispatchEvent(new Event("authStateChange"));
+      }
       setTimeout(() => navigate("/"), 1500);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed. Please try again.");

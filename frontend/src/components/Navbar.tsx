@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { navLinks } from "../constants";
 import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Briefcase, Activity, Users, ChevronDown, Code, Smartphone } from "lucide-react";
 import logoImg from "../assets/logo.png";
@@ -13,7 +13,43 @@ const Navbar: React.FC = () => {
   const [hoverStyle, setHoverStyle] = useState({ left: 0, width: 0, opacity: 0 });
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [theme, setTheme] = useState<Theme>("system");
+  const [user, setUser] = useState<any>(null);
   const lastScrollY = useRef(0);
+  const navigate = useNavigate();
+
+  const checkAuth = () => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (e) {
+        setUser(null);
+      }
+    } else {
+      setUser(null);
+    }
+  };
+
+  useEffect(() => {
+    checkAuth();
+    window.addEventListener("authStateChange", checkAuth);
+    return () => window.removeEventListener("authStateChange", checkAuth);
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await fetch(`${import.meta.env.VITE_API_URL || ""}/api/auth/logout`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+    localStorage.removeItem("user");
+    setUser(null);
+    window.dispatchEvent(new Event("authStateChange"));
+    navigate("/login");
+  };
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as Theme | null;
@@ -231,16 +267,35 @@ const Navbar: React.FC = () => {
               </div>
             </div>
 
-            <Link to="/login">
-              <button className="btn-outline flex items-center gap-2 !py-2.5 !px-6 text-sm cursor-pointer">
-                Login
-              </button>
-            </Link>
-            <a href="#contact">
-              <button className="btn-primary flex items-center gap-2 !py-2.5 !px-6 text-sm cursor-pointer">
-                Get Started <ArrowRight size={16} />
-              </button>
-            </a>
+            {user ? (
+              <div className="relative group/profile">
+                <button className="w-10 h-10 rounded-full glass-effect flex items-center justify-center text-[var(--color-text)] font-bold uppercase hover:ring-2 hover:ring-primary transition-all cursor-pointer">
+                  {user.name ? user.name[0] : "U"}
+                </button>
+                <div className="absolute right-0 top-full mt-2 w-48 py-2 rounded-xl glass-effect opacity-0 invisible group-hover/profile:opacity-100 group-hover/profile:visible transition-all duration-300 flex flex-col z-50 overflow-hidden">
+                  <div className="px-4 py-3 border-b border-[var(--color-glass-border)] mb-1">
+                    <p className="text-sm font-semibold text-[var(--color-text)] truncate">{user.name}</p>
+                    <p className="text-xs text-[var(--color-text-muted)] truncate mt-0.5">{user.email}</p>
+                  </div>
+                  <button onClick={handleLogout} className="px-4 py-2 text-left text-sm text-red-500 hover:bg-[var(--color-glass)] transition-colors cursor-pointer font-medium">
+                    Logout
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <>
+                <Link to="/login">
+                  <button className="btn-outline flex items-center gap-2 !py-2.5 !px-6 text-sm cursor-pointer">
+                    Login
+                  </button>
+                </Link>
+                <a href="#contact">
+                  <button className="btn-primary flex items-center gap-2 !py-2.5 !px-6 text-sm cursor-pointer">
+                    Get Started <ArrowRight size={16} />
+                  </button>
+                </a>
+              </>
+            )}
           </div>
 
           {/* Mobile Toggle */}
@@ -281,12 +336,31 @@ const Navbar: React.FC = () => {
             </div>
           </div>
 
-          <Link to="/login">
-            <button className="btn-primary w-full">Login</button>
-          </Link>
-          <a href="#contact">
-            <button className="btn-primary w-full">Get Started</button>
-          </a>
+          {user ? (
+            <div className="flex flex-col gap-4 border-t border-[var(--color-glass-border)] pt-6 mt-2">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full glass-effect flex items-center justify-center text-xl font-bold uppercase text-[var(--color-text)] shrink-0 border border-[var(--color-glass-border)]">
+                  {user.name ? user.name[0] : "U"}
+                </div>
+                <div className="overflow-hidden">
+                  <p className="font-semibold text-[var(--color-text)] truncate">{user.name}</p>
+                  <p className="text-sm text-[var(--color-text-muted)] truncate">{user.email}</p>
+                </div>
+              </div>
+              <button onClick={() => { setIsMobileMenuOpen(false); handleLogout(); }} className="btn-outline w-full !text-red-500 !border-red-500/30 hover:!bg-red-500/10 cursor-pointer">
+                Logout
+              </button>
+            </div>
+          ) : (
+            <>
+              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
+                <button className="btn-primary w-full cursor-pointer">Login</button>
+              </Link>
+              <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
+                <button className="btn-primary w-full cursor-pointer">Get Started</button>
+              </a>
+            </>
+          )}
         </div>
       </div>
     </nav>

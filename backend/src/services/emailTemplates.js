@@ -61,35 +61,52 @@ export const welcomeTemplate = (name) => {
             <tr>
               <td style="padding:36px;background:linear-gradient(135deg, #10b981, #2563eb);color:#fff;text-align:center;">
                 <h1 style="margin:0;font-size:30px;">Welcome to Aformix 🚀</h1>
-                <p style="margin:12px 0 0;font-size:17px;opacity:0.92;">Your account is now active and ready to build modern digital experiences.</p>
+                <p style="margin:12px 0 0;font-size:17px;opacity:0.92;">Building Digital Experiences That Drive Results.</p>
               </td>
             </tr>
             <tr>
               <td style="padding:32px;">
                 <p style="margin:0 0 18px;font-size:16px;line-height:1.75;">Hello ${name},</p>
                 <p style="margin:0 0 18px;font-size:16px;line-height:1.75;">Welcome to Aformix.</p>
-                <p style="margin:0 0 18px;font-size:16px;line-height:1.75;">We’re excited to have you onboard. Your account is now active and ready to help you build modern digital experiences with powerful web solutions.</p>
-                <p style="margin:0 0 24px;font-size:16px;line-height:1.75;">Thank you for trusting Aformix.</p>
-                <div style="background:#111827;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:24px;">
-                  <h2 style="margin:0 0 10px;font-size:18px;color:#f8fafc;">What’s next?</h2>
-                  <ul style="margin:0;padding:0 0 0 20px;color:#cbd5e1;font-size:15px;line-height:1.8;">
-                    <li>Explore the Aformix dashboard</li>
-                    <li>Secure your app with industry-grade auth</li>
-                    <li>Build fast, responsive interfaces</li>
-                  </ul>
+                <p style="margin:0 0 18px;font-size:16px;line-height:1.75;">We're excited to have you join a growing community of businesses, entrepreneurs, and innovators who believe great digital experiences create real business growth.</p>
+                <p style="margin:0 0 18px;font-size:16px;line-height:1.75;">At Aformix, we don't just build websites—we create fast, scalable, and conversion-focused digital solutions designed to help brands stand out in an increasingly competitive online world.</p>
+                <p style="margin:0 0 24px;font-size:16px;line-height:1.75;">Your account is now successfully activated, and you're ready to explore everything we have to offer.</p>
+                
+                <div style="background:#111827;border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:24px;margin-bottom:24px;">
+                  <h2 style="margin:0 0 14px;font-size:18px;color:#f8fafc;">What You Can Expect</h2>
+                  <p style="margin:0 0 8px;color:#cbd5e1;font-size:15px;line-height:1.6;">✓ Modern and high-performance web solutions</p>
+                  <p style="margin:0 0 8px;color:#cbd5e1;font-size:15px;line-height:1.6;">✓ Secure and scalable development practices</p>
+                  <p style="margin:0 0 8px;color:#cbd5e1;font-size:15px;line-height:1.6;">✓ Professional support whenever you need assistance</p>
+                  <p style="margin:0;color:#cbd5e1;font-size:15px;line-height:1.6;">✓ Continuous innovation and digital growth opportunities</p>
                 </div>
+                
+                <p style="margin:0 0 24px;font-size:16px;line-height:1.75;">Whether you're launching a new idea, upgrading your online presence, or scaling an existing business, we're here to help transform your vision into reality.</p>
+
+                <h3 style="margin:0 0 12px;font-size:18px;color:#f8fafc;">Stay Connected</h3>
+                <p style="margin:0 0 8px;font-size:15px;color:#cbd5e1;">Website: <a href="https://aformix.com" style="color:#60a5fa;text-decoration:none;">https://aformix.com</a></p>
+                <p style="margin:0 0 8px;font-size:15px;color:#cbd5e1;">WhatsApp: +92 XXX XXXXXXX</p>
+                <p style="margin:0 0 16px;font-size:15px;color:#cbd5e1;">Email: <a href="mailto:hello@aformix.com" style="color:#60a5fa;text-decoration:none;">hello@aformix.com</a></p>
+                
+                <p style="margin:0 0 8px;font-size:15px;color:#cbd5e1;">Instagram: <a href="https://instagram.com/aformix" style="color:#60a5fa;text-decoration:none;">@aformix</a></p>
+                <p style="margin:0 0 8px;font-size:15px;color:#cbd5e1;">LinkedIn: <a href="https://linkedin.com/company/aformix" style="color:#60a5fa;text-decoration:none;">Aformix</a></p>
+                <p style="margin:0 0 8px;font-size:15px;color:#cbd5e1;">Facebook: <a href="https://facebook.com/aformix" style="color:#60a5fa;text-decoration:none;">Aformix</a></p>
+                <p style="margin:0 0 24px;font-size:15px;color:#cbd5e1;">X (Twitter): <a href="https://x.com/aformix" style="color:#60a5fa;text-decoration:none;">@aformix</a></p>
+
+                <h3 style="margin:0 0 12px;font-size:18px;color:#f8fafc;">Need Assistance?</h3>
+                <p style="margin:0 0 12px;font-size:16px;line-height:1.75;">Our team is always available to answer questions, discuss projects, or help you get the most out of your experience with Aformix.</p>
+                <p style="margin:0 0 24px;font-size:16px;line-height:1.75;">Simply reply to this email or reach out through WhatsApp for direct support.</p>
+
+                <p style="margin:0 0 12px;font-size:16px;line-height:1.75;">Thank you for choosing Aformix.</p>
+                <p style="margin:0 0 24px;font-size:16px;line-height:1.75;">We're looking forward to building something exceptional together.</p>
+
+                <p style="margin:0 0 8px;font-size:16px;line-height:1.75;">Warm regards,</p>
+                <p style="margin:0;font-size:16px;line-height:1.75;font-weight:600;">The Aformix Team</p>
               </td>
             </tr>
             <tr>
-              <td style="padding:24px 32px 32px;color:#94a3b8;font-size:14px;line-height:1.8;">
-                <p style="margin:0 0 8px;">Aformix</p>
-                <p style="margin:0 0 16px;">Modern digital experiences built with secure, scalable engineering.</p>
-                <p style="margin:0;font-size:12px;opacity:0.75;">Security notice: If you did not sign in to Aformix, please contact support immediately.</p>
-                <div style="margin-top:18px;display:flex;gap:12px;justify-content:center;">
-                  <span style="display:inline-block;width:38px;height:38px;background:#111827;border-radius:12px;line-height:38px;text-align:center;color:#f8fafc;font-size:14px;">FB</span>
-                  <span style="display:inline-block;width:38px;height:38px;background:#111827;border-radius:12px;line-height:38px;text-align:center;color:#f8fafc;font-size:14px;">TW</span>
-                  <span style="display:inline-block;width:38px;height:38px;background:#111827;border-radius:12px;line-height:38px;text-align:center;color:#f8fafc;font-size:14px;">LN</span>
-                </div>
+              <td style="padding:24px 32px 32px;color:#94a3b8;font-size:14px;line-height:1.8;border-top:1px solid rgba(255,255,255,0.05);text-align:center;">
+                <p style="margin:0;">Building Digital Experiences That Drive Results.</p>
+                <p style="margin:4px 0 0;font-size:12px;opacity:0.75;">© Aformix. All rights reserved.</p>
               </td>
             </tr>
           </table>

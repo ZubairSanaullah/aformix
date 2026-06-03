@@ -56,10 +56,13 @@ export const register = async (req, res, next) => {
     });
 
     const html = otpVerificationTemplate(user.name, otp);
+    const text = `Welcome to Aformix, ${user.name}.\n\nYour secure OTP is: ${otp}\n\nThis code expires in 10 minutes. If you did not request this, please ignore this email.`;
+
     await transporter.sendMail({
-      from: process.env.MAIL_USER,
+      from: `"Aformix Support" <${process.env.MAIL_USER}>`,
       to: user.email,
       subject: "Verify Your Aformix Account",
+      text,
       html,
     });
 
@@ -146,10 +149,53 @@ export const login = async (req, res, next) => {
     await publishLoginEvent(user);
 
     const html = welcomeTemplate(user.name);
+    const text = `Hello ${user.name},
+
+Welcome to Aformix.
+
+We're excited to have you join a growing community of businesses, entrepreneurs, and innovators who believe great digital experiences create real business growth.
+
+At Aformix, we don't just build websites—we create fast, scalable, and conversion-focused digital solutions designed to help brands stand out in an increasingly competitive online world.
+
+Your account is now successfully activated, and you're ready to explore everything we have to offer.
+
+What You Can Expect
+✓ Modern and high-performance web solutions
+✓ Secure and scalable development practices
+✓ Professional support whenever you need assistance
+✓ Continuous innovation and digital growth opportunities
+
+Whether you're launching a new idea, upgrading your online presence, or scaling an existing business, we're here to help transform your vision into reality.
+
+Stay Connected
+Website: https://aformix.com
+WhatsApp: +92 XXX XXXXXXX
+Email: hello@aformix.com
+
+Instagram: https://instagram.com/aformix
+LinkedIn: https://linkedin.com/company/aformix
+Facebook: https://facebook.com/aformix
+X (Twitter): https://x.com/aformix
+
+Need Assistance?
+Our team is always available to answer questions, discuss projects, or help you get the most out of your experience with Aformix.
+Simply reply to this email or reach out through WhatsApp for direct support.
+
+Thank you for choosing Aformix.
+
+We're looking forward to building something exceptional together.
+
+Warm regards,
+The Aformix Team
+
+Building Digital Experiences That Drive Results.
+© Aformix. All rights reserved.`;
+
     await transporter.sendMail({
-      from: process.env.MAIL_USER,
+      from: `"Aformix Team" <${process.env.MAIL_USER}>`,
       to: user.email,
       subject: "Welcome to Aformix 🚀",
+      text,
       html,
     });
 
