@@ -10,6 +10,10 @@ export default async function handler(req, res) {
       isDbConnected = true;
     } catch (error) {
       console.error("Database connection failed", error);
+      return res.status(500).json({ 
+        message: "Database connection failed: " + error.message,
+        hint: "Make sure MONGODB_URI is set in Vercel Environment Variables"
+      });
     }
   }
   
