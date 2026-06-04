@@ -26,7 +26,7 @@ const Portfolio: React.FC = () => {
             return (
               <article
                 key={project.id}
-                className={`group relative overflow-hidden rounded-[2.5rem] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl transition-all duration-500 hover:-translate-y-2 ${
+                className={`portfolio-card group ${
                   isFeatured ? "md:col-span-2 md:row-span-2 min-h-[560px]" : "min-h-[420px]"
                 }`}
                 onMouseEnter={(e) => {
@@ -45,19 +45,19 @@ const Portfolio: React.FC = () => {
                       muted
                       loop
                       playsInline
-                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                      className="absolute inset-0 h-full w-full object-contain transition-transform duration-1000 group-hover:scale-110"
                     />
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="absolute inset-0 h-full w-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:opacity-0"
+                      className="absolute inset-0 h-full w-full object-contain transition-all duration-1000 group-hover:scale-110 group-hover:opacity-0"
                     />
                   </>
                 ) : (
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    className="absolute inset-0 h-full w-full object-contain transition-transform duration-1000 group-hover:scale-110"
                   />
                 )}
                 <div className="absolute inset-0 portfolio-gradient" />

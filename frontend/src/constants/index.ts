@@ -69,77 +69,87 @@ export const projects = [
     title: "Signalist",
     category: "SaaS",
     image: "/src/assets/img/1.JPG",
-    video: "https://www.w3schools.com/html/mov_bbb.mp4",
+    video: "/src/assets/vid/1.mp4",
     link: "https://signalist-stock-tracker-app-seven-psi.vercel.app/"
   },
   {
     id: 2,
     title: "MediCare",
     category: "Hospital",
-    image: "https://images.unsplash.com/photo-1550565118-3a14e8d0386f?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/2.JPG",
+    video: "/src/assets/vid/2.mp4",
     link: "https://nexacare-lyart.vercel.app/"
   },
   {
     id: 3,
     title: "Eventora",
     category: "Events",
-    image: "https://images.unsplash.com/photo-1576091160550-2173bdd99611?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/3.JPG",
+    video: "/src/assets/vid/3.mp4",
     link: "https://eventora-nbip.vercel.app/"
   },
   {
     id: 4,
     title: "MacFolio",
     category: "Portfolio",
-    image: "https://images.unsplash.com/photo-1545235617-9465d2a55698?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/4.JPG",
+    video: "/src/assets/vid/4.mp4",
     link: "https://macfolio-eight.vercel.app/"
   },
   {
     id: 5,
     title: "Zorvex Ops",
     category: "SaaS",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/5.JPG",
+    video: "/src/assets/vid/5.mp4",
     link: "https://www.zorvexops.com/"
   },
   {
     id: 6,
     title: "Brainwave",
     category: "Education",
-    image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/6.JPG",
+    video: "/src/assets/vid/6.mp4",
     link: "https://zubairsanaullah.github.io/brainwave/"
   },
   {
     id: 7,
     title: "Awward",
     category: "Gaming",
-    image: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/7.JPG",
+    video: "/src/assets/vid/7.mp4",
     link: "https://zubairsanaullah.github.io/awward/"
   },
   {
     id: 8,
     title: "Velvet Cocktails",
     category: "Drinks",
-    image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/8.JPG",
+    video: "/src/assets/vid/8.mp4",
     link: "https://zubairsanaullah.github.io/cocktail/"
   },
   {
     id: 9,
     title: "DevEvent",
     category: "Event Management",
-    image: "https://images.unsplash.com/photo-1515162305289-67c1fa3274ca?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/9.JPG",
+    video: "/src/assets/vid/9.mp4",
     link: "https://devevent-chi.vercel.app/"
   },
   {
     id: 10,
     title: "iPhone Landing Page",
     category: "Landing Page",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/10.JPG",
+    video: "/src/assets/vid/10.mp4",
     link: "https://iphone-site-iota.vercel.app/"
   },
   {
     id: 11,
     title: "Portfolio Website",
     category: "Portfolio",
-    image: "https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=800&auto=format&fit=crop",
+    image: "/src/assets/img/11.JPG",
+    video: "/src/assets/vid/11.mp4",
     link: "https://zubair-portfolio-oepf.vercel.app/"
   }
 ];
