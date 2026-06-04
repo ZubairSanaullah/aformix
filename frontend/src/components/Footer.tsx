@@ -16,6 +16,13 @@ const Footer: React.FC = () => {
   return (
     <footer className="reveal pt-20 sm:pt-24 lg:pt-32 pb-12 sm:pb-16 border-t border-[var(--color-border)] relative overflow-hidden w-full flex justify-center" style={{ backgroundColor: "var(--color-surface)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-24 w-full">
+        {/* Mobile Logo - centered on top */}
+        <div className="flex flex-col items-center mb-10 lg:hidden">
+          <img src={logoImg} alt="Aformix logo" className="w-8 mb-3 object-contain hover:scale-90 transition-all duration-300" />
+          <p className="text-base font-light text-[var(--color-text)] tracking-wide">Aformix</p>
+          <div className="w-12 h-0.5 bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent mt-4 opacity-50"></div>
+        </div>
+
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-[1.1fr_1fr_1fr_0.8fr] gap-6 sm:gap-8 lg:gap-8 mb-16 sm:mb-24">
           <div className="flex flex-col items-start text-left">
             <h4 className="text-[var(--color-text)] font-black uppercase tracking-widest text-xs mb-6 sm:mb-10">Products</h4>
@@ -71,7 +78,8 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          <div className="col-span-2 sm:col-span-1 lg:col-span-1 flex flex-col items-start lg:items-end text-left lg:text-right">
+          {/* Desktop Logo - hidden on mobile */}
+          <div className="hidden lg:flex col-span-1 flex-col items-end text-right">
             <img src={logoImg} alt="Aformix logo" className="w-6 sm:w-8 mb-6 sm:mb-10 object-contain hover:scale-90 transition-all duration-300" />
           </div>
         </div>

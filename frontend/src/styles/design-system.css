@@ -75,6 +75,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
 
   body {
@@ -83,6 +84,13 @@
     overflow-x: hidden;
     font-family: "Outfit", sans-serif;
     transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  /* Smoother anchor scrolling */
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }
 
@@ -207,6 +215,13 @@ html.light button:hover {
 .section-padding {
   padding-top: 7rem;
   padding-bottom: 7rem;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
 }
 
 /* ─── Reveal Animation ──────────────────────────────── */
@@ -489,15 +504,31 @@ html.light .input-field option {
   padding-bottom: 0.5rem;
   -webkit-overflow-scrolling: touch;
   cursor: grab;
+  scroll-snap-type: x proximity;
+}
+
+@media (max-width: 768px) {
+  .services-slider-container {
+    gap: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    scroll-snap-type: x mandatory;
+    scroll-padding: 0 1rem;
+  }
+  
+  .service-card {
+    scroll-snap-align: center;
+  }
 }
 
 .services-slider-container.dragging {
   cursor: grabbing;
   user-select: none;
+  scroll-snap-type: none;
 }
 
 .services-slider-container::-webkit-scrollbar {
-  height: 6px;
+  height: 4px;
 }
 
 .services-slider-container::-webkit-scrollbar-track {

@@ -86,8 +86,8 @@ const Navbar: React.FC = () => {
         }`}>
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 group">
-            <img src={logoImg} alt="logo" className="w-7 cursor-pointer hover:scale-95 transition-transform" />
-              <p className="text-xl text-[var(--color-text)] font-light transition-colors duration-500">Aformix</p>
+            <img src={logoImg} alt="logo" className="w-5 md:w-7 cursor-pointer hover:scale-95 transition-transform" />
+              <p className="text-base md:text-xl text-[var(--color-text)] font-light transition-colors duration-500">Aformix</p>
           </a>
 
           {/* Desktop Links */}
@@ -281,69 +281,82 @@ const Navbar: React.FC = () => {
             )}
           </div>
 
-          {/* Mobile Toggle */}
-          <div className="md:hidden">
+          {/* Mobile Controls */}
+          <div className="md:hidden flex items-center gap-2">
+            {/* Mobile Theme Toggle */}
+            <div className="relative group/theme-mobile">
+              <button className="w-10 h-10 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)] hover:text-primary transition-colors cursor-pointer">
+                {theme === "light" ? <Sun size={16} /> : theme === "dark" ? <Moon size={16} /> : <Monitor size={16} />}
+              </button>
+              <div className="absolute right-0 top-full mt-2 w-36 py-2 rounded-xl glass-effect opacity-0 invisible group-hover/theme-mobile:opacity-100 group-hover/theme-mobile:visible transition-all duration-300 flex flex-col z-50 overflow-hidden shadow-2xl">
+                <button onClick={() => setTheme("light")} className={`px-4 py-2.5 text-left text-sm hover:text-primary transition-colors flex items-center gap-2.5 ${theme === 'light' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Sun size={14} /> Light</button>
+                <button onClick={() => setTheme("dark")} className={`px-4 py-2.5 text-left text-sm hover:text-primary transition-colors flex items-center gap-2.5 ${theme === 'dark' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Moon size={14} /> Dark</button>
+                <button onClick={() => setTheme("system")} className={`px-4 py-2.5 text-left text-sm hover:text-primary transition-colors flex items-center gap-2.5 ${theme === 'system' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Monitor size={14} /> System</button>
+              </div>
+            </div>
+
+            {/* Mobile Login Button */}
+            {!user && (
+              <Link to="/login">
+                <button className="h-10 px-4 rounded-xl text-xs font-bold btn-primary cursor-pointer flex items-center gap-1.5 whitespace-nowrap">
+                  Login
+                </button>
+              </Link>
+            )}
+
+            {/* Mobile User Avatar */}
+            {user && (
+              <div className="relative group/profile-mobile">
+                <button className="w-10 h-10 rounded-full glass-effect flex items-center justify-center text-[var(--color-text)] font-bold uppercase hover:ring-2 hover:ring-primary transition-all cursor-pointer text-xs">
+                  {user.name ? user.name[0] : "U"}
+                </button>
+                <div className="absolute right-0 top-full mt-2 w-48 py-2 rounded-xl glass-effect opacity-0 invisible group-hover/profile-mobile:opacity-100 group-hover/profile-mobile:visible transition-all duration-300 flex flex-col z-50 overflow-hidden shadow-2xl">
+                  <div className="px-4 py-3 border-b border-[var(--color-glass-border)] mb-1">
+                    <p className="text-sm font-semibold text-[var(--color-text)] truncate">{user.name}</p>
+                    <p className="text-xs text-[var(--color-text-muted)] truncate mt-0.5">{user.email}</p>
+                  </div>
+                  <button onClick={handleLogout} className="px-4 py-2 text-left text-sm text-red-500 hover:bg-[var(--color-glass)] transition-colors cursor-pointer font-medium">
+                    Logout
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Hamburger Menu */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="w-12 h-12 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)]"
+              className="w-10 h-10 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)] cursor-pointer"
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div className={`md:hidden absolute top-full left-0 w-full px-6 pointer-events-auto transition-all duration-500 overflow-hidden ${isMobileMenuOpen ? "max-h-[600px] py-4 opacity-100" : "max-h-0 py-0 opacity-0 pointer-events-none"
+      <div className={`md:hidden absolute top-full left-0 w-full px-4 pointer-events-auto transition-all duration-500 ease-[cubic-bezier(0.22,0.61,0.36,1)] overflow-hidden ${isMobileMenuOpen ? "max-h-[500px] py-3 opacity-100" : "max-h-0 py-0 opacity-0 pointer-events-none"
         }`}>
-        <div className="glass-effect rounded-3xl p-6 sm:p-8 flex flex-col gap-4 sm:gap-6">
-          {navLinks.map((link) => (
+        <div className="glass-effect rounded-2xl p-5 flex flex-col gap-1 shadow-2xl border border-[var(--color-glass-border)]">
+          {navLinks.map((link, index) => (
             <a
               key={link.name}
               href={link.href}
-              className="px-4 py-3 sm:px-6 sm:py-4 text-lg sm:text-xl font-bold text-[var(--color-text)] hover:text-primary hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300"
+              className="px-4 py-3 text-sm font-semibold text-[var(--color-text)] hover:text-primary hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 flex items-center gap-3"
               onClick={() => setIsMobileMenuOpen(false)}
+              style={{ animationDelay: `${index * 50}ms` }}
             >
+              <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary)] opacity-40"></span>
               {link.name}
             </a>
           ))}
-          <div className="h-px bg-[var(--color-border)] w-full"></div>
           
-          {/* Mobile Theme Toggle */}
-          <div className="flex items-center justify-between px-4 py-3 sm:px-6 sm:py-4">
-            <p className="text-[var(--color-text)] font-semibold text-sm sm:text-base">Theme</p>
-            <div className="flex gap-2 sm:gap-3">
-              <button onClick={() => setTheme("light")} className={`p-2 sm:p-3 rounded-lg glass-effect transition-all duration-300 ${theme === 'light' ? 'text-primary border border-primary' : 'text-[var(--color-text)] border border-[var(--color-border)]'}`}><Sun size={18} /></button>
-              <button onClick={() => setTheme("dark")} className={`p-2 sm:p-3 rounded-lg glass-effect transition-all duration-300 ${theme === 'dark' ? 'text-primary border border-primary' : 'text-[var(--color-text)] border border-[var(--color-border)]'}`}><Moon size={18} /></button>
-              <button onClick={() => setTheme("system")} className={`p-2 sm:p-3 rounded-lg glass-effect transition-all duration-300 ${theme === 'system' ? 'text-primary border border-primary' : 'text-[var(--color-text)] border border-[var(--color-border)]'}`}><Monitor size={18} /></button>
-            </div>
-          </div>
+          <div className="h-px bg-[var(--color-border)] w-full my-2"></div>
 
-          {user ? (
-            <div className="flex flex-col gap-3 sm:gap-4 border-t border-[var(--color-glass-border)] pt-4 sm:pt-6 mt-2">
-              <div className="flex items-center gap-3 sm:gap-4 px-4 sm:px-6">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full glass-effect flex items-center justify-center text-base sm:text-lg font-bold uppercase text-[var(--color-text)] shrink-0 border border-[var(--color-glass-border)]">
-                  {user.name ? user.name[0] : "U"}
-                </div>
-                <div className="overflow-hidden min-w-0">
-                  <p className="font-semibold text-[var(--color-text)] truncate text-sm sm:text-base">{user.name}</p>
-                  <p className="text-xs sm:text-sm text-[var(--color-text-muted)] truncate">{user.email}</p>
-                </div>
-              </div>
-              <button onClick={() => { setIsMobileMenuOpen(false); handleLogout(); }} className="btn-outline w-full !text-red-500 !border-red-500/30 hover:!bg-red-500/10 cursor-pointer mx-4 sm:mx-6">
-                Logout
-              </button>
-            </div>
-          ) : (
-            <div className="flex flex-col gap-3 sm:gap-4 border-t border-[var(--color-glass-border)] pt-4 sm:pt-6 mt-2 px-4 sm:px-6">
-              <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="btn-primary w-full cursor-pointer text-sm sm:text-base py-2.5 sm:py-3">Login</button>
-              </Link>
-              <a href="#contact" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="btn-primary w-full cursor-pointer text-sm sm:text-base py-2.5 sm:py-3">Get Started</button>
-              </a>
-            </div>
-          )}
+          <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="block">
+            <button className="btn-primary w-full cursor-pointer text-sm py-2.5 flex items-center justify-center gap-2">
+              Get Started <ArrowRight size={14} />
+            </button>
+          </a>
         </div>
       </div>
     </nav>
