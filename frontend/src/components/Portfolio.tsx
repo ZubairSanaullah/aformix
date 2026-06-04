@@ -31,7 +31,10 @@ const Portfolio: React.FC = () => {
                 }`}
                 onMouseEnter={(e) => {
                   const video = e.currentTarget.querySelector('video');
-                  if (video) video.play();
+                  if (video) {
+                    video.playbackRate = 1.25;
+                    video.play();
+                  }
                 }}
                 onMouseLeave={(e) => {
                   const video = e.currentTarget.querySelector('video');

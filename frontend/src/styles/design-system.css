@@ -363,7 +363,7 @@ html.light .portfolio-card:hover {
 }
 
 html.light .portfolio-gradient {
-  background: linear-gradient(to top, #ffffff 10%, transparent 60%);
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.5) 25%, transparent 50%);
 }
 
 html.light .portfolio-title {
@@ -557,6 +557,10 @@ html.light .input-field option {
   cursor: grabbing;
   user-select: none;
   scroll-snap-type: none;
+}
+
+.services-slider-container.dragging .service-card {
+  pointer-events: none;
 }
 
 .services-slider-container::-webkit-scrollbar {

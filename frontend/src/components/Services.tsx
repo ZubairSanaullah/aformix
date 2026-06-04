@@ -9,41 +9,33 @@ const Services: React.FC = () => {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
-  const handleDragStart = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!sliderRef.current) return;
+  const handlePointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    // Only apply JS drag for mouse; let touch devices use native scrolling
+    if (event.pointerType !== "mouse" || !sliderRef.current) return;
     setIsDragging(true);
     setStartX(event.pageX - sliderRef.current.offsetLeft);
     setScrollLeft(sliderRef.current.scrollLeft);
+    try {
+      sliderRef.current.setPointerCapture(event.pointerId);
+    } catch (e) {}
   };
 
-  const handleDragMove = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging || !sliderRef.current) return;
+  const handlePointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse" || !isDragging || !sliderRef.current) return;
     event.preventDefault();
     const x = event.pageX - sliderRef.current.offsetLeft;
     const walk = (x - startX) * 1.5;
     sliderRef.current.scrollLeft = scrollLeft - walk;
   };
 
-  const handleDragEnd = () => {
+  const handlePointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (event.pointerType !== "mouse") return;
     setIsDragging(false);
-  };
-
-  const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!sliderRef.current) return;
-    setIsDragging(true);
-    setStartX(event.touches[0].pageX - sliderRef.current.offsetLeft);
-    setScrollLeft(sliderRef.current.scrollLeft);
-  };
-
-  const handleTouchMove = (event: React.TouchEvent<HTMLDivElement>) => {
-    if (!isDragging || !sliderRef.current) return;
-    const x = event.touches[0].pageX - sliderRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5;
-    sliderRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleTouchEnd = () => {
-    setIsDragging(false);
+    if (sliderRef.current) {
+      try {
+        sliderRef.current.releasePointerCapture(event.pointerId);
+      } catch (e) {}
+    }
   };
 
   const serviceImages: Record<number, string> = {
@@ -100,13 +92,10 @@ const Services: React.FC = () => {
           <div
             ref={sliderRef}
             className={`services-slider-container ${isDragging ? "dragging" : ""}`}
-            onMouseDown={handleDragStart}
-            onMouseMove={handleDragMove}
-            onMouseUp={handleDragEnd}
-            onMouseLeave={handleDragEnd}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
+            onPointerDown={handlePointerDown}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
           >
             {services.map((service) => {
               return (
