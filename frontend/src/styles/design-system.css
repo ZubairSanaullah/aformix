@@ -78,7 +78,9 @@
     scroll-padding-top: 5rem;
   }
 
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     transition-property: background-color, border-color, color, fill, stroke, box-shadow;
     transition-duration: 0.5s;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -332,18 +334,18 @@ html.light .card-premium:hover {
 
 /* ─── Portfolio Cards ─────────────────────────────────── */
 .portfolio-gradient {
-  background: transparent;
+  background: linear-gradient(to top, var(--color-surface) 5%, transparent 50%);
 }
 
 html.light .portfolio-gradient {
-  background: transparent;
+  background: linear-gradient(to top, var(--color-surface) 5%, transparent 50%);
 }
 
 html.light .portfolio-title {
-  color: white;
+  color: var(--color-text);
 }
 
-html.light .portfolio-view-link:hover {
+.portfolio-view-link:hover {
   background-color: var(--color-primary) !important;
   border-color: var(--color-primary) !important;
   color: #ffffff !important;
@@ -378,7 +380,7 @@ html.light .portfolio-view-link:hover {
   position: absolute;
   inset: 0;
   background: radial-gradient(circle at top left, rgba(39, 185, 144, 0.1), transparent 22%),
-      radial-gradient(circle at bottom right, rgba(104, 75, 158, 0.08), transparent 26%);
+    radial-gradient(circle at bottom right, rgba(104, 75, 158, 0.08), transparent 26%);
   pointer-events: none;
 }
 
@@ -408,7 +410,7 @@ html.light .portfolio-view-link:hover {
   right: 0;
   bottom: 0;
   padding: 1.5rem;
-  background: rgba(7, 14, 26, 0.96);
+  background: var(--color-surface);
   transform: translateY(100%);
   opacity: 0;
   transition: transform 0.35s ease, opacity 0.35s ease;
@@ -520,7 +522,7 @@ html.light .input-field option {
     scroll-snap-type: x mandatory;
     scroll-padding: 0 1rem;
   }
-  
+
   .service-card {
     scroll-snap-align: center;
   }

@@ -29,12 +29,37 @@ const Portfolio: React.FC = () => {
                 className={`group relative overflow-hidden rounded-[2.5rem] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl transition-all duration-500 hover:-translate-y-2 ${
                   isFeatured ? "md:col-span-2 md:row-span-2 min-h-[560px]" : "min-h-[420px]"
                 }`}
+                onMouseEnter={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) video.play();
+                }}
+                onMouseLeave={(e) => {
+                  const video = e.currentTarget.querySelector('video');
+                  if (video) video.pause();
+                }}
               >
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                />
+                {('video' in project && typeof project.video === 'string') ? (
+                  <>
+                    <video
+                      src={project.video}
+                      muted
+                      loop
+                      playsInline
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                    />
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="absolute inset-0 h-full w-full object-cover transition-all duration-1000 group-hover:scale-110 group-hover:opacity-0"
+                    />
+                  </>
+                ) : (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                  />
+                )}
                 <div className="absolute inset-0 portfolio-gradient" />
                 <div className="absolute inset-x-0 bottom-0 z-20 p-8 flex h-full flex-col justify-end">
                   <div className="mb-4 inline-flex items-center rounded-full border border-[var(--color-border)] glass-effect px-4 py-2 text-[0.65rem] uppercase tracking-[0.35em] text-[var(--color-text)] shadow-sm">
