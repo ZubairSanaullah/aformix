@@ -54,6 +54,15 @@ const Navbar: React.FC = () => {
     navigate("/login");
   };
 
+  const toggleTheme = () => {
+    if (theme === 'light') setTheme('dark');
+    else if (theme === 'dark') setTheme('light');
+    else {
+      const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setTheme(isDark ? 'light' : 'dark');
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -238,17 +247,9 @@ const Navbar: React.FC = () => {
 
           <div className="hidden md:flex items-center gap-3 lg:gap-6 flex-shrink-0">
             {/* Theme Toggle */}
-            <div className="relative group/theme">
-              <button className="w-9 lg:w-10 h-9 lg:h-10 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)] hover:text-primary transition-colors cursor-pointer flex-shrink-0">
-                {theme === "light" ? <Sun size={16} className="lg:w-[18px] lg:h-[18px]" /> : theme === "dark" ? <Moon size={16} className="lg:w-[18px] lg:h-[18px]" /> : <Monitor size={16} className="lg:w-[18px] lg:h-[18px]" />}
-              </button>
-              {/* Dropdown */}
-              <div className="absolute right-0 top-full mt-2 w-32 py-2 rounded-xl glass-effect opacity-0 invisible group-hover/theme:opacity-100 group-hover/theme:visible transition-all duration-300 flex flex-col z-50 overflow-hidden">
-                <button onClick={() => setTheme("light")} className={`px-4 py-2 text-left text-sm hover:text-primary transition-colors flex items-center gap-2 ${theme === 'light' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Sun size={14} /> Light</button>
-                <button onClick={() => setTheme("dark")} className={`px-4 py-2 text-left text-sm hover:text-primary transition-colors flex items-center gap-2 ${theme === 'dark' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Moon size={14} /> Dark</button>
-                <button onClick={() => setTheme("system")} className={`px-4 py-2 text-left text-sm hover:text-primary transition-colors flex items-center gap-2 ${theme === 'system' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Monitor size={14} /> System</button>
-              </div>
-            </div>
+            <button onClick={toggleTheme} className="w-9 lg:w-10 h-9 lg:h-10 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)] hover:text-primary transition-colors cursor-pointer flex-shrink-0" title="Toggle Theme">
+              {theme === "light" ? <Sun size={16} className="lg:w-[18px] lg:h-[18px]" /> : theme === "dark" ? <Moon size={16} className="lg:w-[18px] lg:h-[18px]" /> : <Monitor size={16} className="lg:w-[18px] lg:h-[18px]" />}
+            </button>
 
             {user ? (
               <div className="relative group/profile">
@@ -284,25 +285,9 @@ const Navbar: React.FC = () => {
           {/* Mobile Controls */}
           <div className="md:hidden flex items-center gap-2">
             {/* Mobile Theme Toggle */}
-            <div className="relative group/theme-mobile">
-              <button className="w-10 h-10 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)] hover:text-primary transition-colors cursor-pointer">
-                {theme === "light" ? <Sun size={16} /> : theme === "dark" ? <Moon size={16} /> : <Monitor size={16} />}
-              </button>
-              <div className="absolute right-0 top-full mt-2 w-36 py-2 rounded-xl glass-effect opacity-0 invisible group-hover/theme-mobile:opacity-100 group-hover/theme-mobile:visible transition-all duration-300 flex flex-col z-50 overflow-hidden shadow-2xl">
-                <button onClick={() => setTheme("light")} className={`px-4 py-2.5 text-left text-sm hover:text-primary transition-colors flex items-center gap-2.5 ${theme === 'light' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Sun size={14} /> Light</button>
-                <button onClick={() => setTheme("dark")} className={`px-4 py-2.5 text-left text-sm hover:text-primary transition-colors flex items-center gap-2.5 ${theme === 'dark' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Moon size={14} /> Dark</button>
-                <button onClick={() => setTheme("system")} className={`px-4 py-2.5 text-left text-sm hover:text-primary transition-colors flex items-center gap-2.5 ${theme === 'system' ? 'text-primary' : 'text-[var(--color-text)]'}`}><Monitor size={14} /> System</button>
-              </div>
-            </div>
-
-            {/* Mobile Login Button */}
-            {!user && (
-              <Link to="/login">
-                <button className="h-10 px-4 rounded-xl text-xs font-bold btn-primary cursor-pointer flex items-center gap-1.5 whitespace-nowrap">
-                  Login
-                </button>
-              </Link>
-            )}
+            <button onClick={toggleTheme} className="w-10 h-10 rounded-xl glass-effect flex items-center justify-center text-[var(--color-text)] hover:text-primary transition-colors cursor-pointer" title="Toggle Theme">
+              {theme === "light" ? <Sun size={16} /> : theme === "dark" ? <Moon size={16} /> : <Monitor size={16} />}
+            </button>
 
             {/* Mobile User Avatar */}
             {user && (
@@ -351,6 +336,14 @@ const Navbar: React.FC = () => {
           ))}
           
           <div className="h-px bg-[var(--color-border)] w-full my-2"></div>
+
+          {!user && (
+            <Link to="/login" onClick={() => setIsMobileMenuOpen(false)} className="block mb-2">
+              <button className="btn-outline w-full cursor-pointer text-sm py-2.5 flex items-center justify-center gap-2">
+                Login
+              </button>
+            </Link>
+          )}
 
           <a href="#contact" onClick={() => setIsMobileMenuOpen(false)} className="block">
             <button className="btn-primary w-full cursor-pointer text-sm py-2.5 flex items-center justify-center gap-2">
