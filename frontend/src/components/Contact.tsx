@@ -40,8 +40,8 @@ const CONTACT_INFO = [
   {
     icon: Mail,
     label: "Email Us",
-    value: "aformixtech@gmail.com",
-    href: "mailto:aformixtech@gmail.com",
+    value: "hello@aformix.com",
+    href: "mailto:hello@aformix.com",
   },
   {
     icon: Phone,

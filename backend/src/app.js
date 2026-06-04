@@ -68,6 +68,7 @@ if (clientOrigins.length === 0) {
 }
 
 app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 
 app.use(["/api/auth", "/_/backend/api/auth", "/auth"], signupLimiter, loginLimiter, authRoutes);
 app.use(["/api/", "/_/backend/api/", "/"], apiLimiter);
