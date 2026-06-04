@@ -137,6 +137,7 @@ export const login = async (req, res, next) => {
       throw new Error("Invalid credentials.");
     }
 
+    const isFirstLogin = !user.lastLogin;
     user.lastLogin = new Date();
     await user.save();
 
@@ -148,8 +149,9 @@ export const login = async (req, res, next) => {
 
     await publishLoginEvent(user);
 
-    const html = welcomeTemplate(user.name);
-    const text = `Hello ${user.name},
+    if (isFirstLogin) {
+      const html = welcomeTemplate(user.name);
+      const text = `Hello ${user.name},
 
 Welcome to Aformix.
 
@@ -191,13 +193,18 @@ The Aformix Team
 Building Digital Experiences That Drive Results.
 © Aformix. All rights reserved.`;
 
-    await transporter.sendMail({
-      from: `"Aformix Team" <${process.env.MAIL_USER}>`,
-      to: user.email,
-      subject: "Welcome to Aformix 🚀",
-      text,
-      html,
-    });
+      try {
+        await transporter.sendMail({
+          from: `"Aformix Team" <${process.env.MAIL_USER}>`,
+          to: user.email,
+          subject: "Welcome to Aformix 🚀",
+          text,
+          html,
+        });
+      } catch (mailError) {
+        console.warn("⚠️ Login welcome email failed:", mailError.message);
+      }
+    }
 
     res.json({
       message: "Login successful.",
