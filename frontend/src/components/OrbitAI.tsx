@@ -2,9 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import {
-  AlertTriangle,
   CalendarDays,
-  CheckCircle2,
   MessageCircle,
   Rocket,
   Send,
@@ -23,15 +21,15 @@ type LeadProfile = {
   email: string;
   phone: string;
   company: string;
-  industry: string;
+  industry: "Startup" | "Ecommerce" | "Agency" | "Enterprise" | "SaaS" | "Mobile App";
   country: string;
-  businessSize: string;
-  monthlyRevenue: string;
-  projectBudget: string;
-  timeline: string;
+  businessSize: "1-10" | "11-50" | "51-200" | ">200";
+  monthlyRevenue: "< $10K" | "$10K-$50K" | "$50K-$150K" | ">$150K";
+  projectBudget: "<$5K" | "$5K-$15K" | "$15K-$50K" | ">$50K";
+  timeline: "1-3 months" | "3-6 months" | "6-12 months" | "Flexible";
   goals: string;
   currentChallenges: string;
-  preferredContactMethod: string;
+  preferredContactMethod: "Email" | "Phone" | "WhatsApp" | "Slack" | "Other";
 };
 
 const initialLeadProfile: LeadProfile = {
@@ -59,24 +57,23 @@ const SERVICE_RECOMMENDATIONS: Record<string, string> = {
   "Mobile App": "Mobile UX, Cross-platform App Development, API Connectivity, and Analytics Automation.",
 };
 
-const DISCOVERY_QUESTIONS = [
-  "What is your primary business objective?",
-  "What is your biggest digital challenge today?",
-  "What budget range are you planning for this project?",
-  "Do you have a preferred timeline for launch?",
-];
-
 const leadScoreFactors = {
   budget: { "<$5K": 10, "$5K-$15K": 25, "$15K-$50K": 50, ">$50K": 80 },
   timeline: { "1-3 months": 50, "3-6 months": 35, "6-12 months": 20, "Flexible": 15 },
   businessSize: { "1-10": 15, "11-50": 35, "51-200": 55, ">200": 80 },
 };
 
+const createMessageId = (() => {
+  let counter = 0;
+  return () => `orbit-${++counter}`;
+})();
+
 const friendlyGreeting = `Welcome to Aformix 👋
 I'm Orbit AI, your AI Growth Partner. Tell me what you're building and I’ll guide you through the best services, connect your team, and book a discovery call.`;
 
 const OrbitAI: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [activeTab, setActiveTab] = useState<"chat" | "lead" | "booking">("chat");
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -88,7 +85,6 @@ const OrbitAI: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
   const [status, setStatus] = useState<"idle" | "typing" | "success" | "error">("idle");
   const [leadProfile, setLeadProfile] = useState<LeadProfile>(initialLeadProfile);
-  const [leadStep, setLeadStep] = useState(0);
   const [formStatus, setFormStatus] = useState<"idle" | "saving" | "saved" | "failed">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const { theme } = useTheme();
@@ -125,12 +121,12 @@ const OrbitAI: React.FC = () => {
     return SERVICE_RECOMMENDATIONS[leadProfile.industry] ?? SERVICE_RECOMMENDATIONS.Startup;
   }, [leadProfile.industry]);
 
-  const orbitTransition = { type: "spring", stiffness: 280, damping: 24, mass: 0.8 };
+  const orbitTransition = { type: "spring" as const, stiffness: 280, damping: 24, mass: 0.8 };
 
   const leadScore = useMemo(() => {
-    const budgetScore = leadScoreFactors.budget[leadProfile.projectBudget] || 0;
-    const timelineScore = leadScoreFactors.timeline[leadProfile.timeline] || 0;
-    const sizeScore = leadScoreFactors.businessSize[leadProfile.businessSize] || 0;
+    const budgetScore = leadScoreFactors.budget[leadProfile.projectBudget as keyof typeof leadScoreFactors.budget] || 0;
+    const timelineScore = leadScoreFactors.timeline[leadProfile.timeline as keyof typeof leadScoreFactors.timeline] || 0;
+    const sizeScore = leadScoreFactors.businessSize[leadProfile.businessSize as keyof typeof leadScoreFactors.businessSize] || 0;
     const score = Math.min(100, budgetScore + timelineScore + sizeScore + 5);
     return score;
   }, [leadProfile]);
@@ -154,10 +150,21 @@ const OrbitAI: React.FC = () => {
 
   const latestMessage = messages[messages.length - 1];
 
-  const handleToggle = () => {
-    setIsOpen((prev) => !prev);
+  const handleOpen = () => {
+    setIsOpen(true);
+    setIsMinimized(false);
     setActiveTab("chat");
     setStatus("idle");
+  };
+
+  const handleMinimize = () => {
+    setIsOpen(false);
+    setIsMinimized(true);
+  };
+
+  const handleClose = () => {
+    setIsOpen(false);
+    setIsMinimized(false);
   };
 
   const addMessage = (message: ChatMessage) => {
@@ -168,7 +175,7 @@ const OrbitAI: React.FC = () => {
     if (!inputValue.trim()) return;
 
     const userMessage: ChatMessage = {
-      id: `user-${Date.now()}`,
+      id: createMessageId(),
       role: "user",
       content: inputValue.trim(),
     };
@@ -185,10 +192,20 @@ const OrbitAI: React.FC = () => {
         body: JSON.stringify({ query: userMessage.content, conversation: conversationWindow }),
       });
 
-      const data = await response.json();
-      const assistantText = data.response || "I’m processing your request and will respond shortly.";
+      const text = await response.text();
+      let data: { response?: string } = {};
+      try {
+        data = text ? JSON.parse(text) : {};
+      } catch (parseError) {
+        console.warn("Orbit AI response was not valid JSON:", parseError);
+      }
 
-      setMessages((prev) => [...prev, { id: `orbit-${Date.now()}`, role: "assistant", content: assistantText }]);
+      const assistantText =
+        data.response ||
+        text ||
+        "I’m processing your request and will respond shortly.";
+
+      setMessages((prev) => [...prev, { id: createMessageId(), role: "assistant", content: assistantText }] );
       setStatus("success");
       if (assistantText.toLowerCase().includes("book")) {
         setActiveTab("booking");
@@ -200,7 +217,7 @@ const OrbitAI: React.FC = () => {
       setStatus("error");
       setMessages((prev) => [
         ...prev,
-        { id: `orbit-error-${Date.now()}`, role: "assistant", content: message },
+        { id: createMessageId(), role: "assistant", content: message },
       ]);
     }
   };
@@ -268,7 +285,7 @@ const OrbitAI: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.96 }}
             transition={orbitTransition}
-            className={`fixed bottom-28 right-8 z-50 w-[min(420px,95vw)] rounded-4xl border backdrop-blur-2xl ${orbitTheme.panel}`}
+            className={`fixed bottom-24 right-25 z-50 w-[min(420px,calc(100vw-2rem))] max-w-105 rounded-4xl border backdrop-blur-2xl ${orbitTheme.panel}`}
           >
             <div className={`flex items-center justify-between gap-4 border-b px-5 py-4 ${isLight ? "border-slate-200/40" : "border-white/10"}`}>
               <div className="flex items-center gap-3">
@@ -281,9 +298,9 @@ const OrbitAI: React.FC = () => {
                 </div>
               </div>
               <button
-                onClick={handleToggle}
+                onClick={handleMinimize}
                 className={`flex h-10 w-10 items-center justify-center rounded-3xl border transition ${isLight ? "border-slate-200/40 bg-slate-100 text-slate-900 hover:bg-slate-200" : "border-white/10 bg-white/5 text-white hover:bg-white/10"}`}
-                aria-label="Close Orbit AI chat"
+                aria-label="Minimize Orbit AI chat"
               >
                 <X size={18} />
               </button>
@@ -589,7 +606,7 @@ const OrbitAI: React.FC = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        {!isOpen && (
+        {!isOpen && !isMinimized && (
           <motion.button
             layout
             layoutId="orbit-panel"
@@ -597,8 +614,8 @@ const OrbitAI: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.92 }}
             transition={orbitTransition}
-            onClick={handleToggle}
-            className={`fixed bottom-20 right-8 z-50 flex h-20 w-20 items-center justify-center rounded-full border transition focus:outline-none ${orbitTheme.bubbleButton}`}
+            onClick={handleOpen}
+            className={`fixed bottom-8 right-20 z-50 flex h-20 w-20 items-center justify-center rounded-full border transition focus:outline-none ${orbitTheme.bubbleButton}`}
             whileHover={{ y: -4, scale: 1.05 }}
             whileTap={{ scale: 0.94 }}
             aria-label="Open Orbit AI assistant"
@@ -607,6 +624,42 @@ const OrbitAI: React.FC = () => {
               <MessageCircle size={28} className="drop-shadow-lg" />
             </motion.div>
           </motion.button>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {isMinimized && !isOpen && (
+          <motion.div
+            layout
+            layoutId="orbit-panel"
+            initial={{ opacity: 0, y: 16, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 16, scale: 0.92 }}
+            transition={orbitTransition}
+            className={`fixed bottom-8 right-20 z-50 flex min-w-62.5 max-w-[calc(100vw-2rem)] items-center gap-3 rounded-3xl border px-4 py-3 ${orbitTheme.panel}`}
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-primary text-white shadow-lg shadow-primary/20">
+              <MessageCircle size={20} />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-sm font-semibold text-current">Orbit is minimized</p>
+              <p className="text-xs text-slate-300">Resume your project qualification anytime.</p>
+            </div>
+            <button
+              type="button"
+              onClick={handleOpen}
+              className="rounded-full bg-white/10 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/20"
+            >
+              Resume
+            </button>
+            <button
+              type="button"
+              onClick={handleClose}
+              className="rounded-full bg-white/5 px-3 py-2 text-xs text-slate-200 transition hover:bg-white/10"
+            >
+              Close
+            </button>
+          </motion.div>
         )}
       </AnimatePresence>
     </>
