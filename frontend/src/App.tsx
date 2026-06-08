@@ -14,6 +14,7 @@ import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import WhatsAppBtn from "./components/WhatsAppBtn";
 import CookieConsent from "./components/CookieConsent";
+import OrbitAI from "./components/OrbitAI";
 import { ArrowUp } from "lucide-react";
 import useReveal from "./hooks/useReveal";
 import Contact from "./components/Contact";
@@ -120,10 +121,11 @@ const App: React.FC = () => {
         </div>
         <CookieConsent />
         <WhatsAppBtn />
+        {!isLoginPage && <OrbitAI />}
         <button
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className={`fixed right-8 bottom-28 z-[90] w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/25 transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${
+          className={`fixed right-8 bottom-28 z-90 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/25 transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${
             showScrollTop
               ? "opacity-100 translate-y-0 pointer-events-auto"
               : "opacity-0 translate-y-4 pointer-events-none"

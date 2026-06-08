@@ -6,6 +6,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/authRoutes.js";
+import orbitRoutes from "./routes/orbitRoutes.js";
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 import { serve } from "inngest/express";
 import inngest from "./config/inngest.js";
@@ -51,6 +52,7 @@ const loginLimiter = rateLimit({
 app.use(helmet());
 app.use(morgan("combined"));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const clientOrigins = process.env.CLIENT_URL
   ? process.env.CLIENT_URL.split(",").map((origin) => origin.trim()).filter(Boolean)
@@ -71,6 +73,7 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 app.use(["/api/auth", "/_/backend/api/auth", "/auth"], signupLimiter, loginLimiter, authRoutes);
+app.use(["/api/orbit"], apiLimiter, orbitRoutes);
 app.use(["/api/", "/_/backend/api/", "/"], apiLimiter);
 
 app.get("/", (req, res) => {
