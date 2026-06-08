@@ -20,12 +20,26 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 600,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom', 'react-router', 'react-router-dom', 'react-helmet-async'],
-          'gsap-vendor': ['gsap', '@gsap/react'],
-          'ui-vendor': ['lucide-react', 'react-icons', 'framer-motion', 'sweetalert2']
+        manualChunks(id: string) {
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom') ||
+              id.includes('node_modules/react-router') || id.includes('node_modules/react-helmet-async')) {
+            return 'react-vendor';
+          }
+          if (id.includes('node_modules/gsap') || id.includes('node_modules/@gsap')) {
+            return 'gsap-vendor';
+          }
+          if (id.includes('node_modules/framer-motion')) {
+            return 'framer-vendor';
+          }
+          if (id.includes('node_modules/lucide-react') || id.includes('node_modules/react-icons')) {
+            return 'icons-vendor';
+          }
+          if (id.includes('node_modules/sweetalert2')) {
+            return 'ui-vendor';
+          }
         }
       }
     }

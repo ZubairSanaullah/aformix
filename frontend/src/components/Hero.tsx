@@ -109,8 +109,8 @@ const ChromaKeyVideo: React.FC<ChromaKeyVideoProps> = ({ src, fallbackSrc, class
 
       try {
         const frame = offscreenCtx.getImageData(0, 0, width, height);
-        const data = frame.data;
-        // const len = data.length;
+        // pixel data available as frame.data when chroma-key loop is re-enabled
+        // const len = frame.data.length;
 
         // // Threshold parameters to key out the white background
         // const threshold = 210;

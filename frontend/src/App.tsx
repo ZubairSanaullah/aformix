@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Navbar from "./components/Navbar";
@@ -13,13 +13,14 @@ import Testimonials from "./components/Testimonials";
 import FAQ from "./components/FAQ";
 import Footer from "./components/Footer";
 import WhatsAppBtn from "./components/WhatsAppBtn";
-import PrivacyPolicyPage from "./Pages/PrivacyPolicy";
-import TermsOfService from "./Pages/TermsOfService";
-import LoginPage from "./Pages/Login";
 import CookieConsent from "./components/CookieConsent";
 import { ArrowUp } from "lucide-react";
 import useReveal from "./hooks/useReveal";
 import Contact from "./components/Contact";
+
+const PrivacyPolicyPage = lazy(() => import("./Pages/PrivacyPolicy"));
+const TermsOfService = lazy(() => import("./Pages/TermsOfService"));
+const LoginPage = lazy(() => import("./Pages/Login"));
 
 const HomeContent: React.FC = () => (
   <>
@@ -104,13 +105,15 @@ const App: React.FC = () => {
           <Navbar />
         </div>
         <main className="relative w-full">
-          <Routes>
-            <Route path="/" element={<HomeContent />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
-            <Route path="/terms-of-service" element={<TermsOfService />} />
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
+          <Suspense fallback={<LoadingSpinner />}>
+            <Routes>
+              <Route path="/" element={<HomeContent />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+              <Route path="/terms-of-service" element={<TermsOfService />} />
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
+          </Suspense>
         </main>
         <div className={isLoginPage ? "hidden md:block" : ""}>
           <Footer />
