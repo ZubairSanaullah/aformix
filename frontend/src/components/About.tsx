@@ -98,23 +98,26 @@ const About: React.FC = () => {
         <div className="grid gap-14 xl:grid-cols-[1.05fr_0.95fr] items-start">
           <div className="space-y-8 about-animate">
             <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border border-[var(--color-glass-border)] glass-effect">
-              <div className="relative overflow-hidden">
+              <div className="relative overflow-hidden bg-gradient-to-br from-[#04040d] via-[#080c1a] to-[#04040d]">
+                {/* Glow orbs behind mascot */}
+                <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none" />
+                <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-secondary/15 rounded-full blur-[60px] pointer-events-none" />
                 <img
-                  src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop"
-                  alt="Design and development teamwork"
-                  className="w-full aspect-[4/5] object-cover"
+                  src="/images/orbit_mascot.png"
+                  alt="Orbit — Aformix AI Mascot"
+                  className="w-full aspect-[4/5] object-cover object-center scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)]/90 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)]/95 via-[var(--color-bg)]/20 to-transparent"></div>
               </div>
 
               <div className="absolute left-8 right-8 bottom-8 rounded-[2.5rem] border border-[var(--color-glass-border)] glass-effect p-8 shadow-2xl">
-                <div className="inline-flex items-center gap-3 rounded-full bg-white/5 px-4 py-2 text-sm text-slate-200 font-semibold mb-4">
-                  {/* <Sparkles size={18} className="text-primary" /> */}
-                  End-to-end strategy + delivery
+                <div className="inline-flex items-center gap-3 rounded-full bg-primary/10 border border-primary/20 px-4 py-2 text-sm text-primary font-semibold mb-4">
+                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  Meet Orbit — Your AI Assistant
                 </div>
                 <h3 className="text-3xl font-black text-[var(--color-text)] mb-4">Crafting distinctive digital products that scale.</h3>
                 <p className="text-[var(--color-text-muted)] leading-relaxed">
-                  We turn complex challenges into refined digital experiences with polished UI, secure backend systems, and measurable growth playbooks.
+                  Orbit is our AI mascot that represents our commitment to intelligent automation and modern digital craftsmanship.
                 </p>
               </div>
             </div>

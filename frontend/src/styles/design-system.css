@@ -696,3 +696,75 @@ html.light .btn-outline:hover {
 html.light .light-mode-invert {
   filter: invert(1);
 }
+
+/* ─── Orbit Mascot — WhyChooseUs Card ───────────────── */
+.orbit-why-card {
+  animation: orbit-float 6s ease-in-out infinite;
+}
+
+@keyframes orbit-float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+/* On mobile, the Orbit card goes below the perks grid */
+@media (max-width: 1023px) {
+  .orbit-why-card {
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}
+
+/* ─── Orbit Mascot — FAQ Speech Bubble ───────────────── */
+.orbit-faq-bubble {
+  animation: bubble-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes bubble-pop {
+  0%   { transform: scale(0.8) translateY(8px); opacity: 0; }
+  100% { transform: scale(1) translateY(0);     opacity: 1; }
+}
+
+.orbit-faq-avatar {
+  animation: orbit-pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes orbit-pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(39,185,144,0.15); }
+  50%       { box-shadow: 0 0 40px rgba(39,185,144,0.40); }
+}
+
+/* ─── Orbit Mascot — Contact Card ───────────────────── */
+.orbit-contact-card-img {
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.orbit-contact-card-img:hover {
+  transform: scale(1.08) rotate(-2deg);
+}
+
+/* ─── Orbit Testimonials CTA Strip ──────────────────── */
+.orbit-testimonial-strip {
+  position: relative;
+  overflow: hidden;
+  border-radius: 3rem;
+  background: linear-gradient(135deg,
+    rgba(39, 185, 144, 0.06) 0%,
+    rgba(104, 75, 158, 0.06) 100%
+  );
+  border: 1px solid rgba(39, 185, 144, 0.15);
+}
+
+.orbit-testimonial-strip::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 50%, rgba(39,185,144,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 50%, rgba(104,75,158,0.10) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+html.light .orbit-why-card,
+html.light .orbit-testimonial-strip {
+  background: rgba(255,255,255,0.75);
+}
