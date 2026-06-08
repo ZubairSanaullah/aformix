@@ -285,34 +285,34 @@ const OrbitAI: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.96 }}
             transition={orbitTransition}
-            className={`fixed bottom-24 right-25 z-50 w-[min(420px,calc(100vw-2rem))] max-w-105 rounded-4xl border backdrop-blur-2xl ${orbitTheme.panel}`}
+            className={`fixed top-[140px] md:bottom-24 md:top-auto right-4 md:right-25 z-[99] w-[calc(100vw-2rem)] md:w-[min(420px,calc(100vw-2rem))] max-h-[calc(100vh-200px)] md:max-h-none rounded-3xl md:rounded-4xl border backdrop-blur-2xl overflow-hidden ${orbitTheme.panel}`}
           >
-            <div className={`flex items-center justify-between gap-4 border-b px-5 py-4 ${isLight ? "border-slate-200/40" : "border-white/10"}`}>
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-linear-to-br from-primary to-secondary text-white shadow-lg shadow-primary/20">
-                  <Sparkles size={24} />
+            <div className={`flex items-center justify-between gap-3 md:gap-4 border-b px-3 md:px-5 py-3 md:py-4 ${isLight ? "border-slate-200/40" : "border-white/10"}`}>
+              <div className="flex items-center gap-2 md:gap-3 min-w-0">
+                <div className="flex h-10 md:h-12 w-10 md:w-12 items-center justify-center rounded-3xl bg-linear-to-br from-primary to-secondary text-white shadow-lg shadow-primary/20 flex-shrink-0">
+                  <Sparkles size={20} className="md:size-24" />
                 </div>
-                <div>
-                  <p className="text-xs uppercase tracking-[0.3em] text-primary/90">Orbit AI</p>
-                  <h3 className="text-lg font-semibold text-white">Your AI Growth Partner</h3>
+                <div className="min-w-0">
+                  <p className="text-xs uppercase tracking-[0.3em] text-primary/90 truncate">Orbit AI</p>
+                  <h3 className="text-base md:text-lg font-semibold text-white truncate">Your AI Growth Partner</h3>
                 </div>
               </div>
               <button
                 onClick={handleMinimize}
-                className={`flex h-10 w-10 items-center justify-center rounded-3xl border transition ${isLight ? "border-slate-200/40 bg-slate-100 text-slate-900 hover:bg-slate-200" : "border-white/10 bg-white/5 text-white hover:bg-white/10"}`}
+                className={`flex h-9 md:h-10 w-9 md:w-10 items-center justify-center rounded-3xl border transition flex-shrink-0 ${isLight ? "border-slate-200/40 bg-slate-100 text-slate-900 hover:bg-slate-200" : "border-white/10 bg-white/5 text-white hover:bg-white/10"}`}
                 aria-label="Minimize Orbit AI chat"
               >
-                <X size={18} />
+                <X size={16} className="md:size-18" />
               </button>
             </div>
 
-            <div className="grid grid-cols-12 gap-0 p-5">
-              <div className="col-span-12 space-y-4">
-                <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-12 gap-0 p-3 md:p-5">
+              <div className="col-span-12 space-y-3 md:space-y-4">
+                <div className="grid grid-cols-3 gap-2 md:gap-3">
                   <button
                     type="button"
                     onClick={() => setActiveTab("chat")}
-                    className={`rounded-3xl px-3 py-2 text-sm font-semibold transition ${
+                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${
                       activeTab === "chat" ? orbitTheme.tabActive : orbitTheme.tabInactive
                     }`}
                   >
@@ -321,7 +321,7 @@ const OrbitAI: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setActiveTab("lead")}
-                    className={`rounded-3xl px-3 py-2 text-sm font-semibold transition ${
+                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${
                       activeTab === "lead" ? orbitTheme.tabActive : orbitTheme.tabInactive
                     }`}
                   >
@@ -330,7 +330,7 @@ const OrbitAI: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setActiveTab("booking")}
-                    className={`rounded-3xl px-3 py-2 text-sm font-semibold transition ${
+                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${
                       activeTab === "booking" ? orbitTheme.tabActive : orbitTheme.tabInactive
                     }`}
                   >
@@ -339,12 +339,12 @@ const OrbitAI: React.FC = () => {
                 </div>
 
                 {activeTab === "chat" && (
-                  <div className="space-y-4">
-                    <div className={`max-h-105 overflow-y-auto rounded-[28px] border p-4 shadow-inner ${orbitTheme.surface}`}>
+                  <div className="space-y-3 md:space-y-4">
+                    <div className={`max-h-64 md:max-h-105 overflow-y-auto rounded-[24px] md:rounded-[28px] border p-3 md:p-4 shadow-inner ${orbitTheme.surface}`}>
                       {messages.map((message) => (
                         <div
                           key={message.id}
-                          className={`rounded-3xl p-4 mb-4 max-w-[90%] ${
+                          className={`rounded-3xl p-3 md:p-4 mb-3 md:mb-4 max-w-[85%] md:max-w-[90%] text-sm md:text-base ${
                             message.role === "assistant"
                               ? isLight
                                 ? "bg-slate-100/90 text-slate-900"
@@ -354,19 +354,19 @@ const OrbitAI: React.FC = () => {
                               : "bg-white/10 text-white self-end"
                           }`}
                         >
-                          <p className="whitespace-pre-line text-sm leading-6">{message.content}</p>
+                          <p className="whitespace-pre-line leading-6">{message.content}</p>
                         </div>
                       ))}
                     </div>
 
-                    <div className="grid gap-2">
+                    <div className="grid gap-2 md:gap-3">
                       <div className="flex flex-wrap gap-2">
                         {quickReplies.map((reply) => (
                           <button
                             key={reply}
                             type="button"
                             onClick={() => handleQuickReply(reply)}
-                            className={`rounded-full border px-4 py-2 text-xs font-semibold transition ${
+                            className={`rounded-full border px-3 md:px-4 py-2 text-xs font-semibold transition ${
                               isLight
                                 ? "border-slate-200 bg-slate-100 text-slate-900 hover:bg-slate-200"
                                 : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10"
@@ -377,78 +377,78 @@ const OrbitAI: React.FC = () => {
                         ))}
                       </div>
 
-                      <div className={`relative flex items-center gap-3 rounded-[28px] border px-4 py-3 shadow-lg ${isLight ? "border-slate-200 bg-slate-100 text-slate-900 shadow-slate-200/20" : "border-white/10 bg-slate-950/70 text-white shadow-black/20"}`}>
+                      <div className={`relative flex items-center gap-2 md:gap-3 rounded-[24px] md:rounded-[28px] border px-3 md:px-4 py-3 shadow-lg ${isLight ? "border-slate-200 bg-slate-100 text-slate-900 shadow-slate-200/20" : "border-white/10 bg-slate-950/70 text-white shadow-black/20"}`}>
                         <input
                           value={inputValue}
                           onChange={(event) => setInputValue(event.target.value)}
                           onKeyDown={(event) => event.key === "Enter" && handleSend()}
                           placeholder="Ask Orbit a question..."
-                          className={`w-full text-sm outline-none ${orbitTheme.input}`}
+                          className={`w-full text-xs md:text-sm outline-none ${orbitTheme.input}`}
                         />
                         <button
                           onClick={handleSend}
-                          className={`${orbitTheme.buttonSurface} rounded-full px-4 py-2 text-sm font-semibold transition hover:opacity-95`}
+                          className={`${orbitTheme.buttonSurface} rounded-full px-3 md:px-4 py-2 text-xs font-semibold transition hover:opacity-95 flex-shrink-0`}
                           aria-label="Send message"
                         >
-                          <Send size={16} />
+                          <Send size={14} className="md:size-16" />
                         </button>
                       </div>
 
-                      <div className={`flex items-center justify-between text-[0.78rem] ${isLight ? "text-slate-500" : "text-slate-400"}`}>
-                        <span>{status === "typing" ? "Orbit is thinking..." : "Instant recommendations powered by AI."}</span>
-                        <span>{latestMessage.role === "assistant" ? "Ready to help." : "Awaiting your message."}</span>
+                      <div className={`flex items-center justify-between text-[0.7rem] md:text-[0.78rem] ${isLight ? "text-slate-500" : "text-slate-400"}`}>
+                        <span className="truncate">{status === "typing" ? "Orbit is thinking..." : "Instant recommendations powered by AI."}</span>
+                        <span className="truncate text-right">{latestMessage.role === "assistant" ? "Ready to help." : "Awaiting your message."}</span>
                       </div>
                     </div>
                   </div>
                 )}
 
                 {activeTab === "lead" && (
-                  <div className={`space-y-4 rounded-[28px] border p-4 shadow-inner ${orbitTheme.surface}`}>
-                    <div className="grid gap-3">
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <label className="space-y-2 text-sm text-slate-300">
+                  <div className={`space-y-3 md:space-y-4 rounded-[24px] md:rounded-[28px] border p-3 md:p-4 shadow-inner ${orbitTheme.surface}`}>
+                    <div className="grid gap-3 md:gap-3">
+                      <div className="grid grid-cols-1 gap-3 md:gap-3 md:grid-cols-2">
+                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
                           <span>Name</span>
                           <input
                             type="text"
                             name="name"
                             value={leadProfile.name}
                             onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                             placeholder="Full name"
                           />
                         </label>
-                        <label className="space-y-2 text-sm text-slate-300">
+                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
                           <span>Email</span>
                           <input
                             type="email"
                             name="email"
                             value={leadProfile.email}
                             onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                             placeholder="name@company.com"
                           />
                         </label>
                       </div>
 
-                      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                        <label className="space-y-2 text-sm text-slate-300">
+                      <div className="grid grid-cols-1 gap-3 md:gap-3 md:grid-cols-2">
+                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
                           <span>Company</span>
                           <input
                             type="text"
                             name="company"
                             value={leadProfile.company}
                             onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                             placeholder="Aformix"
                           />
                         </label>
-                        <label className="space-y-2 text-sm text-slate-300">
+                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
                           <span>Industry</span>
                           <select
                             name="industry"
                             value={leadProfile.industry}
                             onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                           >
                             <option>Startup</option>
                             <option>Ecommerce</option>
@@ -460,38 +460,38 @@ const OrbitAI: React.FC = () => {
                         </label>
                       </div>
 
-                      <label className="space-y-2 text-sm text-slate-300">
+                      <label className="space-y-2 text-xs md:text-sm text-slate-300">
                         <span>What are the primary goals for this project?</span>
                         <textarea
                           name="goals"
                           rows={3}
                           value={leadProfile.goals}
                           onChange={handleLeadChange}
-                          className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                          className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                           placeholder="Improve conversions, automate lead capture, launch a new product, etc."
                         />
                       </label>
 
-                      <label className="space-y-2 text-sm text-slate-300">
+                      <label className="space-y-2 text-xs md:text-sm text-slate-300">
                         <span>Current challenges</span>
                         <textarea
                           name="currentChallenges"
                           rows={2}
                           value={leadProfile.currentChallenges}
                           onChange={handleLeadChange}
-                          className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                          className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                           placeholder="We need faster onboarding, better funnel analytics, and stronger brand presence."
                         />
                       </label>
 
-                      <div className="grid gap-3 sm:grid-cols-3">
-                        <label className="space-y-2 text-sm text-slate-300">
+                      <div className="grid gap-3 md:gap-3 grid-cols-1 md:grid-cols-3">
+                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
                           <span>Budget</span>
                           <select
                             name="projectBudget"
                             value={leadProfile.projectBudget}
                             onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                           >
                             <option>{"<$5K"}</option>
                             <option>{"$5K-$15K"}</option>
@@ -499,13 +499,13 @@ const OrbitAI: React.FC = () => {
                             <option>{">$50K"}</option>
                           </select>
                         </label>
-                        <label className="space-y-2 text-sm text-slate-300">
+                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
                           <span>Timeline</span>
                           <select
                             name="timeline"
                             value={leadProfile.timeline}
                             onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                           >
                             <option>1-3 months</option>
                             <option>3-6 months</option>
@@ -513,13 +513,13 @@ const OrbitAI: React.FC = () => {
                             <option>Flexible</option>
                           </select>
                         </label>
-                        <label className="space-y-2 text-sm text-slate-300">
+                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
                           <span>Preferred contact</span>
                           <select
                             name="preferredContactMethod"
                             value={leadProfile.preferredContactMethod}
                             onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-4 py-3 outline-none ${orbitTheme.input}`}
+                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
                           >
                             <option>Email</option>
                             <option>WhatsApp</option>
@@ -530,24 +530,24 @@ const OrbitAI: React.FC = () => {
                       </div>
                     </div>
 
-                    <div className="rounded-3xl bg-slate-900/80 p-4 text-sm text-slate-300">
+                    <div className="rounded-3xl bg-slate-900/80 p-3 md:p-4 text-xs md:text-sm text-slate-300">
                       <div className="flex items-center justify-between gap-3">
                         <div>
-                          <p className="font-semibold text-white">Lead score</p>
-                          <p>{leadScore} / 100</p>
+                          <p className="font-semibold text-white text-sm md:text-base">Lead score</p>
+                          <p className="text-base md:text-lg">{leadScore} / 100</p>
                         </div>
-                        <div className="rounded-full bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.25em] text-slate-300">
+                        <div className="rounded-full bg-white/5 px-2 md:px-3 py-1 text-xs uppercase tracking-[0.25em] text-slate-300">
                           {leadScore >= 80 ? "Hot" : leadScore >= 50 ? "Warm" : "Cold"}
                         </div>
                       </div>
-                      <p className="mt-3 text-slate-400">Recommended services: {recommendation}</p>
+                      <p className="mt-2 md:mt-3 text-slate-400 text-xs md:text-sm">Recommended services: {recommendation}</p>
                     </div>
 
-                    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                    <div className="flex flex-col gap-2 md:gap-3 md:flex-row md:items-center md:justify-between">
                       <button
                         type="button"
                         onClick={handleLeadSubmit}
-                        className="btn-primary w-full text-center sm:w-auto"
+                        className="btn-primary w-full text-center md:w-auto text-sm md:text-base px-4 md:px-6 py-2 md:py-3"
                         disabled={formStatus === "saving"}
                       >
                         {formStatus === "saving" ? "Saving lead..." : "Capture My Lead"}
@@ -556,32 +556,32 @@ const OrbitAI: React.FC = () => {
                     </div>
 
                     {formStatus === "failed" && (
-                      <p className="text-sm text-red-300">{errorMessage}</p>
+                      <p className="text-xs md:text-sm text-red-300">{errorMessage}</p>
                     )}
                     {formStatus === "saved" && (
-                      <p className="text-sm text-emerald-300">Lead captured successfully. A discovery call is ready to be booked.</p>
+                      <p className="text-xs md:text-sm text-emerald-300">Lead captured successfully. A discovery call is ready to be booked.</p>
                     )}
                   </div>
                 )}
 
                 {activeTab === "booking" && (
-                  <div className={`space-y-4 rounded-[28px] border p-6 shadow-inner ${orbitTheme.surface}`}>
-                    <div className="flex items-center gap-4 rounded-3xl bg-linear-to-r from-primary/20 to-secondary/20 p-4 text-white">
-                      <div className="rounded-3xl bg-white/10 p-3">
-                        <CalendarDays size={24} />
+                  <div className={`space-y-3 md:space-y-4 rounded-[24px] md:rounded-[28px] border p-3 md:p-6 shadow-inner ${orbitTheme.surface}`}>
+                    <div className="flex items-center gap-3 md:gap-4 rounded-3xl bg-linear-to-r from-primary/20 to-secondary/20 p-3 md:p-4 text-white">
+                      <div className="rounded-3xl bg-white/10 p-2 md:p-3 flex-shrink-0">
+                        <CalendarDays size={20} className="md:size-24" />
                       </div>
-                      <div>
-                        <p className="text-sm uppercase tracking-[0.28em] text-primary/90">Discovery Call</p>
-                        <h4 className="text-lg font-semibold">Book a 15-minute growth session</h4>
-                        <p className="text-slate-300 text-sm">Orbit recommends a live consultation when your project shows high intent.</p>
+                      <div className="min-w-0">
+                        <p className="text-xs md:text-sm uppercase tracking-[0.28em] text-primary/90">Discovery Call</p>
+                        <h4 className="text-base md:text-lg font-semibold">Book a 15-minute growth session</h4>
+                        <p className="text-slate-300 text-xs md:text-sm">Orbit recommends a live consultation when your project shows high intent.</p>
                       </div>
                     </div>
 
-                    <div className="space-y-3 rounded-3xl border border-white/10 bg-slate-900/80 p-4">
-                      <p className="text-sm text-slate-300">Suggested booking slot:</p>
-                      <div className="space-y-2 rounded-3xl bg-slate-950/90 p-4">
-                        <p className="text-base font-semibold text-white">Next available discovery call</p>
-                        <p className="text-sm text-slate-400">Choose a time that works best for your team.</p>
+                    <div className="space-y-2 md:space-y-3 rounded-3xl border border-white/10 bg-slate-900/80 p-3 md:p-4">
+                      <p className="text-xs md:text-sm text-slate-300">Suggested booking slot:</p>
+                      <div className="space-y-2 rounded-3xl bg-slate-950/90 p-3 md:p-4">
+                        <p className="text-sm md:text-base font-semibold text-white">Next available discovery call</p>
+                        <p className="text-xs md:text-sm text-slate-400">Choose a time that works best for your team.</p>
                       </div>
                     </div>
 
@@ -589,7 +589,7 @@ const OrbitAI: React.FC = () => {
                       href="https://calendly.com/aformix/discovery-call"
                       target="_blank"
                       rel="noreferrer"
-                      className="btn-primary inline-flex items-center justify-center gap-2 w-full rounded-3xl px-5 py-3 text-center font-semibold"
+                      className="btn-primary inline-flex items-center justify-center gap-2 w-full rounded-3xl px-4 md:px-5 py-2 md:py-3 text-center font-semibold text-sm md:text-base"
                     >
                       Book with Calendly <Rocket size={16} />
                     </a>
@@ -615,13 +615,13 @@ const OrbitAI: React.FC = () => {
             exit={{ opacity: 0, y: 16, scale: 0.92 }}
             transition={orbitTransition}
             onClick={handleOpen}
-            className={`fixed bottom-8 right-20 z-50 flex h-20 w-20 items-center justify-center rounded-full border transition focus:outline-none ${orbitTheme.bubbleButton}`}
+            className={`fixed bottom-24 md:bottom-8 right-4 md:right-20 z-[99] flex h-16 md:h-20 w-16 md:w-20 items-center justify-center rounded-full border transition focus:outline-none ${orbitTheme.bubbleButton}`}
             whileHover={{ y: -4, scale: 1.05 }}
             whileTap={{ scale: 0.94 }}
             aria-label="Open Orbit AI assistant"
           >
             <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}>
-              <MessageCircle size={28} className="drop-shadow-lg" />
+              <MessageCircle size={24} className="md:size-28 drop-shadow-lg" />
             </motion.div>
           </motion.button>
         )}
@@ -636,26 +636,26 @@ const OrbitAI: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.92 }}
             transition={orbitTransition}
-            className={`fixed bottom-8 right-20 z-50 flex min-w-62.5 max-w-[calc(100vw-2rem)] items-center gap-3 rounded-3xl border px-4 py-3 ${orbitTheme.panel}`}
+            className={`fixed bottom-24 md:bottom-8 right-4 md:right-20 z-[99] flex min-w-auto md:min-w-62.5 max-w-[calc(100vw-2rem)] items-center gap-2 md:gap-3 rounded-3xl border px-3 md:px-4 py-2 md:py-3 ${orbitTheme.panel}`}
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-primary text-white shadow-lg shadow-primary/20">
-              <MessageCircle size={20} />
+            <div className="flex h-10 md:h-12 w-10 md:w-12 items-center justify-center rounded-3xl bg-primary text-white shadow-lg shadow-primary/20 flex-shrink-0">
+              <MessageCircle size={18} className="md:size-20" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="text-sm font-semibold text-current">Orbit is minimized</p>
-              <p className="text-xs text-slate-300">Resume your project qualification anytime.</p>
+              <p className="text-xs md:text-sm font-semibold text-current truncate">Orbit is minimized</p>
+              <p className="text-xs text-slate-300 truncate">Resume your project qualification anytime.</p>
             </div>
             <button
               type="button"
               onClick={handleOpen}
-              className="rounded-full bg-white/10 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/20"
+              className="rounded-full bg-white/10 px-2 md:px-3 py-1 md:py-2 text-xs font-semibold text-white transition hover:bg-white/20 flex-shrink-0 whitespace-nowrap"
             >
               Resume
             </button>
             <button
               type="button"
               onClick={handleClose}
-              className="rounded-full bg-white/5 px-3 py-2 text-xs text-slate-200 transition hover:bg-white/10"
+              className="rounded-full bg-white/5 px-2 md:px-3 py-1 md:py-2 text-xs text-slate-200 transition hover:bg-white/10 flex-shrink-0"
             >
               Close
             </button>
