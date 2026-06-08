@@ -1,4 +1,4 @@
-﻿import { defineConfig } from "vite"
+import { defineConfig } from "vite"
 import react from "@vitejs/plugin-react"
 
 export default defineConfig({
@@ -19,4 +19,15 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router', 'react-router-dom', 'react-helmet-async'],
+          'gsap-vendor': ['gsap', '@gsap/react'],
+          'ui-vendor': ['lucide-react', 'react-icons', 'framer-motion', 'sweetalert2']
+        }
+      }
+    }
+  }
 })
