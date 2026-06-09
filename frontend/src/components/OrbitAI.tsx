@@ -3,14 +3,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import {
   CalendarDays,
+  Maximize,
   MessageCircle,
-  Minimize2Icon,
   Rocket,
   Send,
-  Smartphone,
-  Sparkles,
   X,
 } from "lucide-react";
+import { BsRobot } from "react-icons/bs";
 
 type ChatMessage = {
   id: string;
@@ -274,7 +273,6 @@ const OrbitAI: React.FC = () => {
   const quickReplies = [
     "Show me your AI automation case studies",
     "I need a new website for my business",
-    "Help me choose the right service mix",
     "Book a discovery call",
   ];
 
@@ -294,12 +292,12 @@ const OrbitAI: React.FC = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.96 }}
             transition={orbitTransition}
-            className={`fixed ${isMobileView ? "inset-0" : "top-[140px] md:bottom-24 md:top-auto right-4 md:right-6"} z-[1000] ${isMobileView ? "w-screen h-screen max-h-none rounded-none overflow-hidden" : "w-[calc(100vw-2rem)] md:w-[min(420px,calc(100vw-2rem))] max-h-[calc(100vh-200px)] md:max-h-none rounded-3xl md:rounded-4xl border"} backdrop-blur-2xl overflow-hidden ${orbitTheme.panel}`}
+            className={`fixed ${isMobileView ? "inset-0" : "top-[140px] md:bottom-24 md:top-auto right-4 md:right-4"} z-[1000] ${isMobileView ? "w-screen h-screen max-h-none rounded-none overflow-hidden" : "w-[calc(100vw-2rem)] md:w-[min(420px,calc(100vw-2rem))] max-h-[calc(100vh-200px)] md:max-h-none rounded-3xl md:rounded-4xl border"} backdrop-blur-2xl overflow-hidden ${orbitTheme.panel}`}
           >
             <div className={`flex items-center justify-between gap-3 md:gap-4 border-b px-3 md:px-5 py-3 md:py-4 ${isLight ? "border-slate-200/40" : "border-white/10"}`}>
               <div className="flex items-center gap-2 md:gap-3 min-w-0">
                 <div className="flex h-10 md:h-12 w-10 md:w-12 items-center justify-center rounded-3xl bg-linear-to-br from-primary to-secondary text-white shadow-lg shadow-primary/20 shrink-0">
-                  <Sparkles className="w-5 h-5 md:w-6 md:h-6" />
+                  <BsRobot className="w-5 h-5 md:w-6 md:h-6" />
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs uppercase tracking-[0.3em] text-primary/90 truncate">Orbit AI</p>
@@ -311,11 +309,10 @@ const OrbitAI: React.FC = () => {
                   <button
                     type="button"
                     onClick={openMobilePanel}
-                    className="hidden md:inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition text-slate-200 border-white/10 bg-white/5 hover:bg-white/10"
+                    className="hidden md:inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition text-slate-200 border-white/10 bg-white/5 hover:bg-white/10 cursor-pointer"
                     aria-label="Open Orbit AI in smaller screen mode"
                   >
-                    <Smartphone size={14} />
-                    Small screen
+                    <Maximize size={14} />
                   </button>
                 )}
                 <button
@@ -323,8 +320,10 @@ const OrbitAI: React.FC = () => {
                   className={`flex h-9 md:h-10 w-9 md:w-10 items-center justify-center rounded-3xl border transition flex-shrink-0 ${isLight ? "border-slate-200/40 bg-slate-100 text-slate-900 hover:bg-slate-200" : "border-white/10 bg-white/5 text-white hover:bg-white/10"}`}
                   aria-label="Minimize Orbit AI chat"
                 >
-                  {/* <Minimize2Icon size={16} /> */}
-                  <X size={16} />
+                  <X 
+                    size={16}
+                    className={`cursor-pointer ${isLight ? "text-rose-500 hover:text-rose-700" : "text-rose-400 hover:text-rose-200"}`}
+                  />
                 </button>
               </div>
             </div>
@@ -642,7 +641,7 @@ const OrbitAI: React.FC = () => {
             <motion.button
               layout
               onClick={openPanel}
-              className={`flex h-16 md:h-20 w-16 md:w-20 items-center justify-center rounded-full border transition focus:outline-none overflow-hidden ${orbitTheme.bubbleButton}`}
+              className={`flex h-1 md:h-20 w-16 md:w-20 items-center justify-center rounded-full border transition focus:outline-none overflow-hidden ${orbitTheme.bubbleButton}`}
               whileHover={{ y: -4, scale: 1.05 }}
               whileTap={{ scale: 0.94 }}
               aria-label="Open Orbit AI assistant"
@@ -650,7 +649,7 @@ const OrbitAI: React.FC = () => {
               <motion.img
                 src="/img/avatar.png"
                 alt="Orbit avatar"
-                className="h-10 w-10 md:h-12 md:w-12 object-cover"
+                className="h-50 w-50 md:h-12 md:w-12 object-cover"
                 animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
               />
@@ -662,8 +661,9 @@ const OrbitAI: React.FC = () => {
               className="hidden md:inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
               aria-label="Open Orbit AI in smaller screen mode"
             >
-              <Smartphone size={14} />
-              Small screen
+              <BsRobot size={14} />
+              Enter Orbit
+              
             </motion.button>
           </motion.div>
         )}

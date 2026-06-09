@@ -121,7 +121,6 @@ const App: React.FC = () => {
         </div>
         <CookieConsent />
         <WhatsAppBtn />
-        {!isLoginPage && <OrbitAI />}
         <button
           onClick={scrollToTop}
           aria-label="Scroll to top"
@@ -133,6 +132,7 @@ const App: React.FC = () => {
         >
           <ArrowUp size={24} />
         </button>
+        {!isLoginPage && <OrbitAI />}
       </div>
     </>
   );

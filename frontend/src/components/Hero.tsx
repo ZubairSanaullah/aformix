@@ -7,12 +7,9 @@ import {
   ExternalLink,
   Zap,
   Globe,
-  Layers,
   Cpu,
-  Sparkles,
   Terminal,
   Database,
-  Activity,
   CheckCircle2,
   Cloud
 } from "lucide-react";
