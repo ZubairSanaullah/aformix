@@ -13,8 +13,11 @@ import {
   Terminal,
   Database,
   Activity,
-  CheckCircle2
+  CheckCircle2,
+  Cloud
 } from "lucide-react";
+import { BiMobile } from "react-icons/bi";
+import { BsRobot } from "react-icons/bs";
 
 // Register ScrollTrigger plugin
 if (typeof window !== "undefined") {
@@ -393,7 +396,7 @@ const Hero: React.FC = () => {
             {/* Premium Badge */}
             <div className="hero-badge">
               <span className="hero-badge-pulse" />
-              <span className="hero-badge-text">AI-Powered Digital Solutions</span>
+              <span className="hero-badge-text">OrbitAI - Intelligent Digital Solutions</span>
             </div>
 
             {/* Headline */}
@@ -428,10 +431,10 @@ const Hero: React.FC = () => {
             {/* Trust Elements: Floating Badges */}
             <div className="hero-trust-badges">
               {[
-                { icon: <Zap size={14} />, label: "AI Automation" },
-                { icon: <Layers size={14} />, label: "Custom Software" },
+                { icon: <Zap size={14} />, label: "Full-Stack Development" },
+                { icon: <BiMobile size={14} />, label: "Custom Web Apps" },
                 { icon: <Globe size={14} />, label: "Web Development" },
-                { icon: <Activity size={14} />, label: "Business Growth" },
+                { icon: <Cloud size={14} />, label: "SaaS Solutions" },
               ].map((item, i) => (
                 <div key={i} className="hero-trust-badge">
                   <span className="hero-trust-icon">{item.icon}</span>
@@ -536,7 +539,7 @@ const Hero: React.FC = () => {
             <div className="floating-card-ui floating-card-ui--2">
               <div className="agent-status-layout">
                 <div className="agent-avatar-ring">
-                  <Sparkles size={16} className="text-primary text-spin" />
+                  <BsRobot size={16} className="text-white" />
                 </div>
                 <div className="agent-status-info">
                   <span className="agent-status-label">Orbit Assistant</span>

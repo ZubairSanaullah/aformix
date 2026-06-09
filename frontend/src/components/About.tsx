@@ -103,7 +103,7 @@ const About: React.FC = () => {
                 <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none" />
                 <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-secondary/15 rounded-full blur-[60px] pointer-events-none" />
                 <img
-                  src="/images/orbit_mascot.png"
+                  src="/img/banner.png"
                   alt="Orbit — Aformix AI Mascot"
                   className="w-full aspect-[4/5] object-cover object-center scale-110"
                 />
@@ -112,7 +112,7 @@ const About: React.FC = () => {
 
               <div className="absolute left-8 right-8 bottom-8 rounded-[2.5rem] border border-[var(--color-glass-border)] glass-effect p-8 shadow-2xl">
                 <div className="inline-flex items-center gap-3 rounded-full bg-primary/10 border border-primary/20 px-4 py-2 text-sm text-primary font-semibold mb-4">
-                  <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <span className="w-3 h-3 rounded-full bg-primary animate-pulse" />
                   Meet Orbit — Your AI Assistant
                 </div>
                 <h3 className="text-3xl font-black text-[var(--color-text)] mb-4">Crafting distinctive digital products that scale.</h3>

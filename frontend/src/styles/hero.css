@@ -257,12 +257,13 @@
 }
 
 .hero-headline-gradient {
-  background: linear-gradient(135deg, #27b990 0%, #00d4ff 45%, #684b9e 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: white;
   display: inline-block;
   padding-bottom: 0.1rem;
+}
+
+html.light .hero-headline-gradient {
+  color: #0f172a;
 }
 
 .hero-title-chunk {
@@ -699,7 +700,7 @@
   height: 34px;
   border-radius: 50%;
   background: rgba(39, 185, 144, 0.1);
-  border: 1px solid rgba(39, 185, 144, 0.25);
+  border: 1px solid rgba(20, 197, 147, 0.986);
   display: flex;
   align-items: center;
   justify-content: center;

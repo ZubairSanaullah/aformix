@@ -39,19 +39,14 @@ const Testimonials: React.FC = () => {
           <div className="relative z-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
 
             {/* Mascot visual */}
-            <div className="flex-shrink-0 relative">
-              {/* Glow ring */}
-              <div className="absolute inset-0 rounded-full bg-primary/20 blur-2xl scale-125 pointer-events-none" />
-              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-primary/30 shadow-[0_0_50px_rgba(39,185,144,0.25)]">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#04040d] via-[#080c1a] to-[#04040d]" />
+            <div className="">
+              <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden">
                 <img
-                  src="/images/orbit_mascot.png"
+                  src="/img/avatar.png"
                   alt="Orbit AI Mascot"
-                  className="orbit-faq-avatar w-full h-full object-cover object-top scale-[1.7] translate-y-[-5%]"
+                  className="orbit-faq-avatar w-full h-full object-cover object-center"
                 />
               </div>
-              {/* Active dot */}
-              <span className="absolute bottom-1 right-1 w-5 h-5 rounded-full bg-primary border-2 border-[var(--color-bg)] shadow-md" />
             </div>
 
             {/* Text content */}

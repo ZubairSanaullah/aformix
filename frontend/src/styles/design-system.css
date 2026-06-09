@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #27b990;
+  --color-primary: #31b98f;
   --color-secondary: #684b9e;
-  --color-accent: #f43f5e;
+  --color-accent: #00bfde;
   --color-bg: #0a0a1a;
   --color-surface: #0f172a;
   --color-surface-elevated: #151b2e;
@@ -725,9 +725,9 @@ html.light .light-mode-invert {
   100% { transform: scale(1) translateY(0);     opacity: 1; }
 }
 
-.orbit-faq-avatar {
+/* .orbit-faq-avatar {
   animation: orbit-pulse-glow 3s ease-in-out infinite;
-}
+} */
 
 @keyframes orbit-pulse-glow {
   0%, 100% { box-shadow: 0 0 20px rgba(39,185,144,0.15); }

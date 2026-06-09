@@ -47,7 +47,7 @@ const WhyChooseUs: React.FC = () => {
             {/* Orbit image */}
             <div className="relative bg-gradient-to-br from-[#04040d] via-[#080c1a] to-[#04040d]">
               <img
-                src="/images/orbit_mascot.png"
+                src="/img/banner.png"
                 alt="Orbit AI Mascot — Aformix"
                 className="w-full object-cover object-center"
                 style={{ aspectRatio: "1/1" }}

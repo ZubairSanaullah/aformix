@@ -39,14 +39,15 @@ const Services: React.FC = () => {
   };
 
   const serviceImages: Record<number, string> = {
-    1: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=900&q=80",
-    2: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=900&q=80",
-    3: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=900&q=80",
-    4: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
-    5: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=900&q=80",
-    6: "https://images.unsplash.com/photo-1557804506-669a67965ba0?auto=format&fit=crop&w=900&q=80",
-    7: "https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=900&q=80",
-    8: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80",
+    1: '/img/services/1.png',
+    2: '/img/services/2.png',
+    3: '/img/services/3.jpg',
+    4: '/img/services/4.png',
+    5: '/img/services/5.png',
+    6: '/img/services/6.png',
+    7: '/img/services/7.png',
+    8: '/img/services/8.png',
+
   };
 
   const scrollSlider = (direction: "left" | "right") => {

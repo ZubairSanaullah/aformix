@@ -16,7 +16,7 @@ export const services = [
   {
     id: 1,
     title: "Custom Development",
-    description: "Bespoke web solutions tailored to your unique business needs.",
+    description: "Tailored web applications built to your unique specifications and business needs.",
     icon: "Code2"
   },
   {
@@ -39,9 +39,9 @@ export const services = [
   },
   {
     id: 5,
-    title: "Banking Systems",
-    description: "Secure, robust, and scalable financial management platforms.",
-    icon: "CreditCard"
+    title: "Mobile Applications",
+    description: "Native and cross-platform mobile apps for iOS and Android.",
+    icon: "Smartphone"
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ export const services = [
   },
   {
     id: 7,
-    title: "WordPress Development",
+    title: "WordPress Websites",
     description: "Professional CMS solutions with custom themes and plugins.",
     icon: "Layout"
   },
