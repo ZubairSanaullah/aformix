@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Eye, MessageCircle, Share2 } from 'lucide-react';
+import { Eye } from 'lucide-react';
 import type { BlogArticle } from '../../constants/blogData';
 import { BLOG_ARTICLES } from '../../constants/blogData';
 

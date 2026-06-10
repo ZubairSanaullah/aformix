@@ -1,5 +1,5 @@
 import {
-  Code2, Smartphone, Monitor, ShoppingCart, 
+  Code2, Smartphone, Monitor,
   Search, Shield, Zap, Database, BarChart, 
   Settings, PenTool, LayoutTemplate, Layers,
   Server, MessageSquare, Headphones, Award

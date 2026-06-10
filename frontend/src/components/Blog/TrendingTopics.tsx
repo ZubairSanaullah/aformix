@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { TRENDING_TOPICS } from '../../constants/blogData';
 
@@ -8,7 +8,6 @@ interface TrendingTopicsProps {
 }
 
 const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick }) => {
-  const [hoveredTopic, setHoveredTopic] = useState<string | null>(null);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -30,11 +29,11 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
   };
 
   // Add view counts and icons to trending topics
-  const topicsWithMetrics = TRENDING_TOPICS.map((topic, index) => ({
+  const topicsWithMetrics = TRENDING_TOPICS.map((topic, _index) => ({
     topic,
     views: 2000 + Math.random() * 8000,
     trend: Math.random() > 0.5 ? 'up' : 'down',
-    icon: ['🤖', '🛠️', '💡', '📱', '🔍', '📈', '🚀', '🔐', '⚙️', '💻'][index % 10],
+    icon: ['🤖', '🛠️', '💡', '📱', '🔍', '📈', '🚀', '🔐', '⚙️', '💻'][_index % 10],
   }));
 
   return (
@@ -89,8 +88,6 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
             <motion.button
               key={item.topic}
               onClick={() => onTopicClick(item.topic)}
-              onMouseEnter={() => setHoveredTopic(item.topic)}
-              onMouseLeave={() => setHoveredTopic(null)}
               className={`relative group p-6 rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer ${
                 isDark
                   ? 'bg-gray-800 border-gray-700 hover:border-cyan-500'
@@ -202,7 +199,7 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
             whileInView="visible"
             viewport={{ once: true }}
           >
-            {TRENDING_TOPICS.map((topic, index) => (
+            {TRENDING_TOPICS.map((topic) => (
               <motion.button
                 key={topic}
                 onClick={() => onTopicClick(topic)}

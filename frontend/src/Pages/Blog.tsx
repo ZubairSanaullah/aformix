@@ -8,7 +8,6 @@ import LatestArticles from '../components/Blog/LatestArticles';
 import TrendingTopics from '../components/Blog/TrendingTopics';
 import NewsletterSection from '../components/Blog/NewsletterSection';
 import type { BlogArticle } from '../constants/blogData';
-import { BLOG_ARTICLES } from '../constants/blogData';
 import { useMemo } from 'react';
 import { useTheme } from '../contexts/ThemeContext';
 
