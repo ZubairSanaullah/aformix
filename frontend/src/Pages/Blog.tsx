@@ -9,12 +9,15 @@ import TrendingTopics from '../components/Blog/TrendingTopics';
 import NewsletterSection from '../components/Blog/NewsletterSection';
 import type { BlogArticle } from '../constants/blogData';
 import { BLOG_ARTICLES } from '../constants/blogData';
-import { useContext } from 'react';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { useMemo } from 'react';
+import { useTheme } from '../contexts/ThemeContext';
 
 const Blog: React.FC = () => {
-  const themeContext = useContext(ThemeContext);
-  const isDark = themeContext?.isDark ?? false;
+  const { theme } = useTheme();
+  const isDark = useMemo(
+    () => theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches),
+    [theme]
+  );
 
   const [selectedArticle, setSelectedArticle] = useState<BlogArticle | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
