@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 import Divider from "./Divider";
+import { convertAndFormatPriceString, getSelectedCurrency, setSelectedCurrency, CURRENCIES } from "../utils/currency";
 
 const pricingPlans = [
   {
+    id: "starter",
     title: "Starter",
     price: "$499",
     description: "Perfect for freelancers and small startups launching their first product.",
@@ -12,9 +15,11 @@ const pricingPlans = [
       "Basic SEO setup",
       "2 rounds of revisions",
     ],
-    cta: "Book Starter",
+    cta: "View Starter Details",
+    link: "/pricing/starter",
   },
   {
+    id: "growth",
     title: "Growth",
     price: "$1,299",
     description: "Ideal for growing teams that need reliable product design and scalable builds.",
@@ -24,10 +29,12 @@ const pricingPlans = [
       "Performance optimization",
       "3 months support",
     ],
-    cta: "Book Growth",
+    cta: "View Growth Details",
+    link: "/pricing/growth",
     featured: true,
   },
   {
+    id: "enterprise",
     title: "Enterprise",
     price: "$2,499",
     description: "Advanced solutions for enterprise-level systems with ongoing support.",
@@ -37,11 +44,18 @@ const pricingPlans = [
       "Security & compliance",
       "Dedicated project manager",
     ],
-    cta: "Book Enterprise",
+    cta: "View Enterprise Details",
+    link: "/pricing/enterprise",
   },
 ];
 
 const Pricing: React.FC = () => {
+  const [currency, setCurrencyState] = useState<string>(getSelectedCurrency());
+
+  useEffect(() => {
+    setSelectedCurrency(currency);
+  }, [currency]);
+
   return (
     <section id="pricing" className="reveal section-padding relative overflow-hidden w-full">
       <div className="absolute top-0 right-0 w-72 h-72 rounded-full bg-primary/10 blur-3xl opacity-70 -z-10"></div>
@@ -52,6 +66,18 @@ const Pricing: React.FC = () => {
           <p className="max-w-2xl mx-auto text-[var(--color-text-muted)] text-lg">
             Choose the right plan for your business and get the support you need to build, launch, and scale with confidence.
           </p>
+          <div className="mt-4">
+            <label className="text-sm text-[var(--color-text-muted)] mr-2">Currency:</label>
+            <select
+              value={currency}
+              onChange={(e) => setCurrencyState(e.target.value)}
+              className="bg-transparent border border-[var(--color-border)] px-3 py-1 rounded-md text-[var(--color-text)]"
+            >
+              {CURRENCIES.map((c) => (
+                <option key={c} value={c}>{c}</option>
+              ))}
+            </select>
+          </div>
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
@@ -64,7 +90,7 @@ const Pricing: React.FC = () => {
                 {plan.title}
               </span>
               <div className="mt-8">
-                <p className="text-5xl font-black tracking-tight text-[var(--color-text)]">{plan.price}</p>
+                <p className="text-5xl font-black tracking-tight text-[var(--color-text)]">{convertAndFormatPriceString(plan.price, currency)}</p>
                 <p className="mt-4 text-[var(--color-text-muted)] leading-relaxed">{plan.description}</p>
               </div>
 
@@ -77,9 +103,9 @@ const Pricing: React.FC = () => {
                 ))}
               </ul>
 
-              <button type="button" className="btn-primary mt-10 w-full">
+              <Link to={plan.link || `/pricing/${plan.id}`} className="btn-primary mt-10 w-full text-center block cursor-pointer">
                 {plan.cta}
-              </button>
+              </Link>
             </div>
           ))}
         </div>

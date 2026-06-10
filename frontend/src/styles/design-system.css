@@ -326,6 +326,7 @@ html.light .card-premium:hover {
       transparent);
   opacity: 0;
   transition: opacity 0.5s;
+  pointer-events: none;
 }
 
 .card-premium:hover::before {

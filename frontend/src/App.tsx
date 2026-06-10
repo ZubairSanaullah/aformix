@@ -22,6 +22,8 @@ import Contact from "./components/Contact";
 const PrivacyPolicyPage = lazy(() => import("./Pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./Pages/TermsOfService"));
 const LoginPage = lazy(() => import("./Pages/Login"));
+const PricingDetailsPage = lazy(() => import("./Pages/PricingDetails"));
+const Blog = lazy(() => import("./Pages/Blog"));
 
 const HomeContent: React.FC = () => (
   <>
@@ -110,9 +112,11 @@ const App: React.FC = () => {
             <Routes>
               <Route path="/" element={<HomeContent />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/blog" element={<Blog />} />
               <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/login" element={<LoginPage />} />
+              <Route path="/pricing/:packageId" element={<PricingDetailsPage />} />
             </Routes>
           </Suspense>
         </main>
