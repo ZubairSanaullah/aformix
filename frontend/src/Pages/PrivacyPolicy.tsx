@@ -285,7 +285,7 @@ const PrivacyPolicyPage: React.FC = () => {
         <motion.section
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          transition={{ duration: 0.8, ease: 'easeOut' as const }}
           className="relative overflow-hidden rounded-4xl border border-[var(--color-border)] bg-[var(--color-surface)]/95 px-6 py-16 shadow-2xl shadow-[var(--color-bg)]/40 backdrop-blur-xl sm:px-10 lg:px-14 transition-colors duration-300"
           id="overview"
         >
