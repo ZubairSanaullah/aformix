@@ -423,6 +423,13 @@ const Hero: React.FC = () => {
                 <span>View Portfolio</span>
                 <ExternalLink size={16} />
               </a>
+              <button
+                onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('open-orbit-ai')); }}
+                className="hero-cta-btn hero-cta-secondary cursor-pointer"
+              >
+                <span>Open Orbit AI</span>
+                <BsRobot size={16} />
+              </button>
             </div>
 
             {/* Trust Elements: Floating Badges */}
@@ -511,23 +518,23 @@ const Hero: React.FC = () => {
             <div className="floating-card-ui floating-card-ui--1">
               <div className="floating-card-hdr">
                 <Terminal size={14} className="text-primary" />
-                <span className="floating-card-title">Automation Workflow</span>
+                <span className="floating-card-title">AI Agent</span>
                 <span className="pulse-indicator" />
               </div>
               <div className="workflow-steps">
                 <div className="workflow-step active">
                   <CheckCircle2 size={12} className="text-primary" />
-                  <span>Webhook Received</span>
+                  <span>Analyzing Request</span>
                 </div>
                 <div className="workflow-step-connector" />
                 <div className="workflow-step processing">
                   <Cpu size={12} className="text-secondary-color text-pulse" />
-                  <span>Execute AI Agent</span>
+                  <span>Processing Request</span>
                 </div>
                 <div className="workflow-step-connector" />
                 <div className="workflow-step">
                   <Database size={12} className="text-muted" />
-                  <span>Sync Dashboard</span>
+                  <span>Sending Response</span>
                 </div>
               </div>
             </div>
@@ -548,9 +555,9 @@ const Hero: React.FC = () => {
             {/* FLOATING CARD 3: Performance Metric */}
             <div className="floating-card-ui floating-card-ui--3">
               <div className="metric-card-layout">
-                <span className="metric-label">AI Efficiency Boost</span>
+                <span className="metric-label">Efficiency Boost</span>
                 <div className="metric-value-row">
-                  <span className="metric-value">+340%</span>
+                  <span className="metric-value">+94%</span>
                   <Zap size={14} className="text-primary fill-primary" />
                 </div>
                 <div className="metric-bar-bg">

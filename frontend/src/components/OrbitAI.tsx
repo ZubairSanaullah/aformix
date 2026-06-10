@@ -118,8 +118,11 @@ const OrbitAI: React.FC = () => {
       ? "border-slate-200/30 bg-white/90 text-slate-900"
       : "border-white/10 text-white",
     bubbleButton: isLight
-      ? "border-slate-200/30 bg-slate-900 text-white shadow-[0_30px_60px_rgba(15,23,42,0.18)]"
-      : "border-white/15 bg-linear-to-br from-primary to-secondary text-white shadow-[0_30px_60px_rgba(0,0,0,0.35)]",
+      ? "border-white/50 bg-linear-to-br from-primary to-emerald-400 text-white shadow-[0_20px_50px_rgba(49,185,143,0.35)]"
+      : "border-white/15 bg-linear-to-br from-primary to-secondary text-white shadow-[0_30px_60px_rgba(0,0,0,0.45)]",
+    fullScreenButton: isLight
+      ? "border-white/60 bg-white/95 text-slate-800 shadow-[0_10px_30px_rgba(15,23,42,0.15)] hover:bg-white hover:scale-105"
+      : "border-white/10 bg-slate-900/80 text-white shadow-[0_10px_30px_rgba(0,0,0,0.4)] hover:bg-slate-800/90 hover:scale-105 hover:border-white/20",
   };
 
   const recommendation = useMemo(() => {
@@ -152,6 +155,20 @@ const OrbitAI: React.FC = () => {
     }, 600);
     return () => window.clearTimeout(timer);
   }, [isOpen, messages.length]);
+
+  useEffect(() => {
+    const handleOpenOrbitAI = () => {
+      setShowWidget(true);
+      setIsOpen(true);
+      setIsMinimized(false);
+      setIsMobileView(window.innerWidth < 768);
+      setActiveTab("chat");
+      setStatus("idle");
+    };
+
+    window.addEventListener("open-orbit-ai", handleOpenOrbitAI);
+    return () => window.removeEventListener("open-orbit-ai", handleOpenOrbitAI);
+  }, []);
 
   const latestMessage = messages[messages.length - 1];
 
@@ -227,7 +244,7 @@ const OrbitAI: React.FC = () => {
         text ||
         "I’m processing your request and will respond shortly.";
 
-      setMessages((prev) => [...prev, { id: createMessageId(), role: "assistant", content: assistantText }] );
+      setMessages((prev) => [...prev, { id: createMessageId(), role: "assistant", content: assistantText }]);
       setStatus("success");
       if (assistantText.toLowerCase().includes("book")) {
         setActiveTab("booking");
@@ -324,7 +341,10 @@ const OrbitAI: React.FC = () => {
                   <button
                     type="button"
                     onClick={openMobilePanel}
-                    className="hidden md:inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition text-slate-200 border-white/10 bg-white/5 hover:bg-white/10 cursor-pointer"
+                    className={`hidden md:inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition cursor-pointer ${isLight
+                        ? "text-slate-700 border-slate-200/60 bg-slate-100 hover:bg-slate-200"
+                        : "text-slate-200 border-white/10 bg-white/5 hover:bg-white/10"
+                      }`}
                     aria-label="Open Orbit AI in smaller screen mode"
                   >
                     <Maximize size={14} />
@@ -335,7 +355,7 @@ const OrbitAI: React.FC = () => {
                   className={`flex h-9 md:h-10 w-9 md:w-10 items-center justify-center rounded-3xl border transition flex-shrink-0 ${isLight ? "border-slate-200/40 bg-slate-100 text-slate-900 hover:bg-slate-200" : "border-white/10 bg-white/5 text-white hover:bg-white/10"}`}
                   aria-label="Minimize Orbit AI chat"
                 >
-                  <X 
+                  <X
                     size={16}
                     className={`cursor-pointer ${isLight ? "text-rose-500 hover:text-rose-700" : "text-rose-400 hover:text-rose-200"}`}
                   />
@@ -349,27 +369,24 @@ const OrbitAI: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setActiveTab("chat")}
-                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${
-                      activeTab === "chat" ? orbitTheme.tabActive : orbitTheme.tabInactive
-                    }`}
+                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${activeTab === "chat" ? orbitTheme.tabActive : orbitTheme.tabInactive
+                      }`}
                   >
                     Chat
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveTab("lead")}
-                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${
-                      activeTab === "lead" ? orbitTheme.tabActive : orbitTheme.tabInactive
-                    }`}
+                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${activeTab === "lead" ? orbitTheme.tabActive : orbitTheme.tabInactive
+                      }`}
                   >
                     Lead Capture
                   </button>
                   <button
                     type="button"
                     onClick={() => setActiveTab("booking")}
-                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${
-                      activeTab === "booking" ? orbitTheme.tabActive : orbitTheme.tabInactive
-                    }`}
+                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${activeTab === "booking" ? orbitTheme.tabActive : orbitTheme.tabInactive
+                      }`}
                   >
                     Book Call
                   </button>
@@ -381,15 +398,14 @@ const OrbitAI: React.FC = () => {
                       {messages.map((message) => (
                         <div
                           key={message.id}
-                          className={`rounded-3xl p-3 md:p-4 mb-3 md:mb-4 max-w-[85%] md:max-w-[90%] text-sm md:text-base ${
-                            message.role === "assistant"
+                          className={`rounded-3xl p-3 md:p-4 mb-3 md:mb-4 max-w-[85%] md:max-w-[90%] text-sm md:text-base ${message.role === "assistant"
                               ? isLight
                                 ? "bg-slate-100/90 text-slate-900"
                                 : "bg-slate-900/80 text-slate-100"
                               : isLight
-                              ? "bg-slate-200 text-slate-900 self-end"
-                              : "bg-white/10 text-white self-end"
-                          }`}
+                                ? "bg-slate-200 text-slate-900 self-end"
+                                : "bg-white/10 text-white self-end"
+                            }`}
                         >
                           <p className="whitespace-pre-line leading-6">{message.content}</p>
                         </div>
@@ -403,11 +419,10 @@ const OrbitAI: React.FC = () => {
                             key={reply}
                             type="button"
                             onClick={() => handleQuickReply(reply)}
-                            className={`rounded-full border px-3 md:px-4 py-2 text-xs font-semibold transition ${
-                              isLight
+                            className={`rounded-full border px-3 md:px-4 py-2 text-xs font-semibold transition ${isLight
                                 ? "border-slate-200 bg-slate-100 text-slate-900 hover:bg-slate-200"
                                 : "border-white/10 bg-white/5 text-slate-200 hover:bg-white/10"
-                            }`}
+                              }`}
                           >
                             {reply}
                           </button>
@@ -654,32 +669,34 @@ const OrbitAI: React.FC = () => {
             style={{ right: FIXED_RIGHT, bottom: FIXED_BOTTOM }}
             className="fixed bottom-24 md:bottom-8 right-4 md:right-[20%] z-[99] flex flex-col items-center gap-3"
           >
-            <div className="relative flex flex-col items-center gap-3">
+            <motion.div
+              className="relative flex flex-col items-center"
+              whileHover={{ y: -4, scale: 1.05 }}
+              whileTap={{ scale: 0.94 }}
+            >
               <button
                 type="button"
                 onClick={handleClose}
-                className="absolute -top-3 right-0 inline-flex h-8 w-8 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/20 transition hover:bg-rose-600 focus:outline-none"
+                className="absolute -top-1 -right-1 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-rose-500 text-white shadow-lg shadow-rose-500/20 transition hover:bg-rose-600 focus:outline-none cursor-pointer"
                 aria-label="Close Orbit AI widget"
               >
-                <X size={16} />
+                <X size={14} />
               </button>
 
-              <motion.button
-                layout
+              <button
+                type="button"
                 onClick={openPanel}
                 className={`flex h-16 md:h-20 w-16 md:w-20 items-center justify-center rounded-full border transition focus:outline-none overflow-hidden ${orbitTheme.bubbleButton}`}
-                whileHover={{ y: -4, scale: 1.05 }}
-                whileTap={{ scale: 0.94 }}
                 aria-label="Open Orbit AI assistant"
               >
                 <FaRobot size={40} />
-              </motion.button>
-            </div>
+              </button>
+            </motion.div>
 
             <motion.button
               layout
               onClick={openMobilePanel}
-              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-rose-500/80 px-3 py-2 text-xs font-semibold text-white transition hover:bg-white/10"
+              className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 text-xs font-semibold transition backdrop-blur-md ${orbitTheme.fullScreenButton}`}
               aria-label="Open Orbit AI in smaller screen mode"
             >
               <BsRobot size={14} />

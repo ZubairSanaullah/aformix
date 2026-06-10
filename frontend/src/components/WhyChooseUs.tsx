@@ -72,7 +72,7 @@ const WhyChooseUs: React.FC = () => {
               </div>
 
               {/* Feature badges */}
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 mb-6">
                 {["AI Automation", "Smart Workflows", "24/7 Support", "Data Insights"].map((tag) => (
                   <span
                     key={tag}
@@ -82,6 +82,14 @@ const WhyChooseUs: React.FC = () => {
                   </span>
                 ))}
               </div>
+
+              <button
+                onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('open-orbit-ai')); }}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-primary/10 border border-primary/20 text-primary px-4 py-3 font-semibold transition hover:bg-primary hover:text-white cursor-pointer"
+              >
+                <Bot size={18} />
+                Open Orbit AI
+              </button>
             </div>
           </div>
         </div>

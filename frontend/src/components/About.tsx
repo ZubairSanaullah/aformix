@@ -3,6 +3,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ShieldCheck, Globe, ChartNoAxesCombined } from "lucide-react";
 import { CiMobile1 } from "react-icons/ci";
+import { BsRobot } from "react-icons/bs";
 import Divider from "./Divider";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -116,9 +117,16 @@ const About: React.FC = () => {
                   Meet Orbit — Your AI Assistant
                 </div>
                 <h3 className="text-3xl font-black text-[var(--color-text)] mb-4">Crafting distinctive digital products that scale.</h3>
-                <p className="text-[var(--color-text-muted)] leading-relaxed">
+                <p className="text-[var(--color-text-muted)] leading-relaxed mb-6">
                   Orbit is our AI mascot that represents our commitment to intelligent automation and modern digital craftsmanship.
                 </p>
+                <button
+                  onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('open-orbit-ai')); }}
+                  className="inline-flex items-center gap-2 rounded-full bg-primary text-white px-6 py-3 font-semibold transition hover:bg-primary/90 hover:scale-105 shadow-lg shadow-primary/20 cursor-pointer"
+                >
+                  <BsRobot size={18} />
+                  Open Orbit AI
+                </button>
               </div>
             </div>
 
