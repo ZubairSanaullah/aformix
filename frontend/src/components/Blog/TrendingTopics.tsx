@@ -3,11 +3,10 @@ import { motion } from 'framer-motion';
 import { TRENDING_TOPICS } from '../../constants/blogData';
 
 interface TrendingTopicsProps {
-  isDark: boolean;
   onTopicClick: (topic: string) => void;
 }
 
-const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick }) => {
+const TrendingTopics: React.FC<TrendingTopicsProps> = ({ onTopicClick }) => {
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -38,11 +37,7 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
 
   return (
     <section
-      className={`py-20 ${
-        isDark
-          ? 'bg-gradient-to-br from-gray-900 to-gray-950'
-          : 'bg-gradient-to-br from-emerald-50 to-cyan-50'
-      }`}
+      className="py-20 bg-[var(--color-surface-elevated)]"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
@@ -54,23 +49,17 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
           transition={{ duration: 0.5 }}
         >
           <span
-            className={`text-sm font-semibold tracking-widest uppercase ${
-              isDark ? 'text-cyan-400' : 'text-cyan-600'
-            }`}
+            className="text-sm font-semibold tracking-widest uppercase text-accent"
           >
             What's Hot
           </span>
           <h2
-            className={`text-4xl md:text-5xl font-bold mt-3 mb-4 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}
+            className="text-4xl md:text-5xl font-bold mt-3 mb-4 text-[var(--color-text)]"
           >
             Trending Topics
           </h2>
           <p
-            className={`text-lg max-w-2xl mx-auto ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}
+            className="text-lg max-w-2xl mx-auto text-[var(--color-text-muted)]"
           >
             Explore the most talked-about topics in technology, business, and innovation
           </p>
@@ -88,11 +77,7 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
             <motion.button
               key={item.topic}
               onClick={() => onTopicClick(item.topic)}
-              className={`relative group p-6 rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer ${
-                isDark
-                  ? 'bg-gray-800 border-gray-700 hover:border-cyan-500'
-                  : 'bg-white border-gray-200 hover:border-cyan-500'
-              }`}
+              className="relative group p-6 rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer bg-[var(--color-surface)] border-[var(--color-border)] hover:border-accent"
               variants={itemVariants}
               whileHover={{ scale: 1.05, y: -8 }}
               whileTap={{ scale: 0.95 }}
@@ -112,12 +97,8 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
                   <motion.span
                     className={`text-xs font-bold px-2 py-1 rounded-full ${
                       item.trend === 'up'
-                        ? isDark
-                          ? 'bg-emerald-500/20 text-emerald-400'
-                          : 'bg-emerald-100 text-emerald-700'
-                        : isDark
-                        ? 'bg-orange-500/20 text-orange-400'
-                        : 'bg-orange-100 text-orange-700'
+                        ? 'bg-emerald-500/20 text-emerald-400'
+                        : 'bg-orange-500/20 text-orange-400'
                     }`}
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
@@ -129,27 +110,21 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
 
                 {/* Topic Name */}
                 <h3
-                  className={`text-lg font-bold mb-2 text-left ${
-                    isDark ? 'text-white' : 'text-gray-900'
-                  }`}
+                  className="text-lg font-bold mb-2 text-left text-[var(--color-text)]"
                 >
                   {item.topic}
                 </h3>
 
                 {/* Views */}
                 <p
-                  className={`text-xs font-medium mb-3 ${
-                    isDark ? 'text-gray-400' : 'text-gray-600'
-                  }`}
+                  className="text-xs font-medium mb-3 text-[var(--color-text-muted)] text-left"
                 >
                   {Math.round(item.views / 100)} articles
                 </p>
 
                 {/* Progress Bar */}
                 <div
-                  className={`h-1.5 rounded-full overflow-hidden ${
-                    isDark ? 'bg-gray-700' : 'bg-gray-200'
-                  }`}
+                  className="h-1.5 rounded-full overflow-hidden bg-[var(--color-bg)]"
                 >
                   <motion.div
                     className="h-full bg-gradient-to-r from-cyan-500 to-emerald-500"
@@ -176,18 +151,13 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
 
         {/* Tags Cloud Alternative View */}
         <motion.div
-          className="mt-20 pt-20 border-t"
-          style={{
-            borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-          }}
+          className="mt-20 pt-20 border-t border-[var(--color-border)]"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
           <h3
-            className={`text-2xl font-bold mb-8 text-center ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}
+            className="text-2xl font-bold mb-8 text-center text-[var(--color-text)]"
           >
             All Topics
           </h3>
@@ -203,18 +173,11 @@ const TrendingTopics: React.FC<TrendingTopicsProps> = ({ isDark, onTopicClick })
               <motion.button
                 key={topic}
                 onClick={() => onTopicClick(topic)}
-                className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 border-2 ${
-                  isDark
-                    ? 'bg-gray-800 text-gray-300 border-gray-700 hover:border-cyan-500 hover:text-cyan-400'
-                    : 'bg-white text-gray-700 border-gray-300 hover:border-cyan-500 hover:text-cyan-600'
-                }`}
+                className="px-6 py-3 rounded-full font-semibold transition-all duration-300 border-2 bg-[var(--color-surface)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-cyan-500 hover:text-accent cursor-pointer"
                 variants={itemVariants}
                 whileHover={{
                   scale: 1.1,
-                  boxShadow:
-                    isDark
-                      ? '0 0 20px rgba(0, 191, 222, 0.3)'
-                      : '0 0 20px rgba(0, 191, 222, 0.2)',
+                  boxShadow: '0 0 20px rgba(0, 191, 222, 0.2)',
                 }}
                 whileTap={{ scale: 0.95 }}
               >

@@ -8,16 +8,8 @@ import LatestArticles from '../components/Blog/LatestArticles';
 import TrendingTopics from '../components/Blog/TrendingTopics';
 import NewsletterSection from '../components/Blog/NewsletterSection';
 import type { BlogArticle } from '../constants/blogData';
-import { useMemo } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
 
 const Blog: React.FC = () => {
-  const { theme } = useTheme();
-  const isDark = useMemo(
-    () => theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches),
-    [theme]
-  );
-
   const [selectedArticle, setSelectedArticle] = useState<BlogArticle | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -78,24 +70,21 @@ const Blog: React.FC = () => {
         <meta property="og:type" content="website" />
       </head>
 
-      <main className={isDark ? 'bg-gray-950' : 'bg-white'}>
+      <main className="bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
         {/* Hero Section */}
         <HeroSection
           onExplore={handleExplore}
           onSubscribe={handleSubscribe}
-          isDark={isDark}
         />
 
         {/* Featured Articles */}
         <FeaturedArticles
-          isDark={isDark}
           onArticleClick={setSelectedArticle}
         />
 
         {/* Search & Filtering */}
         <div id="search-section">
           <SearchFiltering
-            isDark={isDark}
             onCategoryChange={setSelectedCategory}
             onTagChange={setSelectedTag}
             onSearchChange={setSearchQuery}
@@ -107,7 +96,6 @@ const Blog: React.FC = () => {
 
         {/* Latest Articles */}
         <LatestArticles
-          isDark={isDark}
           onArticleClick={setSelectedArticle}
           searchQuery={searchQuery}
           selectedCategory={selectedCategory}
@@ -115,11 +103,11 @@ const Blog: React.FC = () => {
         />
 
         {/* Trending Topics */}
-        <TrendingTopics isDark={isDark} onTopicClick={handleTopicClick} />
+        <TrendingTopics onTopicClick={handleTopicClick} />
 
         {/* Newsletter Section */}
         <div id="newsletter-section">
-          <NewsletterSection isDark={isDark} />
+          <NewsletterSection />
         </div>
 
         {/* Article Modal */}
@@ -142,11 +130,7 @@ const Blog: React.FC = () => {
 
               {/* Modal Content */}
               <motion.div
-                className={`relative max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl ${
-                  isDark
-                    ? 'bg-gray-900'
-                    : 'bg-white'
-                }`}
+                className="relative max-w-4xl w-full max-h-[90vh] overflow-y-auto rounded-3xl shadow-2xl bg-[var(--color-surface)] border border-[var(--color-border)]"
                 initial={{ opacity: 0, scale: 0.9, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.9, y: 20 }}
@@ -156,11 +140,7 @@ const Blog: React.FC = () => {
                 {/* Close Button */}
                 <motion.button
                   onClick={() => setSelectedArticle(null)}
-                  className={`sticky top-6 right-6 z-10 p-2 rounded-full transition-all ${
-                    isDark
-                      ? 'bg-gray-800 hover:bg-gray-700 text-gray-300'
-                      : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                  }`}
+                  className="sticky top-6 right-6 z-10 p-2 rounded-full transition-all bg-[var(--color-surface-elevated)] hover:bg-[var(--color-border)] text-[var(--color-text)]"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                 >
@@ -181,90 +161,70 @@ const Blog: React.FC = () => {
                   {/* Metadata */}
                   <div className="flex flex-wrap items-center gap-4 mb-6">
                     <span
-                      className={`px-4 py-2 rounded-full font-semibold text-sm bg-gradient-to-r from-emerald-500 to-cyan-500 text-white`}
+                      className="px-4 py-2 rounded-full font-semibold text-sm bg-gradient-to-r from-emerald-500 to-cyan-500 text-white"
                     >
                       {selectedArticle.category}
                     </span>
-                    <span className={isDark ? 'text-gray-400' : 'text-gray-600'}>
+                    <span className="text-[var(--color-text-muted)]">
                       {selectedArticle.readingTime} read
                     </span>
-                    <span className={isDark ? 'text-gray-400' : 'text-gray-600'}>
+                    <span className="text-[var(--color-text-muted)]">
                       {selectedArticle.publishDate}
                     </span>
                   </div>
 
                   {/* Title */}
                   <h1
-                    className={`text-4xl md:text-5xl font-bold mb-6 leading-tight ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
+                    className="text-4xl md:text-5xl font-bold mb-6 leading-tight text-[var(--color-text)]"
                   >
                     {selectedArticle.title}
                   </h1>
 
                   {/* Author Info */}
-                  <div className="flex items-center gap-4 py-6 border-b" style={{
-                    borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                  }}>
+                  <div className="flex items-center gap-4 py-6 border-b border-[var(--color-border)]">
                     <img
                       src={selectedArticle.author.avatar}
                       alt={selectedArticle.author.name}
                       className="w-12 h-12 rounded-full object-cover border-2 border-emerald-500"
                     />
                     <div>
-                      <div className={`font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <div className="font-bold text-[var(--color-text)]">
                         {selectedArticle.author.name}
                       </div>
-                      <div className={isDark ? 'text-gray-400' : 'text-gray-600'}>
+                      <div className="text-[var(--color-text-muted)]">
                         {selectedArticle.author.bio}
                       </div>
                     </div>
                   </div>
 
                   {/* Description */}
-                  <p className={`text-lg my-8 leading-relaxed ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}>
+                  <p className="text-lg my-8 leading-relaxed text-[var(--color-text-muted)]">
                     {selectedArticle.description}
                   </p>
 
                   {/* Full Content */}
-                  <div className={`prose prose-lg max-w-none mb-8 ${
-                    isDark ? 'prose-invert' : ''
-                  }`}>
-                    <p className={`leading-relaxed ${
-                      isDark ? 'text-gray-300' : 'text-gray-700'
-                    }`}>
+                  <div className="prose prose-lg max-w-none mb-8 dark:prose-invert">
+                    <p className="leading-relaxed text-[var(--color-text-muted)]">
                       {selectedArticle.content}
                     </p>
 
                     {/* Placeholder for more detailed content */}
-                    <p className={`leading-relaxed mt-6 ${
-                      isDark ? 'text-gray-300' : 'text-gray-700'
-                    }`}>
+                    <p className="leading-relaxed mt-6 text-[var(--color-text-muted)]">
                       This comprehensive article explores key insights and practical strategies to help you succeed in {selectedArticle.category.toLowerCase()}. Whether you're just starting out or looking to optimize your existing approach, you'll find valuable takeaways that you can implement immediately.
                     </p>
 
-                    <p className={`leading-relaxed mt-6 ${
-                      isDark ? 'text-gray-300' : 'text-gray-700'
-                    }`}>
+                    <p className="leading-relaxed mt-6 text-[var(--color-text-muted)]">
                       Throughout this guide, we'll examine real-world examples, industry trends, and expert recommendations that have proven effective. By the end, you'll have a clear understanding of best practices and actionable steps to take your strategy to the next level.
                     </p>
                   </div>
 
                   {/* Tags */}
-                  <div className="mb-8 pt-8 border-t" style={{
-                    borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                  }}>
+                  <div className="mb-8 pt-8 border-t border-[var(--color-border)]">
                     <div className="flex flex-wrap gap-3">
                       {selectedArticle.tags.map((tag) => (
                         <span
                           key={tag}
-                          className={`px-4 py-2 rounded-full text-sm font-medium ${
-                            isDark
-                              ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                          }`}
+                          className="px-4 py-2 rounded-full text-sm font-medium bg-[var(--color-surface-elevated)] text-[var(--color-text-muted)] hover:bg-[var(--color-border)]"
                         >
                           #{tag}
                         </span>
@@ -273,54 +233,38 @@ const Blog: React.FC = () => {
                   </div>
 
                   {/* Actions */}
-                  <div className="flex items-center gap-4 py-8 border-t" style={{
-                    borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                  }}>
-                    <span className={isDark ? 'text-gray-400' : 'text-gray-600'}>Share this article:</span>
-                    <button className={`px-4 py-2 rounded-lg font-medium ${
-                      isDark
-                        ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}>
+                  <div className="flex items-center gap-4 py-8 border-t border-[var(--color-border)]">
+                    <span className="text-[var(--color-text-muted)]">Share this article:</span>
+                    <button className="px-4 py-2 rounded-lg font-medium bg-[var(--color-surface-elevated)] text-[var(--color-text-muted)] hover:bg-[var(--color-border)]">
                       Twitter
                     </button>
-                    <button className={`px-4 py-2 rounded-lg font-medium ${
-                      isDark
-                        ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}>
+                    <button className="px-4 py-2 rounded-lg font-medium bg-[var(--color-surface-elevated)] text-[var(--color-text-muted)] hover:bg-[var(--color-border)]">
                       LinkedIn
                     </button>
-                    <button className={`px-4 py-2 rounded-lg font-medium ${
-                      isDark
-                        ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-                        : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                    }`}>
+                    <button className="px-4 py-2 rounded-lg font-medium bg-[var(--color-surface-elevated)] text-[var(--color-text-muted)] hover:bg-[var(--color-border)]">
                       Copy Link
                     </button>
                   </div>
 
                   {/* Stats */}
-                  <div className="grid grid-cols-3 gap-4 py-8 border-t" style={{
-                    borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                  }}>
+                  <div className="grid grid-cols-3 gap-4 py-8 border-t border-[var(--color-border)]">
                     <div className="text-center">
-                      <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <div className="text-2xl font-bold text-[var(--color-text)]">
                         {selectedArticle.views.toLocaleString()}
                       </div>
-                      <div className={isDark ? 'text-gray-400' : 'text-gray-600'}>Views</div>
+                      <div className="text-[var(--color-text-muted)]">Views</div>
                     </div>
                     <div className="text-center">
-                      <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <div className="text-2xl font-bold text-[var(--color-text)]">
                         {selectedArticle.reactions.comments}
                       </div>
-                      <div className={isDark ? 'text-gray-400' : 'text-gray-600'}>Comments</div>
+                      <div className="text-[var(--color-text-muted)]">Comments</div>
                     </div>
                     <div className="text-center">
-                      <div className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                      <div className="text-2xl font-bold text-[var(--color-text)]">
                         {selectedArticle.reactions.likes}
                       </div>
-                      <div className={isDark ? 'text-gray-400' : 'text-gray-600'}>Likes</div>
+                      <div className="text-[var(--color-text-muted)]">Likes</div>
                     </div>
                   </div>
                 </article>

@@ -47,7 +47,7 @@ const Unsubscribe: React.FC = () => {
   }, [token]);
 
   return (
-    <div className="min-h-screen pt-32 pb-20 flex items-center justify-center bg-[var(--color-background)] px-4">
+    <div className="min-h-screen pt-32 pb-20 flex items-center justify-center bg-[var(--color-bg)] px-4">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ const Unsubscribe: React.FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 w-full">
               <button
                 onClick={() => navigate("/")}
-                className="flex-1 bg-transparent border border-[var(--color-primary)] text-[var(--color-primary)] font-bold py-3 px-6 rounded-xl hover:bg-[var(--color-primary)] hover:text-white transition-all duration-300"
+                className="btn-outline flex-1 cursor-pointer"
               >
                 Return to Website
               </button>
@@ -89,7 +89,7 @@ const Unsubscribe: React.FC = () => {
             <p className="text-[var(--color-text-muted)] mb-8">{message}</p>
             <button
               onClick={() => navigate("/")}
-              className="w-full bg-[var(--color-surface)] border border-[var(--color-border)] text-[var(--color-text)] font-bold py-3 px-6 rounded-xl hover:bg-[#222] transition-all duration-300"
+              className="btn-outline w-full cursor-pointer"
             >
               Return Home
             </button>

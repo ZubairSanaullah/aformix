@@ -190,7 +190,7 @@ const LoginPage: React.FC = () => {
                   value={loginEmail}
                   onChange={(event) => setLoginEmail(event.target.value)}
                   placeholder="you@example.com"
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-transparent px-4 py-3 text-sm text-[var(--color-text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="mt-2 input-field"
                   required
                 />
               </label>
@@ -203,7 +203,7 @@ const LoginPage: React.FC = () => {
                     value={loginPassword}
                     onChange={(event) => setLoginPassword(event.target.value)}
                     placeholder="********"
-                    className="w-full rounded-2xl border border-white/10 bg-transparent px-4 py-3 pr-12 text-sm text-[var(--color-text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    className="input-field pr-12"
                     required
                   />
                   <button
@@ -270,7 +270,7 @@ const LoginPage: React.FC = () => {
                   value={signupName}
                   onChange={(event) => setSignupName(event.target.value)}
                   placeholder="John Doe"
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-transparent px-4 py-3 text-sm text-[var(--color-text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="mt-2 input-field"
                   required
                 />
               </label>
@@ -282,7 +282,7 @@ const LoginPage: React.FC = () => {
                   value={signupEmail}
                   onChange={(event) => setSignupEmail(event.target.value)}
                   placeholder="you@example.com"
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-transparent px-4 py-3 text-sm text-[var(--color-text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                  className="mt-2 input-field"
                   required
                 />
               </label>
@@ -295,7 +295,7 @@ const LoginPage: React.FC = () => {
                     value={signupPassword}
                     onChange={(event) => setSignupPassword(event.target.value)}
                     placeholder="At least 8 characters"
-                    className="w-full rounded-2xl border border-white/10 bg-transparent px-4 py-3 pr-12 text-sm text-[var(--color-text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    className="input-field pr-12"
                     required
                   />
                   <button
@@ -325,7 +325,7 @@ const LoginPage: React.FC = () => {
                     value={confirmPassword}
                     onChange={(event) => setConfirmPassword(event.target.value)}
                     placeholder="Confirm your password"
-                    className="w-full rounded-2xl border border-white/10 bg-transparent px-4 py-3 pr-12 text-sm text-[var(--color-text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
+                    className="input-field pr-12"
                     required
                   />
                   <button
@@ -395,7 +395,7 @@ const LoginPage: React.FC = () => {
                   onChange={(event) => setOtp(event.target.value.replace(/\D/g, "").slice(0, 6))}
                   placeholder="000000"
                   maxLength={6}
-                  className="mt-2 w-full rounded-2xl border border-white/10 bg-transparent px-4 py-3 text-sm text-[var(--color-text)] outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 text-center tracking-widest"
+                  className="mt-2 input-field text-center tracking-widest"
                   required
                 />
               </label>

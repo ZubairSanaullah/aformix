@@ -5,7 +5,6 @@ import { BLOG_ARTICLES } from '../../constants/blogData';
 import BlogCard from './BlogCard';
 
 interface LatestArticlesProps {
-  isDark: boolean;
   onArticleClick: (article: BlogArticle) => void;
   searchQuery?: string;
   selectedCategory?: string | null;
@@ -13,7 +12,6 @@ interface LatestArticlesProps {
 }
 
 const LatestArticles: React.FC<LatestArticlesProps> = ({
-  isDark,
   onArticleClick,
   searchQuery = '',
   selectedCategory = null,
@@ -48,7 +46,7 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
   };
 
   return (
-    <section className={`py-20 ${isDark ? 'bg-gray-950' : 'bg-white'}`}>
+    <section className="py-20 bg-[var(--color-bg)]">
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
         <motion.div
@@ -59,25 +57,19 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
           transition={{ duration: 0.5 }}
         >
           <span
-            className={`text-sm font-semibold tracking-widest uppercase ${
-              isDark ? 'text-emerald-400' : 'text-emerald-600'
-            }`}
+            className="text-sm font-semibold tracking-widest uppercase text-primary"
           >
             Latest Articles
           </span>
           <h2
-            className={`text-4xl md:text-5xl font-bold mt-3 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}
+            className="text-4xl md:text-5xl font-bold mt-3 text-[var(--color-text)]"
           >
             {selectedCategory || selectedTag || searchQuery
               ? `Results for ${selectedCategory || selectedTag || `"${searchQuery}"`}`
               : 'Discover Our Latest Insights'}
           </h2>
           <p
-            className={`text-lg mt-4 ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}
+            className="text-lg mt-4 text-[var(--color-text-muted)]"
           >
             {filteredArticles.length} article{filteredArticles.length !== 1 ? 's' : ''} found
           </p>
@@ -86,21 +78,17 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
         {/* No Results */}
         {filteredArticles.length === 0 && (
           <motion.div
-            className={`py-20 text-center rounded-2xl border-2 border-dashed ${
-              isDark
-                ? 'bg-gray-900 border-gray-800'
-                : 'bg-gray-50 border-gray-300'
-            }`}
+            className="py-20 text-center rounded-2xl border-2 border-dashed bg-[var(--color-surface)] border-[var(--color-border)]"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className={`text-5xl mb-4 ${isDark ? 'text-gray-700' : 'text-gray-300'}`}>
+            <div className="text-5xl mb-4 text-[var(--color-text-muted)] opacity-60">
               📝
             </div>
-            <h3 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-gray-900'}`}>
+            <h3 className="text-2xl font-bold mb-2 text-[var(--color-text)]">
               No Articles Found
             </h3>
-            <p className={`${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
+            <p className="text-[var(--color-text-muted)]">
               Try adjusting your filters or search query
             </p>
           </motion.div>
@@ -125,7 +113,6 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
               >
                 <BlogCard
                   article={article}
-                  isDark={isDark}
                   onArticleClick={onArticleClick}
                 />
               </motion.div>
@@ -143,7 +130,7 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
             transition={{ delay: 0.3 }}
           >
             <motion.button
-              className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300"
+              className="btn-primary"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

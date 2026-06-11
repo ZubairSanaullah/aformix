@@ -5,11 +5,10 @@ import type { BlogArticle } from '../../constants/blogData';
 import { BLOG_ARTICLES } from '../../constants/blogData';
 
 interface FeaturedArticlesProps {
-  isDark: boolean;
   onArticleClick: (article: BlogArticle) => void;
 }
 
-const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ isDark, onArticleClick }) => {
+const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ onArticleClick }) => {
   const featured = BLOG_ARTICLES.filter(a => a.featured);
 
   const containerVariants = {
@@ -33,7 +32,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ isDark, onArticleCl
 
   return (
     <section
-      className={`py-20 ${isDark ? 'bg-gray-950' : 'bg-white'}`}
+      className="py-20 bg-[var(--color-bg)]"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
@@ -45,25 +44,19 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ isDark, onArticleCl
           viewport={{ once: true, margin: '-100px' }}
         >
           <motion.span
-            className={`text-sm font-semibold tracking-widest uppercase ${
-              isDark ? 'text-emerald-400' : 'text-emerald-600'
-            }`}
+            className="text-sm font-semibold tracking-widest uppercase text-primary"
             variants={itemVariants}
           >
             Featured Stories
           </motion.span>
           <motion.h2
-            className={`text-4xl md:text-5xl font-bold mt-3 ${
-              isDark ? 'text-white' : 'text-gray-900'
-            }`}
+            className="text-4xl md:text-5xl font-bold mt-3 text-[var(--color-text)]"
             variants={itemVariants}
           >
             Magazine-Style Selection
           </motion.h2>
           <motion.p
-            className={`text-lg mt-4 ${
-              isDark ? 'text-gray-400' : 'text-gray-600'
-            }`}
+            className="text-lg mt-4 text-[var(--color-text-muted)]"
             variants={itemVariants}
           >
             Our carefully curated selection of premium articles on technology, business, and innovation
@@ -85,9 +78,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ isDark, onArticleCl
               variants={itemVariants}
             >
               <div
-                className={`group relative rounded-3xl overflow-hidden cursor-pointer h-full ${
-                  isDark ? 'bg-gray-900' : 'bg-gray-50'
-                } border ${isDark ? 'border-gray-800' : 'border-gray-200'}`}
+                className="group relative rounded-3xl overflow-hidden cursor-pointer h-full bg-[var(--color-surface)] border border-[var(--color-border)]"
                 onClick={() => onArticleClick(featured[0])}
               >
                 {/* Image Container */}
@@ -164,11 +155,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ isDark, onArticleCl
             {featured.slice(1, 4).map((article) => (
               <motion.div
                 key={article.id}
-                className={`group relative rounded-2xl overflow-hidden cursor-pointer p-6 border transition-all duration-300 ${
-                  isDark
-                    ? 'bg-gray-900 border-gray-800 hover:border-emerald-500'
-                    : 'bg-white border-gray-200 hover:border-emerald-500'
-                }`}
+                className="group relative rounded-2xl overflow-hidden cursor-pointer p-6 border transition-all duration-300 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary"
                 onClick={() => onArticleClick(article)}
                 variants={itemVariants}
                 whileHover={{ y: -4 }}
@@ -187,35 +174,24 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ isDark, onArticleCl
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
                     <span
-                      className={`text-xs font-semibold px-2 py-1 rounded-full ${
-                        isDark
-                          ? 'bg-emerald-500/20 text-emerald-400'
-                          : 'bg-emerald-100 text-emerald-700'
-                      }`}
+                      className="text-xs font-semibold px-2 py-1 rounded-full bg-primary/10 text-primary"
                     >
                       {article.category}
                     </span>
                     <span
-                      className={`text-xs font-medium ${
-                        isDark ? 'text-gray-400' : 'text-gray-600'
-                      }`}
+                      className="text-xs font-medium text-[var(--color-text-muted)]"
                     >
                       {article.readingTime}
                     </span>
                   </div>
 
                   <h4
-                    className={`font-bold line-clamp-2 ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
+                    className="font-bold line-clamp-2 text-[var(--color-text)]"
                   >
                     {article.title}
                   </h4>
 
-                  <div className="flex items-center justify-between pt-3 border-t"
-                    style={{
-                      borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                    }}>
+                  <div className="flex items-center justify-between pt-3 border-t border-[var(--color-border)]">
                     <div className="flex items-center gap-2">
                       <img
                         src={article.author.avatar}
@@ -223,9 +199,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ isDark, onArticleCl
                         className="w-6 h-6 rounded-full object-cover"
                       />
                       <span
-                        className={`text-xs font-medium ${
-                          isDark ? 'text-gray-400' : 'text-gray-600'
-                        }`}
+                        className="text-xs font-medium text-[var(--color-text-muted)]"
                       >
                         {article.author.name.split(' ')[0]}
                       </span>
@@ -251,7 +225,7 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ isDark, onArticleCl
           transition={{ delay: 0.3 }}
         >
           <motion.button
-            className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300"
+            className="btn-primary"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

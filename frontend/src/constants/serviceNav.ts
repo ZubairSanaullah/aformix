@@ -1,6 +1,5 @@
 import type { LucideIcon } from "lucide-react";
 import {
-  Bot,
   Code,
   Layers,
   Rocket,
@@ -10,7 +9,6 @@ import {
   PenTool,
   Briefcase,
   HeartPulse,
-  Workflow,
   Users,
   Building2,
   ShoppingCart,

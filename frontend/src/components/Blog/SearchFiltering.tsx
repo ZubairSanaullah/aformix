@@ -4,7 +4,6 @@ import { Search, X } from 'lucide-react';
 import { BLOG_CATEGORIES, TRENDING_TOPICS } from '../../constants/blogData';
 
 interface SearchFilteringProps {
-  isDark: boolean;
   onCategoryChange: (category: string | null) => void;
   onTagChange: (tag: string | null) => void;
   onSearchChange: (query: string) => void;
@@ -14,7 +13,6 @@ interface SearchFilteringProps {
 }
 
 const SearchFiltering: React.FC<SearchFilteringProps> = ({
-  isDark,
   onCategoryChange,
   onTagChange,
   onSearchChange,
@@ -46,11 +44,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
 
   return (
     <section
-      className={`py-12 border-y ${
-        isDark
-          ? 'bg-gray-900 border-gray-800'
-          : 'bg-gray-50 border-gray-200'
-      }`}
+      className="py-12 border-y bg-[var(--color-surface)] border-[var(--color-border)]"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Search Bar */}
@@ -62,20 +56,16 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
           transition={{ duration: 0.5 }}
         >
           <div
-            className={`relative group ${
-              isDark
-                ? 'bg-gray-800 border-gray-700'
-                : 'bg-white border-gray-200'
-            } border-2 rounded-2xl transition-all duration-300 ${
+            className={`relative group bg-[var(--color-bg)] border-[var(--color-border)] border-2 rounded-2xl transition-all duration-300 ${
               isSearchFocused
-                ? `${isDark ? 'border-emerald-500' : 'border-emerald-500'} shadow-lg`
+                ? 'border-primary shadow-lg'
                 : ''
             }`}
           >
             <div className="flex items-center px-6 py-4">
               <Search
                 size={20}
-                className={isSearchFocused ? 'text-emerald-500' : isDark ? 'text-gray-400' : 'text-gray-400'}
+                className={isSearchFocused ? 'text-primary' : 'text-[var(--color-text-muted)]'}
               />
               <input
                 type="text"
@@ -84,11 +74,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
                 onChange={(e) => onSearchChange(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
-                className={`ml-4 flex-1 outline-none text-lg font-medium placeholder-gray-400 ${
-                  isDark
-                    ? 'bg-gray-800 text-white'
-                    : 'bg-white text-gray-900'
-                }`}
+                className="ml-4 flex-1 outline-none text-lg font-medium placeholder-gray-400 bg-transparent text-[var(--color-text)]"
               />
               {searchQuery && (
                 <motion.button
@@ -96,9 +82,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.5 }}
-                  className={`p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 ${
-                    isDark ? 'text-gray-400' : 'text-gray-600'
-                  }`}
+                  className="p-2 rounded-lg hover:bg-[var(--color-border)] text-[var(--color-text-muted)]"
                 >
                   <X size={20} />
                 </motion.button>
@@ -109,19 +93,13 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
             <AnimatePresence>
               {isSearchFocused && (
                 <motion.div
-                  className={`absolute top-full left-0 right-0 mt-2 p-4 rounded-2xl shadow-2xl border ${
-                    isDark
-                      ? 'bg-gray-800 border-gray-700'
-                      : 'bg-white border-gray-200'
-                  }`}
+                  className="absolute top-full left-0 right-0 mt-2 p-4 rounded-2xl shadow-2xl border bg-[var(--color-surface-elevated)] border-[var(--color-border)] z-20"
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <div className={`text-xs font-semibold uppercase tracking-wider mb-3 ${
-                    isDark ? 'text-gray-400' : 'text-gray-600'
-                  }`}>
+                  <div className="text-xs font-semibold uppercase tracking-wider mb-3 text-[var(--color-text-muted)]">
                     Popular Searches
                   </div>
                   <motion.div className="space-y-2" variants={containerVariants}>
@@ -129,11 +107,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
                       <motion.button
                         key={topic}
                         onClick={() => onSearchChange(topic)}
-                        className={`block w-full text-left px-3 py-2 rounded-lg transition-colors ${
-                          isDark
-                            ? 'hover:bg-gray-700 text-gray-300'
-                            : 'hover:bg-gray-100 text-gray-700'
-                        }`}
+                        className="block w-full text-left px-3 py-2 rounded-lg transition-colors hover:bg-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
                         variants={itemVariants}
                       >
                         {topic}
@@ -149,11 +123,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
         {/* Filters Toggle */}
         <motion.button
           onClick={() => setShowFilters(!showFilters)}
-          className={`mb-6 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${
-            isDark
-              ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
-              : 'bg-white text-gray-700 hover:bg-gray-100'
-          } border ${isDark ? 'border-gray-700' : 'border-gray-200'}`}
+          className="mb-6 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 bg-[var(--color-surface-elevated)] text-[var(--color-text-muted)] hover:bg-[var(--color-border)] border border-[var(--color-border)] cursor-pointer"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
@@ -173,9 +143,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
               {/* Category Filters */}
               <div>
                 <motion.h3
-                  className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}
+                  className="text-sm font-semibold uppercase tracking-wider mb-4 text-[var(--color-text-muted)]"
                   variants={itemVariants}
                 >
                   Categories
@@ -192,12 +160,10 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
                       onClick={() =>
                         onCategoryChange(currentCategory === category ? null : category)
                       }
-                      className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 border-2 ${
+                      className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 border-2 cursor-pointer ${
                         currentCategory === category
                           ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white border-emerald-500'
-                          : isDark
-                          ? 'bg-gray-800 text-gray-300 border-gray-700 hover:border-emerald-500'
-                          : 'bg-white text-gray-700 border-gray-300 hover:border-emerald-500'
+                          : 'bg-[var(--color-bg)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-primary'
                       }`}
                       variants={itemVariants}
                       whileHover={{ scale: 1.05 }}
@@ -212,9 +178,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
               {/* Tag Filters */}
               <div>
                 <motion.h3
-                  className={`text-sm font-semibold uppercase tracking-wider mb-4 ${
-                    isDark ? 'text-gray-300' : 'text-gray-700'
-                  }`}
+                  className="text-sm font-semibold uppercase tracking-wider mb-4 text-[var(--color-text-muted)]"
                   variants={itemVariants}
                 >
                   Topics
@@ -231,12 +195,10 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
                       onClick={() =>
                         onTagChange(currentTag === topic ? null : topic)
                       }
-                      className={`px-3 py-1 rounded-full font-medium text-xs transition-all duration-300 border-2 ${
+                      className={`px-3 py-1 rounded-full font-medium text-xs transition-all duration-300 border-2 cursor-pointer ${
                         currentTag === topic
                           ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-white border-cyan-500'
-                          : isDark
-                          ? 'bg-gray-800 text-gray-400 border-gray-700 hover:border-cyan-500'
-                          : 'bg-gray-100 text-gray-700 border-gray-300 hover:border-cyan-500'
+                          : 'bg-[var(--color-bg)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-accent'
                       }`}
                       variants={itemVariants}
                       whileHover={{ scale: 1.08 }}
@@ -251,64 +213,47 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
               {/* Active Filters Display */}
               {(currentCategory || currentTag || searchQuery) && (
                 <motion.div
-                  className="flex flex-wrap items-center gap-2 pt-4 border-t"
-                  style={{
-                    borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-                  }}
+                  className="flex flex-wrap items-center gap-2 pt-4 border-t border-[var(--color-border)]"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                 >
                   <span
-                    className={`text-xs font-semibold uppercase ${
-                      isDark ? 'text-gray-400' : 'text-gray-600'
-                    }`}
+                    className="text-xs font-semibold uppercase text-[var(--color-text-muted)]"
                   >
                     Active Filters:
                   </span>
                   {searchQuery && (
                     <motion.div
-                      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${
-                        isDark
-                          ? 'bg-gray-800 text-emerald-400'
-                          : 'bg-emerald-100 text-emerald-700'
-                      }`}
+                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-primary/10 text-primary border border-primary/20"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                     >
                       {searchQuery}
-                      <button onClick={() => onSearchChange('')} className="hover:opacity-70">
+                      <button onClick={() => onSearchChange('')} className="hover:opacity-70 cursor-pointer">
                         ✕
                       </button>
                     </motion.div>
                   )}
                   {currentCategory && (
                     <motion.div
-                      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${
-                        isDark
-                          ? 'bg-gray-800 text-emerald-400'
-                          : 'bg-emerald-100 text-emerald-700'
-                      }`}
+                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-primary/10 text-primary border border-primary/20"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                     >
                       {currentCategory}
-                      <button onClick={() => onCategoryChange(null)} className="hover:opacity-70">
+                      <button onClick={() => onCategoryChange(null)} className="hover:opacity-70 cursor-pointer">
                         ✕
                       </button>
                     </motion.div>
                   )}
                   {currentTag && (
                     <motion.div
-                      className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs ${
-                        isDark
-                          ? 'bg-gray-800 text-cyan-400'
-                          : 'bg-cyan-100 text-cyan-700'
-                      }`}
+                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-accent/10 text-accent border border-accent/20"
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
                     >
                       {currentTag}
-                      <button onClick={() => onTagChange(null)} className="hover:opacity-70">
+                      <button onClick={() => onTagChange(null)} className="hover:opacity-70 cursor-pointer">
                         ✕
                       </button>
                     </motion.div>

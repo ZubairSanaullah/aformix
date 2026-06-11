@@ -15,7 +15,6 @@ interface ServiceHeroProps {
 }
 
 const ServiceHero: React.FC<ServiceHeroProps> = ({
-  badge,
   headline,
   valueProposition,
   description,

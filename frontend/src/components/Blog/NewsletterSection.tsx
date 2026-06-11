@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Mail, CheckCircle, ArrowRight } from 'lucide-react';
 
-interface NewsletterSectionProps {
-  isDark: boolean;
-}
+interface NewsletterSectionProps {}
 
-const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
+const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -47,11 +45,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
 
   return (
     <section
-      className={`py-20 ${
-        isDark
-          ? 'bg-gradient-to-br from-purple-950 via-gray-950 to-emerald-950'
-          : 'bg-gradient-to-br from-emerald-50 via-cyan-50 to-purple-50'
-      }`}
+      className="py-20 bg-gradient-to-br from-[var(--color-bg)] via-[var(--color-surface)] to-[var(--color-bg)]"
     >
       <div className="max-w-4xl mx-auto px-6">
         <motion.div
@@ -64,11 +58,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
           {/* Animated Background Elements */}
           <div className="absolute inset-0 -z-10 overflow-hidden rounded-3xl">
             <motion.div
-              className={`absolute inset-0 rounded-3xl blur-3xl ${
-                isDark
-                  ? 'bg-gradient-to-br from-emerald-500/10 to-cyan-500/10'
-                  : 'bg-gradient-to-br from-emerald-400/20 to-cyan-400/20'
-              }`}
+              className="absolute inset-0 rounded-3xl blur-3xl bg-gradient-to-br from-primary/10 to-accent/10"
               animate={{
                 scale: [1, 1.05, 1],
                 opacity: [0.5, 0.7, 0.5],
@@ -82,21 +72,13 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
 
           {/* Main Container */}
           <div
-            className={`relative rounded-3xl border-2 p-12 md:p-16 ${
-              isDark
-                ? 'bg-gray-900/80 backdrop-blur-xl border-emerald-500/30'
-                : 'bg-white/80 backdrop-blur-xl border-emerald-200/50'
-            }`}
+            className="relative rounded-3xl border-2 p-12 md:p-16 bg-[var(--color-surface)]/80 backdrop-blur-xl border-primary/30"
           >
             {/* Content */}
             <motion.div className="text-center mb-12" variants={containerVariants}>
               {/* Icon */}
               <motion.div
-                className={`w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center ${
-                  isDark
-                    ? 'bg-gradient-to-br from-emerald-500 to-cyan-500'
-                    : 'bg-gradient-to-br from-emerald-500 to-cyan-500'
-                }`}
+                className="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-cyan-500"
                 variants={itemVariants}
                 whileHover={{ scale: 1.1, rotate: 360 }}
                 transition={{ rotate: { duration: 0.6 } }}
@@ -106,9 +88,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
 
               {/* Heading */}
               <motion.h2
-                className={`text-4xl md:text-5xl font-bold mb-4 ${
-                  isDark ? 'text-white' : 'text-gray-900'
-                }`}
+                className="text-4xl md:text-5xl font-bold mb-4 text-[var(--color-text)]"
                 variants={itemVariants}
               >
                 Get Industry Insights Before Everyone Else
@@ -116,9 +96,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
 
               {/* Subheading */}
               <motion.p
-                className={`text-lg md:text-xl max-w-2xl mx-auto ${
-                  isDark ? 'text-gray-300' : 'text-gray-700'
-                }`}
+                className="text-lg md:text-xl max-w-2xl mx-auto text-[var(--color-text-muted)]"
                 variants={itemVariants}
               >
                 Join 10,000+ tech professionals and entrepreneurs who receive curated insights on AI, SaaS, and digital transformation every week.
@@ -140,11 +118,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
                     required
-                    className={`w-full px-6 py-4 rounded-xl border-2 font-medium outline-none transition-all duration-300 ${
-                      isDark
-                        ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-500 focus:border-emerald-500'
-                        : 'bg-white border-gray-300 text-gray-900 placeholder-gray-400 focus:border-emerald-500'
-                    }`}
+                    className="input-field py-4"
                   />
                 </div>
 
@@ -152,11 +126,9 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
                 <motion.button
                   type="submit"
                   disabled={isLoading || isSubmitted}
-                  className={`px-8 py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all duration-300 whitespace-nowrap ${
-                    isSubmitted
-                      ? 'bg-emerald-500 text-white'
-                      : 'bg-gradient-to-r from-emerald-500 to-cyan-500 text-white hover:shadow-lg hover:shadow-emerald-500/50'
-                  } disabled:opacity-80`}
+                  className={`btn-primary flex items-center justify-center gap-2 whitespace-nowrap cursor-pointer ${
+                    isSubmitted ? '!bg-emerald-500 !text-white' : ''
+                  }`}
                   whileHover={{ scale: isSubmitted ? 1 : 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -185,9 +157,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
 
               {/* Privacy Message */}
               <motion.p
-                className={`text-xs mt-4 text-center ${
-                  isDark ? 'text-gray-400' : 'text-gray-600'
-                }`}
+                className="text-xs mt-4 text-center text-[var(--color-text-muted)]"
                 variants={itemVariants}
               >
                 We respect your privacy. Unsubscribe anytime.
@@ -196,10 +166,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
 
             {/* Trust Indicators */}
             <motion.div
-              className="flex flex-wrap items-center justify-center gap-8 pt-8 border-t"
-              style={{
-                borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-              }}
+              className="flex flex-wrap items-center justify-center gap-8 pt-8 border-t border-[var(--color-border)]"
               variants={containerVariants}
             >
               {[
@@ -213,18 +180,12 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
                   variants={itemVariants}
                 >
                   <div
-                    className={`text-2xl font-bold ${
-                      isDark
-                        ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 bg-clip-text text-transparent'
-                        : 'bg-gradient-to-r from-emerald-600 to-cyan-600 bg-clip-text text-transparent'
-                    }`}
+                    className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
                   >
                     {stat.label}
                   </div>
                   <div
-                    className={`text-sm ${
-                      isDark ? 'text-gray-400' : 'text-gray-600'
-                    }`}
+                    className="text-sm text-[var(--color-text-muted)]"
                   >
                     {stat.value}
                   </div>
@@ -256,25 +217,17 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = ({ isDark }) => {
               ].map((benefit, i) => (
                 <motion.div
                   key={i}
-                  className={`p-4 rounded-xl border ${
-                    isDark
-                      ? 'bg-gray-800/50 border-gray-700'
-                      : 'bg-emerald-50 border-emerald-200'
-                  }`}
+                  className="p-4 rounded-xl border bg-[var(--color-surface-elevated)] border-[var(--color-border)]"
                   variants={itemVariants}
                 >
                   <div className="text-3xl mb-3">{benefit.icon}</div>
                   <h4
-                    className={`font-bold mb-2 ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
+                    className="font-bold mb-2 text-[var(--color-text)]"
                   >
                     {benefit.title}
                   </h4>
                   <p
-                    className={`text-sm ${
-                      isDark ? 'text-gray-400' : 'text-gray-600'
-                    }`}
+                    className="text-sm text-[var(--color-text-muted)]"
                   >
                     {benefit.description}
                   </p>

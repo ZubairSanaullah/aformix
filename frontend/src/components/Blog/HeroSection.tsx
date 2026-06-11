@@ -5,10 +5,9 @@ import { BLOG_ARTICLES } from '../../constants/blogData';
 interface HeroSectionProps {
   onExplore: () => void;
   onSubscribe: () => void;
-  isDark: boolean;
 }
 
-const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDark }) => {
+const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe }) => {
   const featuredArticles = BLOG_ARTICLES.slice(0, 3);
 
   const containerVariants = {
@@ -45,13 +44,11 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
 
   return (
     <div
-      className={`relative min-h-screen overflow-hidden py-12 md:py-20 ${
-        isDark ? 'bg-gray-950' : 'bg-white'
-      }`}
+      className="relative min-h-screen overflow-hidden py-12 md:py-20 bg-[var(--color-bg)]"
     >
       {/* Animated Background Grid */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className={`absolute inset-0 opacity-5 ${isDark ? 'bg-white' : 'bg-black'}`}>
+        <div className="absolute inset-0 opacity-5 bg-[var(--color-text)]">
           <div
             className="absolute inset-0"
             style={{
@@ -107,11 +104,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
             >
               <div className="w-2 h-2 rounded-full bg-emerald-500" />
               <span
-                className={`text-sm font-medium tracking-wide ${
-                  isDark
-                    ? 'text-emerald-400'
-                    : 'text-emerald-600'
-                }`}
+                className="text-sm font-medium tracking-wide text-primary"
               >
                 INSIGHTS & INNOVATION
               </span>
@@ -119,9 +112,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
 
             {/* Main Heading */}
             <motion.h1
-              className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight ${
-                isDark ? 'text-white' : 'text-gray-900'
-              }`}
+              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-[var(--color-text)]"
               variants={itemVariants}
             >
               Insights,{' '}
@@ -133,11 +124,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
 
             {/* Subheading */}
             <motion.p
-              className={`text-lg md:text-xl mb-8 leading-relaxed ${
-                isDark
-                  ? 'text-gray-300'
-                  : 'text-gray-600'
-              }`}
+              className="text-lg md:text-xl mb-8 leading-relaxed text-[var(--color-text-muted)]"
               variants={itemVariants}
             >
               Expert insights on AI, automation, web development, SaaS, SEO, business growth, and emerging technologies
@@ -148,7 +135,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
             <motion.div className="flex flex-col sm:flex-row gap-4 mb-8" variants={itemVariants}>
               <motion.button
                 onClick={onExplore}
-                className="px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-300 transform hover:scale-105"
+                className="btn-primary text-base transform hover:scale-105"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -156,11 +143,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
               </motion.button>
               <motion.button
                 onClick={onSubscribe}
-                className={`px-8 py-4 border-2 font-semibold rounded-xl transition-all duration-300 ${
-                  isDark
-                    ? 'border-emerald-400 text-emerald-400 hover:bg-emerald-400/10'
-                    : 'border-emerald-600 text-emerald-600 hover:bg-emerald-50'
-                }`}
+                className="btn-outline text-base transform hover:scale-105"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -170,10 +153,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
 
             {/* Stats */}
             <motion.div
-              className="flex items-center gap-8 pt-8 border-t"
-              style={{
-                borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-              }}
+              className="flex items-center gap-8 pt-8 border-t border-[var(--color-border)]"
               variants={itemVariants}
             >
               {[
@@ -183,16 +163,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
               ].map((stat, i) => (
                 <div key={i}>
                   <div
-                    className={`text-2xl font-bold ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
+                    className="text-2xl font-bold text-[var(--color-text)]"
                   >
                     {stat.value}
                   </div>
                   <div
-                    className={`text-sm ${
-                      isDark ? 'text-gray-400' : 'text-gray-600'
-                    }`}
+                    className="text-sm text-[var(--color-text-muted)]"
                   >
                     {stat.label}
                   </div>
@@ -209,9 +185,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
             {featuredArticles.map((article, index) => (
               <motion.div
                 key={article.id}
-                className={`absolute w-72 rounded-2xl shadow-xl overflow-hidden cursor-pointer group ${
-                  isDark ? 'bg-gray-900 border border-gray-800' : 'bg-white border border-gray-100'
-                }`}
+                className="absolute w-72 rounded-2xl shadow-xl overflow-hidden cursor-pointer group bg-[var(--color-surface)] border border-[var(--color-border)]"
                 style={{
                   left: `${index * 30}%`,
                   top: `${index * 40}px`,
@@ -242,18 +216,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe, isDar
                 {/* Card Content */}
                 <div className="p-4">
                   <h3
-                    className={`font-bold text-sm line-clamp-2 mb-3 ${
-                      isDark ? 'text-white' : 'text-gray-900'
-                    }`}
+                    className="font-bold text-sm line-clamp-2 mb-3 text-[var(--color-text)]"
                   >
                     {article.title}
                   </h3>
 
                   {/* Meta Info */}
                   <div
-                    className={`text-xs space-y-2 ${
-                      isDark ? 'text-gray-400' : 'text-gray-600'
-                    }`}
+                    className="text-xs space-y-2 text-[var(--color-text-muted)]"
                   >
                     <div className="flex items-center justify-between">
                       <span>{article.author.name}</span>

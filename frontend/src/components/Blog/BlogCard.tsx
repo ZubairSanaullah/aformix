@@ -5,12 +5,11 @@ import type { BlogArticle } from '../../constants/blogData';
 
 interface BlogCardProps {
   article: BlogArticle;
-  isDark: boolean;
   onArticleClick: (article: BlogArticle) => void;
   variant?: 'grid' | 'list';
 }
 
-const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, variant = 'grid' }) => {
+const BlogCard: React.FC<BlogCardProps> = ({ article, onArticleClick, variant = 'grid' }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(article.reactions.likes);
@@ -35,11 +34,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
     return (
       <motion.div
         onClick={() => onArticleClick(article)}
-        className={`group cursor-pointer flex gap-6 p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 ${
-          isDark
-            ? 'bg-gray-900 border-gray-800 hover:border-emerald-500'
-            : 'bg-white border-gray-200 hover:border-emerald-500 hover:shadow-lg'
-        }`}
+        className="group cursor-pointer flex gap-6 p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary hover:shadow-lg"
         whileHover={{ y: -4 }}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -61,44 +56,32 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
           <div>
             <div className="flex items-center justify-between mb-3">
               <span
-                className={`text-xs font-semibold px-3 py-1 rounded-full ${
-                  isDark
-                    ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'bg-emerald-100 text-emerald-700'
-                }`}
+                className="text-xs font-semibold px-3 py-1 rounded-full bg-primary/10 text-primary"
               >
                 {article.category}
               </span>
               <span
-                className={`text-xs font-medium ${
-                  isDark ? 'text-gray-400' : 'text-gray-600'
-                }`}
+                className="text-xs font-medium text-[var(--color-text-muted)]"
               >
                 {article.readingTime}
               </span>
             </div>
 
             <h3
-              className={`text-xl font-bold mb-2 line-clamp-2 ${
-                isDark ? 'text-white' : 'text-gray-900'
-              }`}
+              className="text-xl font-bold mb-2 line-clamp-2 text-[var(--color-text)]"
             >
               {article.title}
             </h3>
 
             <p
-              className={`line-clamp-2 mb-4 ${
-                isDark ? 'text-gray-400' : 'text-gray-600'
-              }`}
+              className="line-clamp-2 mb-4 text-[var(--color-text-muted)]"
             >
               {article.description}
             </p>
           </div>
 
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t" style={{
-            borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-          }}>
+          <div className="flex items-center justify-between pt-4 border-t border-[var(--color-border)]">
             <div className="flex items-center gap-3">
               <img
                 src={article.author.avatar}
@@ -106,10 +89,10 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
                 className="w-8 h-8 rounded-full object-cover border border-emerald-500"
               />
               <div>
-                <div className={`text-sm font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <div className="text-sm font-semibold text-[var(--color-text)]">
                   {article.author.name}
                 </div>
-                <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'}`}>
+                <div className="text-xs text-[var(--color-text-muted)] opacity-80">
                   {article.publishDate}
                 </div>
               </div>
@@ -129,11 +112,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
   return (
     <motion.div
       onClick={() => onArticleClick(article)}
-      className={`group cursor-pointer rounded-2xl overflow-hidden border transition-all duration-300 ${
-        isDark
-          ? 'bg-gray-900 border-gray-800 hover:border-emerald-500'
-          : 'bg-white border-gray-200 hover:border-emerald-500 hover:shadow-xl'
-      }`}
+      className="group cursor-pointer rounded-2xl overflow-hidden border transition-all duration-300 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary hover:shadow-xl"
       whileHover={{ y: -8 }}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -157,7 +136,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
           viewport={{ once: true }}
         >
           <span
-            className={`text-xs font-semibold px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white`}
+            className="text-xs font-semibold px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-cyan-500 text-white"
           >
             {article.category}
           </span>
@@ -176,7 +155,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
           <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <motion.button
               onClick={handleLike}
-              className={`p-2 rounded-full backdrop-blur-md transition-all ${
+              className={`p-2 rounded-full backdrop-blur-md transition-all cursor-pointer ${
                 isLiked
                   ? 'bg-red-500/80 text-white'
                   : 'bg-white/20 text-white hover:bg-white/30'
@@ -187,7 +166,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
             </motion.button>
             <motion.button
               onClick={handleBookmark}
-              className={`p-2 rounded-full backdrop-blur-md transition-all ${
+              className={`p-2 rounded-full backdrop-blur-md transition-all cursor-pointer ${
                 isBookmarked
                   ? 'bg-emerald-500/80 text-white'
                   : 'bg-white/20 text-white hover:bg-white/30'
@@ -198,7 +177,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
             </motion.button>
             <motion.button
               onClick={handleShare}
-              className="p-2 rounded-full backdrop-blur-md bg-white/20 text-white hover:bg-white/30 transition-all"
+              className="p-2 rounded-full backdrop-blur-md bg-white/20 text-white hover:bg-white/30 transition-all cursor-pointer"
               whileTap={{ scale: 0.8 }}
             >
               <Share2 size={18} />
@@ -211,18 +190,14 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
       <div className="p-6">
         {/* Title */}
         <h3
-          className={`font-bold text-lg mb-3 line-clamp-2 ${
-            isDark ? 'text-white' : 'text-gray-900'
-          }`}
+          className="font-bold text-lg mb-3 line-clamp-2 text-[var(--color-text)]"
         >
           {article.title}
         </h3>
 
         {/* Description */}
         <p
-          className={`text-sm line-clamp-2 mb-4 ${
-            isDark ? 'text-gray-400' : 'text-gray-600'
-          }`}
+          className="text-sm line-clamp-2 mb-4 text-[var(--color-text-muted)]"
         >
           {article.description}
         </p>
@@ -232,22 +207,14 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
           {article.tags.slice(0, 2).map((tag) => (
             <span
               key={tag}
-              className={`text-xs px-2 py-1 rounded-full ${
-                isDark
-                  ? 'bg-gray-800 text-gray-400'
-                  : 'bg-gray-100 text-gray-700'
-              }`}
+              className="text-xs px-2 py-1 rounded-full bg-[var(--color-surface-elevated)] text-[var(--color-text-muted)]"
             >
               #{tag}
             </span>
           ))}
           {article.tags.length > 2 && (
             <span
-              className={`text-xs px-2 py-1 rounded-full ${
-                isDark
-                  ? 'bg-gray-800 text-gray-400'
-                  : 'bg-gray-100 text-gray-700'
-              }`}
+              className="text-xs px-2 py-1 rounded-full bg-[var(--color-surface-elevated)] text-[var(--color-text-muted)]"
             >
               +{article.tags.length - 2}
             </span>
@@ -256,10 +223,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
 
         {/* Footer */}
         <div
-          className="pt-4 border-t"
-          style={{
-            borderColor: isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)',
-          }}
+          className="pt-4 border-t border-[var(--color-border)]"
         >
           <div className="flex items-center justify-between">
             {/* Author */}
@@ -270,10 +234,10 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, isDark, onArticleClick, va
                 className="w-8 h-8 rounded-full object-cover border-2 border-emerald-500"
               />
               <div>
-                <div className={`text-xs font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>
+                <div className="text-xs font-semibold text-[var(--color-text)]">
                   {article.author.name.split(' ')[0]}
                 </div>
-                <div className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-600'}`}>
+                <div className="text-xs text-[var(--color-text-muted)]">
                   {article.publishDate}
                 </div>
               </div>

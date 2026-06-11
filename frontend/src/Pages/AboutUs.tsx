@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React from 'react';
+import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
 import {
   Target, Eye, Code, Smartphone, Globe, Search,
-  Settings, Layout, Shield, Zap, CheckCircle, Clock,
-  TrendingUp, Award, Star, Lightbulb, Cpu, Database, Cloud,
+  Settings, Layout, Shield, Zap, CheckCircle,
+  TrendingUp, Award, Star, Lightbulb, Cpu, Cloud,
   Layers, ArrowRight, Quote, Building2, Users
 } from 'lucide-react';
 
 const AboutUs: React.FC = () => {
   const { scrollYProgress } = useScroll();
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
 
   // --- Animation Variants ---
-  const fadeUpVariant = {
+  const fadeUpVariant: Variants = {
     hidden: { opacity: 0, y: 40 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
   };
 
-  const staggerContainer = {
+  const staggerContainer: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -25,7 +25,7 @@ const AboutUs: React.FC = () => {
     }
   };
 
-  const scaleVariant = {
+  const scaleVariant: Variants = {
     hidden: { opacity: 0, scale: 0.8 },
     visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: "easeOut" } }
   };
@@ -60,11 +60,11 @@ const AboutUs: React.FC = () => {
             </motion.p>
 
             <motion.div variants={fadeUpVariant} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <button className="px-8 py-4 bg-gradient-to-r from-[#31B98F] to-[#00BFDE] text-white font-semibold rounded-full hover:shadow-[0_0_30px_rgba(49,185,143,0.4)] transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center group">
+              <button className="btn-primary flex items-center justify-center group">
                 Start Your Project
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
-              <a className="px-8 py-4 bg-[var(--color-surface-elevated)] backdrop-blur-md border border-[var(--color-border)] text-[var(--color-text)] font-semibold rounded-full hover:bg-[var(--color-border)] transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center"
+              <a className="btn-outline flex items-center justify-center"
                 href="https://wa.me/+923019170936"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -256,7 +256,7 @@ const AboutUs: React.FC = () => {
           >
             <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight text-[var(--color-text)]">Why Choose <br /><span className="text-[#31B98F]">Aformix?</span></h2>
             <p className="text-[var(--color-text-muted)] text-lg mb-8">We don't just write code; we engineer scalable businesses. Partner with a team that treats your product as their own.</p>
-            <button className="flex items-center space-x-2 text-[#00BFDE] font-semibold hover:text-[var(--color-text)] transition-colors group">
+            <button className="flex items-center space-x-2 text-[var(--color-accent)] font-semibold hover:text-[var(--color-text)] transition-colors group">
               <span>View Our Portfolio</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </button>
@@ -522,11 +522,11 @@ const AboutUs: React.FC = () => {
             Stop settling for mediocre software. Partner with Aformix and let's engineer a digital solution that dominates your market.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="px-10 py-5 bg-gradient-to-r from-[#31B98F] to-[#00BFDE] text-white text-lg font-semibold rounded-full hover:shadow-[0_0_40px_rgba(49,185,143,0.5)] transition-all duration-300 transform hover:-translate-y-1">
+            <button className="btn-primary text-lg">
               Start Your Project
             </button>
             <a
-              className="px-10 py-5 bg-[var(--color-surface-elevated)] border border-[var(--color-border)] text-[var(--color-text)] text-lg font-semibold rounded-full hover:bg-[var(--color-border)] transition-all duration-300 transform hover:-translate-y-1"
+              className="btn-outline text-lg flex items-center justify-center"
               href="https://wa.me/+923019170936"
               target="_blank"
               rel="noopener noreferrer"
