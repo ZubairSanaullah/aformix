@@ -26,9 +26,6 @@ const Footer: React.FC = () => {
               <img src={logoImg} alt="Aformix logo" className="w-8 sm:w-10 object-contain hover:scale-90 transition-all duration-300" />
               <span className="text-2xl font-bold tracking-wide text-[var(--color-text)]">Aformix</span>
             </div>
-            <p className="text-[var(--color-text-muted)] text-sm sm:text-base mb-6 max-w-sm">
-              Empowering businesses with AI, automation, and enterprise-grade digital solutions.
-            </p>
             <div className="w-full">
               <FooterNewsletter />
             </div>
@@ -69,9 +66,9 @@ const Footer: React.FC = () => {
             <ul className="space-y-3 sm:space-y-5">
               {[
                 { label: "About Us", href: "/about-us" },
-                { label: "Careers", href: "#" },
                 { label: "Blog", href: "/blog" },
                 { label: "Contact", href: "#contact" },
+                { label: "Book a Meeting", href: "https://calendly.com/aformixtech/30min", target: "_blank" },
               ].map((item) => (
                 <li key={item.label}>
                   <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all text-sm sm:text-base">

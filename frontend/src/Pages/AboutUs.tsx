@@ -36,12 +36,19 @@ const AboutUs: React.FC = () => {
       {/* SECTION 1 — PREMIUM HERO */}
       <section className="relative min-h-screen flex items-center justify-center pt-20 pb-32 px-6 lg:px-20 overflow-hidden">
         {/* Animated Background Gradients */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* <div className="absolute inset-0 z-0 pointer-events-none">
           <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#684B9E] rounded-full mix-blend-screen filter blur-[150px] opacity-30 animate-pulse"></div>
           <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#31B98F] rounded-full mix-blend-screen filter blur-[150px] opacity-20" style={{ animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}></div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00BFDE] rounded-full mix-blend-screen filter blur-[200px] opacity-10"></div>
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-        </div>
+        </div> */}
+        {/* ── Background Design Layers ── */}
+        <div className="hero-bg-grid" aria-hidden="true" />
+        <div className="hero-bg-glow hero-bg-glow--1" aria-hidden="true" />
+        <div className="hero-bg-glow hero-bg-glow--2" aria-hidden="true" />
+        <div className="hero-bg-glow hero-bg-glow--3" aria-hidden="true" />
+        <div className="hero-bg-streak hero-bg-streak--1" aria-hidden="true" />
+        <div className="hero-bg-streak hero-bg-streak--2" aria-hidden="true" />
 
         <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -65,7 +72,7 @@ const AboutUs: React.FC = () => {
                 <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </button>
               <a className="btn-outline flex items-center justify-center"
-                href="https://wa.me/+923019170936"
+                href="https://calendly.com/aformixtech/30min"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -82,13 +89,13 @@ const AboutUs: React.FC = () => {
           >
             {/* Orbit Mascot Video Area */}
             <div className="relative w-full aspect-square rounded-[3rem] overflow-hidden flex items-center justify-center bg-[var(--color-surface-elevated)] border border-[var(--color-border)] shadow-2xl">
-              <video 
-                src="/vid/orbit.mp4" 
-                autoPlay 
-                loop 
-                muted 
-                playsInline 
-                className="w-full h-full object-cover" 
+              <video
+                src="/vid/orbit-2.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover"
               />
             </div>
           </motion.div>

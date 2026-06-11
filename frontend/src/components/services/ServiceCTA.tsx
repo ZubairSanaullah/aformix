@@ -62,9 +62,9 @@ const ServiceCTA: React.FC<ServiceCTAProps> = ({
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/contact">
+              <Link to="https://calendly.com/aformixtech/30min" target="_blank">
                 <button
-                  className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-base transition-all duration-300 hover:scale-105"
+                  className="group flex items-center justify-center gap-2 px-8 py-4 rounded-xl font-bold text-base transition-all duration-300 hover:scale-105 cursor-pointer"
                   style={{ background: "white", color: "var(--color-primary)", boxShadow: "0 4px 24px rgba(0,0,0,0.2)" }}
                 >
                   <Calendar size={20} />

@@ -409,7 +409,7 @@ const Hero: React.FC = () => {
 
             {/* Subheadline */}
             <p className="hero-description">
-              Aformix helps businesses automate workflows, launch modern web platforms,
+              Aformix helps businesses make intelligent digital products, launch modern web platforms,
               and transform ideas into powerful digital products.
             </p>
 
