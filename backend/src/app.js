@@ -7,6 +7,7 @@ import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 import authRoutes from "./routes/authRoutes.js";
 import orbitRoutes from "./routes/orbitRoutes.js";
+import newsletterRoutes from "./routes/newsletterRoutes.js";
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 import { serve } from "inngest/express";
 import inngest from "./config/inngest.js";
@@ -74,6 +75,7 @@ app.options("*", cors(corsOptions));
 
 app.use(["/api/auth", "/_/backend/api/auth", "/auth"], signupLimiter, loginLimiter, authRoutes);
 app.use(["/api/orbit"], apiLimiter, orbitRoutes);
+app.use(["/api/newsletter"], newsletterRoutes);
 app.use(["/api/", "/_/backend/api/", "/"], apiLimiter);
 
 app.get("/", (req, res) => {

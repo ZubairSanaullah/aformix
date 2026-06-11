@@ -18,12 +18,15 @@ import OrbitAI from "./components/OrbitAI";
 import { ArrowUp } from "lucide-react";
 import useReveal from "./hooks/useReveal";
 import Contact from "./components/Contact";
+import AboutUs from "./Pages/AboutUs";
 
 const PrivacyPolicyPage = lazy(() => import("./Pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./Pages/TermsOfService"));
 const LoginPage = lazy(() => import("./Pages/Login"));
 const PricingDetailsPage = lazy(() => import("./Pages/PricingDetails"));
 const Blog = lazy(() => import("./Pages/Blog"));
+const UnsubscribePage = lazy(() => import("./Pages/Unsubscribe"));
+const NewsletterDashboard = lazy(() => import("./Pages/Admin/NewsletterDashboard"));
 
 const HomeContent: React.FC = () => (
   <>
@@ -70,16 +73,16 @@ const App: React.FC = () => {
       const target = e.target as HTMLElement;
       const anchor = target.closest('a[href^="#"]');
       if (!anchor) return;
-      
+
       const href = anchor.getAttribute('href');
       if (!href || href === '#') return;
-      
+
       const element = document.querySelector(href);
       if (element) {
         e.preventDefault();
         const yOffset = -80;
         const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        
+
         window.scrollTo({
           top: y,
           behavior: 'smooth'
@@ -117,6 +120,10 @@ const App: React.FC = () => {
               <Route path="/terms-of-service" element={<TermsOfService />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/pricing/:packageId" element={<PricingDetailsPage />} />
+              <Route path="/unsubscribe" element={<UnsubscribePage />} />
+              <Route path="/admin/newsletter" element={<NewsletterDashboard />} />
+              <Route path="/about-us" element={<AboutUs />} />
+
             </Routes>
           </Suspense>
         </main>
@@ -128,11 +135,10 @@ const App: React.FC = () => {
         <button
           onClick={scrollToTop}
           aria-label="Scroll to top"
-          className={`fixed right-8 bottom-28 z-90 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/25 transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${
-            showScrollTop
+          className={`fixed right-8 bottom-28 z-90 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/25 transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${showScrollTop
               ? "opacity-100 translate-y-0 pointer-events-auto"
               : "opacity-0 translate-y-4 pointer-events-none"
-          }`}
+            }`}
         >
           <ArrowUp size={24} />
         </button>
