@@ -27,6 +27,7 @@ const PricingDetailsPage = lazy(() => import("./Pages/PricingDetails"));
 const Blog = lazy(() => import("./Pages/Blog"));
 const UnsubscribePage = lazy(() => import("./Pages/Unsubscribe"));
 const NewsletterDashboard = lazy(() => import("./Pages/Admin/NewsletterDashboard"));
+const ServicePage = lazy(() => import("./Pages/ServicePage"));
 
 const HomeContent: React.FC = () => (
   <>
@@ -123,6 +124,7 @@ const App: React.FC = () => {
               <Route path="/unsubscribe" element={<UnsubscribePage />} />
               <Route path="/admin/newsletter" element={<NewsletterDashboard />} />
               <Route path="/about-us" element={<AboutUs />} />
+              <Route path="/services/:serviceId" element={<ServicePage />} />
 
             </Routes>
           </Suspense>

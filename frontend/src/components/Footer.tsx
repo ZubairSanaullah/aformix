@@ -1,7 +1,9 @@
 import React from "react";
+import { Link } from "react-router";
 import { FaLinkedin, FaInstagram, FaFacebookF, FaDiscord, FaTiktok, FaXTwitter, FaEnvelope } from "react-icons/fa6";
 import logoImg from "../assets/logo.png";
 import FooterNewsletter from "./FooterNewsletter";
+import { serviceNavItems, getServicePath } from "../constants/serviceNav";
 
 const socialLinks = [
   { name: "LinkedIn", icon: FaLinkedin, href: "https://www.linkedin.com/in/aformix-tech-173393413/" },
@@ -52,16 +54,11 @@ const Footer: React.FC = () => {
           <div className="flex flex-col items-start text-left">
             <h4 className="text-[var(--color-text)] font-black uppercase tracking-widest text-xs mb-6 sm:mb-10">Solutions</h4>
             <ul className="space-y-3 sm:space-y-5 text-left">
-              {[
-                { label: "Enterprise", href: "#" },
-                { label: "SaaS Templates", href: "#" },
-                { label: "System Architecture", href: "#" },
-                { label: "Analytics", href: "#" },
-              ].map((item) => (
-                <li key={item.label}>
-                  <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all block text-sm sm:text-base">
-                    {item.label}
-                  </a>
+              {serviceNavItems.slice(0, 8).map((item) => (
+                <li key={item.id}>
+                  <Link to={getServicePath(item.id)} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all block text-sm sm:text-base">
+                    {item.title}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -73,7 +70,7 @@ const Footer: React.FC = () => {
               {[
                 { label: "About Us", href: "/about-us" },
                 { label: "Careers", href: "#" },
-                { label: "Blog", href: "#" },
+                { label: "Blog", href: "/blog" },
                 { label: "Contact", href: "#contact" },
               ].map((item) => (
                 <li key={item.label}>

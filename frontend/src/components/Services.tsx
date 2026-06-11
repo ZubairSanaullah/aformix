@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router";
 import { services } from "../constants";
+import { homepageServiceSlugs, getServicePath } from "../constants/serviceNav";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import Divider from "./Divider";
 
@@ -99,8 +101,15 @@ const Services: React.FC = () => {
             onPointerCancel={handlePointerUp}
           >
             {services.map((service) => {
+              const slug = homepageServiceSlugs[service.id];
               return (
-                <div key={service.id} className="service-card card-premium min-w-[260px] w-[85vw] sm:min-w-[380px] max-w-[380px] h-[440px] sm:h-[520px] flex-shrink-0 group">
+                <Link
+                  key={service.id}
+                  to={slug ? getServicePath(slug) : "/#services"}
+                  className="service-card card-premium min-w-[260px] w-[85vw] sm:min-w-[380px] max-w-[380px] h-[440px] sm:h-[520px] flex-shrink-0 group block"
+                  draggable={false}
+                  onDragStart={(event) => event.preventDefault()}
+                >
                   <div className="service-card-image-wrapper">
                     <img
                       src={serviceImages[service.id]}
@@ -118,7 +127,7 @@ const Services: React.FC = () => {
                   <div className="service-card-description-panel">
                     <p>{service.description}</p>
                   </div>
-                </div>
+                </Link>
               );
             })}
           </div>

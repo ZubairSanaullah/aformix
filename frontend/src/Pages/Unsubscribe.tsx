@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router";
 import { motion } from "framer-motion";
 import { FaSadTear, FaCheckCircle, FaSpinner } from "react-icons/fa";
 

@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router";
 import { navLinks } from "../constants";
-import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Briefcase, Activity, Users, ChevronDown, Code, Smartphone } from "lucide-react";
+import { serviceNavItems, getServicePath } from "../constants/serviceNav";
+import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Briefcase, Users, ChevronDown, Smartphone } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import logoImg from "../assets/logo.png";
 
@@ -142,7 +143,9 @@ const Navbar: React.FC = () => {
                 {/* Dropdown Menu */}
                 {['Products', 'Services', 'Company'].includes(link.name) && (
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 w-[340px] transition-all duration-300 ease-out z-50 ${
+                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-300 ease-out z-50 ${
+                      link.name === 'Services' ? 'w-[520px]' : 'w-[340px]'
+                    } ${
                       hoveredMenu === link.name
                         ? "opacity-100 translate-y-0 visible pointer-events-auto"
                         : "opacity-0 translate-y-4 invisible pointer-events-none"
@@ -185,30 +188,36 @@ const Navbar: React.FC = () => {
                           </>
                         )}
                         {link.name === 'Services' && (
-                          <>
-                            <a href="#" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
-                              <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
-                                <Code size={20} />
-                              </div>
-                              <div>
-                                <h4 className="text-[var(--color-text)] font-semibold text-sm group-hover/item:text-[var(--color-primary)] transition-colors">Custom Development</h4>
-                                <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">End-to-end full stack web solutions.</p>
-                              </div>
-                            </a>
-                            <a href="#" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
-                              <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
-                                <Activity size={20} />
-                              </div>
-                              <div>
-                                <h4 className="text-[var(--color-text)] font-semibold text-sm group-hover/item:text-[var(--color-primary)] transition-colors">System Architecture</h4>
-                                <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">Scalable cloud infrastructures.</p>
-                              </div>
-                            </a>
-                          </>
+                          <div className="max-h-[420px] overflow-y-auto custom-scrollbar">
+                            <div className="grid grid-cols-2 gap-1 p-1">
+                              {serviceNavItems.map((item) => {
+                                const ItemIcon = item.icon;
+                                return (
+                                  <Link
+                                    key={item.id}
+                                    to={getServicePath(item.id)}
+                                    className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-3 items-start"
+                                  >
+                                    <div className="w-9 h-9 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
+                                      <ItemIcon size={18} />
+                                    </div>
+                                    <div className="min-w-0">
+                                      <h4 className="text-[var(--color-text)] font-semibold text-xs group-hover/item:text-[var(--color-primary)] transition-colors truncate">
+                                        {item.title}
+                                      </h4>
+                                      <p className="text-[var(--color-text-muted)] text-[11px] mt-0.5 leading-relaxed line-clamp-2">
+                                        {item.shortDescription}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                );
+                              })}
+                            </div>
+                          </div>
                         )}
                         {link.name === 'Company' && (
                           <>
-                            <a href="#" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
+                            <Link to="/about-us" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
                               <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
                                 <Users size={20} />
                               </div>
@@ -216,7 +225,7 @@ const Navbar: React.FC = () => {
                                 <h4 className="text-[var(--color-text)] font-semibold text-sm group-hover/item:text-[var(--color-primary)] transition-colors">About Us</h4>
                                 <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">Learn about our mission and vision.</p>
                               </div>
-                            </a>
+                            </Link>
                             <a href="#" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
                               <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
                                 <Briefcase size={20} />
