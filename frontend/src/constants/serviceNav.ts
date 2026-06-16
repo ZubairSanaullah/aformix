@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 
 export type HeroVariant =
-  | "ai"
   | "code"
   | "mern"
   | "fullstack"
@@ -27,7 +26,6 @@ export type HeroVariant =
   | "design"
   | "portfolio"
   | "healthcare"
-  | "automation"
   | "crm"
   | "erp"
   | "ecommerce"
@@ -38,7 +36,7 @@ export interface ServiceNavItem {
   title: string;
   shortDescription: string;
   icon: LucideIcon;
-  category: "AI & Automation" | "Development" | "Enterprise" | "Growth & Design";
+  category: "Development" | "Enterprise" | "Growth & Design";
 }
 
 export const serviceNavItems: ServiceNavItem[] = [
@@ -146,10 +144,6 @@ export const serviceHeroConfig: Record<
   string,
   { variant: HeroVariant; valueProposition: string }
 > = {
-  "ai-automation": {
-    variant: "ai",
-    valueProposition: "Cut operational costs by up to 60% with intelligent automation",
-  },
   "custom-development": {
     variant: "code",
     valueProposition: "Software built around your business — not the other way around",
@@ -189,10 +183,6 @@ export const serviceHeroConfig: Record<
   "hospital-management-systems": {
     variant: "healthcare",
     valueProposition: "HIPAA-ready systems that streamline patient care",
-  },
-  "business-automation": {
-    variant: "automation",
-    valueProposition: "Eliminate repetitive tasks and reclaim hundreds of hours",
   },
   "crm-development": {
     variant: "crm",

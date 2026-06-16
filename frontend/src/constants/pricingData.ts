@@ -181,7 +181,7 @@ export const pricingData: Record<string, PackageType> = {
       { icon: Zap, title: "API Integrations", description: "Seamless connection with third-party enterprise tools (ERP, CRM)." },
       { icon: Shield, title: "Security & Compliance", description: "GDPR compliance, data encryption, and advanced security." },
       { icon: Award, title: "Dedicated Manager", description: "A dedicated project manager ensuring smooth delivery." },
-      { icon: Code2, title: "Custom Algorithms", description: "Complex business logic, AI integrations, and automation workflows." },
+      { icon: Code2, title: "Custom Algorithms", description: "Complex business logic and custom API integrations." },
       { icon: Monitor, title: "Multi-Platform", description: "Web, Desktop, and Mobile readiness." },
       { icon: Database, title: "Data Migration", description: "Securely move your existing data to the new system." },
       { icon: Headphones, title: "24/7 SLA Support", description: "Enterprise-grade Service Level Agreement for continuous uptime." }
@@ -207,7 +207,7 @@ export const pricingData: Record<string, PackageType> = {
       { step: 6, title: "Phased Deployment", description: "Rolling out the system incrementally to minimize business disruption." },
       { step: 7, title: "Ongoing Support", description: "24/7 monitoring, scaling, and feature additions." }
     ],
-    techStack: ["React", "Next.js", "Node.js", "PostgreSQL", "AWS", "Docker", "OpenAI", "Tailwind CSS"],
+    techStack: ["React", "Next.js", "Node.js", "PostgreSQL", "AWS", "Docker", "Redis", "Tailwind CSS"],
     idealClients: ["Enterprise", "Healthcare Networks", "Financial Institutions", "Large E-Commerce", "Government"],
     faqs: [
       { question: "How long does development take?", answer: "Enterprise projects are highly custom. An MVP usually takes 8-12 weeks, followed by continuous agile development." },
@@ -218,7 +218,7 @@ export const pricingData: Record<string, PackageType> = {
       { question: "Can you integrate with our existing legacy systems?", answer: "Yes, we specialize in building custom APIs and middleware to connect modern web apps with legacy ERPs or CRMs." },
       { question: "How do you handle data security and compliance?", answer: "We follow industry best practices for encryption (at rest and in transit), role-based access control, and GDPR/HIPAA compliance if needed." },
       { question: "Who will manage the project?", answer: "A dedicated Technical Project Manager will be assigned to your account as your primary point of contact." },
-      { question: "Can you incorporate AI features?", answer: "Yes, we integrate LLMs (like OpenAI), custom machine learning models, and automated workflows to optimize your operations." },
+      { question: "Can you build complex custom features?", answer: "Yes, we build advanced custom functionality including complex business logic, third-party integrations, and scalable backend systems." },
       { question: "How do you handle QA?", answer: "We employ comprehensive automated testing (unit, integration, e2e) alongside manual QA and third-party security audits." }
     ]
   }
@@ -235,7 +235,7 @@ export const comparisonTableData = [
   { feature: "Analytics Setup", starter: false, growth: true, enterprise: true },
   { feature: "User Authentication", starter: false, growth: true, enterprise: true },
   { feature: "API Integrations", starter: false, growth: "Up to 3", enterprise: "Unlimited" },
-  { feature: "AI Workflows", starter: false, growth: false, enterprise: true },
+  { feature: "Advanced Integrations", starter: false, growth: false, enterprise: true },
   { feature: "Dedicated Manager", starter: false, growth: false, enterprise: true },
   { feature: "Support SLA", starter: "14 Days", growth: "3 Months", enterprise: "24/7 Custom SLA" }
 ];

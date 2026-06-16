@@ -25,7 +25,7 @@ const SERVICES = [
   "Web Development",
   "E-Commerce Website",
   "Custom Software",
-  "Business Automation",
+  "Mobile App Development",
   "UI/UX Design",
   "Maintenance & Support",
   "Other",

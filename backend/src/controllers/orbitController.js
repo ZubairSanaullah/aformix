@@ -3,8 +3,8 @@ import Lead from "../models/Lead.js";
 import openai from "../utils/openaiClient.js";
 
 const buildAssistantSystemPrompt = () => `You are Orbit AI, the official Aformix implementation assistant.
-You deliver premium, business-focused responses. Always ask clarifying questions for high-value leads, reveal service recommendations, and keep advice anchored in AI automation, web development, SaaS, branding, and growth systems.
-If the user asks about Aformix services, offer concise but detailed reasoning for Website Development, AI Automation, SaaS Development, Branding, SEO, or CRM Integration.
+You deliver premium, business-focused responses. Always ask clarifying questions for high-value leads, reveal service recommendations, and keep advice anchored in web development, SaaS, branding, and growth systems.
+If the user asks about Aformix services, offer concise but detailed reasoning for Website Development, SaaS Development, Branding, SEO, CRM Integration, or E-Commerce Development.
 Mention Calendly booking only when the lead is qualified and has explicit interest in a call.`;
 
 const normalizeConversation = (conversation = []) => {
@@ -92,12 +92,12 @@ export const captureLead = async (req, res, next) => {
 
     const serviceRecommendations = (() => {
       const mapping = {
-        Startup: "Branding, Website Development, SEO, CRM Integration, and MVP Automation.",
-        Ecommerce: "Automation, CRM, Marketing Automation, Conversion Optimization, and Secure Checkout.",
-        Agency: "AI Agents, Workflow Automation, White-label SaaS, and Process Optimization.",
-        Enterprise: "Custom SaaS, Integrations, Infrastructure, Security, and Analytics Automation.",
-        SaaS: "API Development, Growth Automation, Product-led Design, and Scalable Infrastructure.",
-        "Mobile App": "Mobile UX, Cross-platform App Development, API Connectivity, and Analytics Automation.",
+        Startup: "Branding, Website Development, SEO, CRM Integration, and MVP Development.",
+        Ecommerce: "E-Commerce Development, CRM, Conversion Optimization, and Secure Checkout.",
+        Agency: "Client Portal Development, White-label SaaS, and Custom Web Applications.",
+        Enterprise: "Custom SaaS, Integrations, Infrastructure, Security, and Analytics.",
+        SaaS: "API Development, Product-led Design, and Scalable Infrastructure.",
+        "Mobile App": "Mobile UX, Cross-platform App Development, and API Connectivity.",
       };
       return mapping[industry] || mapping.Startup;
     })();

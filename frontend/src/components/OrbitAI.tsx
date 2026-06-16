@@ -51,12 +51,12 @@ const initialLeadProfile: LeadProfile = {
 };
 
 const SERVICE_RECOMMENDATIONS: Record<string, string> = {
-  Startup: "Branding, Website Development, SEO, CRM Integration, and MVP Automation.",
-  Ecommerce: "Automation, CRM, Marketing Automation, Conversion Optimization, and Secure Checkout.",
-  Agency: "AI Agents, Workflow Automation, Client Portal Development, and White-label SaaS.",
+  Startup: "Branding, Website Development, SEO, CRM Integration, and MVP Development.",
+  Ecommerce: "E-Commerce Development, CRM, Conversion Optimization, and Secure Checkout.",
+  Agency: "Client Portal Development, White-label SaaS, and Custom Web Applications.",
   Enterprise: "Custom SaaS, Systems Integrations, Cloud Infrastructure, and Compliance-ready Platforms.",
-  SaaS: "API Development, Growth Automation, Product-led Design, and Scalable Infrastructure.",
-  "Mobile App": "Mobile UX, Cross-platform App Development, API Connectivity, and Analytics Automation.",
+  SaaS: "API Development, Product-led Design, and Scalable Infrastructure.",
+  "Mobile App": "Mobile UX, Cross-platform App Development, and API Connectivity.",
 };
 
 const leadScoreFactors = {
@@ -148,7 +148,7 @@ const OrbitAI: React.FC = () => {
           {
             id: `orbit-welcome`,
             role: "assistant",
-            content: `Need a website, automation, or AI solution? I can qualify your project, recommend services, and book the right discovery call.`,
+            content: `Need a website or custom software? I can qualify your project, recommend services, and book the right discovery call.`,
           },
         ]);
       }
@@ -302,7 +302,7 @@ const OrbitAI: React.FC = () => {
   };
 
   const quickReplies = [
-    "Show me your AI automation case studies",
+    "Show me your web development case studies",
     "I need a new website for my business",
     "Book a discovery call",
   ];

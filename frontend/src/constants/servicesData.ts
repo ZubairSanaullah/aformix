@@ -1,7 +1,5 @@
 ﻿import type { ServiceData } from "../types/service";
 import {
-  Bot,
-  Brain,
   Zap,
   Code,
   Server,
@@ -11,7 +9,6 @@ import {
   Globe,
   PenTool,
   ShoppingCart,
-  Workflow,
   BarChart,
   Users,
   Building,
@@ -48,201 +45,7 @@ import {
 } from "lucide-react";
 
 export const servicesData: Record<string, ServiceData> = {
-  /* ─────────────────────── 1. AI AUTOMATION ─────────────────────── */
-  "ai-automation": {
-    id: "ai-automation",
-    title: "AI Automation",
-    badge: "Enterprise AI Solutions",
-    heroHeadline: "Intelligent Automation for the Modern Enterprise",
-    heroDescription:
-      "Transform your business operations with cutting-edge AI. We build custom automation solutions that reduce costs, eliminate manual tasks, and accelerate your growth at scale.",
-    seo: {
-      title: "AI Automation Services | Aformix",
-      description:
-        "Scale your business with custom AI automation solutions by Aformix. We build intelligent systems that eliminate repetitive tasks and boost ROI.",
-      keywords: "AI Automation, Business Automation, Machine Learning, Custom AI, Enterprise AI, LLM Integration",
-    },
-    problems: [
-      {
-        id: "p1",
-        title: "Manual Process Bottlenecks",
-        description:
-          "Your team spends countless hours on repetitive data entry and administrative tasks instead of high-value strategic work.",
-        icon: Clock,
-      },
-      {
-        id: "p2",
-        title: "High Operational Costs",
-        description:
-          "Inefficient workflows and human errors are directly impacting your bottom line and eating into your margins.",
-        icon: BarChart,
-      },
-      {
-        id: "p3",
-        title: "Siloed Data Systems",
-        description:
-          "Your software stack doesn't communicate, requiring manual syncing and leading to fragmented, unreliable data silos.",
-        icon: Database,
-      },
-    ],
-    solution: {
-      title: "How Aformix Transforms Your Workflow",
-      description:
-        "We deploy intelligent AI agents and machine learning models that seamlessly integrate with your existing infrastructure to automate complex, multi-step workflows — from data ingestion to decision-making.",
-      benefits: [
-        "End-to-end process automation",
-        "Custom LLM & GPT-4 integrations",
-        "Automated customer support agents",
-        "Intelligent document processing & OCR",
-      ],
-    },
-    features: [
-      {
-        id: "f1",
-        title: "Custom AI Agents",
-        description: "Deploy intelligent agents that handle complex, context-aware tasks 24/7 without human supervision.",
-        icon: Bot,
-      },
-      {
-        id: "f2",
-        title: "Predictive Analytics",
-        description: "Leverage machine learning models to forecast trends and make proactive, data-driven decisions.",
-        icon: Brain,
-      },
-      {
-        id: "f3",
-        title: "Seamless Integration",
-        description: "Connect AI tools with your CRM, ERP, and internal software via robust REST and webhook APIs.",
-        icon: Zap,
-      },
-      {
-        id: "f4",
-        title: "Workflow Automation",
-        description: "Automate multi-step processes across dozens of applications in a single orchestrated pipeline.",
-        icon: Workflow,
-      },
-    ],
-    benefits: [
-      {
-        id: "b1",
-        title: "Increased Efficiency",
-        description: "Automate up to 80% of routine manual processes, freeing your team for strategic initiatives.",
-        metric: "80%",
-        metricLabel: "Time Saved",
-      },
-      {
-        id: "b2",
-        title: "Cost Reduction",
-        description: "Significantly reduce operational and administrative overhead with intelligent automation.",
-        metric: "40%",
-        metricLabel: "Cost Reduction",
-      },
-      {
-        id: "b3",
-        title: "Near-Zero Error Rate",
-        description: "Eliminate costly human error in data processing, transfers, and approvals.",
-        metric: "99.9%",
-        metricLabel: "Accuracy Rate",
-      },
-    ],
-    process: [
-      {
-        id: "pr1",
-        title: "Process Audit",
-        description: "We analyze your current workflows to identify the highest-value automation opportunities.",
-        icon: Search,
-      },
-      {
-        id: "pr2",
-        title: "Solution Design",
-        description: "Architecting the AI workflow, selecting the right models, and defining integration points.",
-        icon: Layers,
-      },
-      {
-        id: "pr3",
-        title: "Development & Integration",
-        description: "Building custom automation pipelines and integrating APIs across your tech stack.",
-        icon: Code,
-      },
-      {
-        id: "pr4",
-        title: "Deployment & Training",
-        description: "Launching the system, monitoring performance, and training your team to manage the AI.",
-        icon: Rocket,
-      },
-    ],
-    techStack: [
-      {
-        category: "AI & Machine Learning",
-        technologies: [
-          { name: "OpenAI GPT-4", icon: Brain },
-          { name: "Anthropic Claude", icon: Brain },
-          { name: "LangChain", icon: Code },
-          { name: "TensorFlow", icon: Cpu },
-        ],
-      },
-      {
-        category: "Automation Infrastructure",
-        technologies: [
-          { name: "Python", icon: Code },
-          { name: "Make / Integromat", icon: Workflow },
-          { name: "Zapier", icon: Zap },
-          { name: "AWS Lambda", icon: Server },
-        ],
-      },
-    ],
-    caseStudies: [
-      {
-        id: "cs1",
-        title: "Automated Customer Support Resolution",
-        client: "TechFlow SaaS",
-        challenge: "Drowning in tier-1 support tickets with a 24-hour average response time, causing churn.",
-        solution:
-          "Implemented a custom AI agent trained on company documentation to handle inbound queries, routing only complex cases to humans.",
-        results: [
-          { label: "Resolution Time", value: "< 2 min" },
-          { label: "Tickets Deflected", value: "75%" },
-        ],
-      },
-      {
-        id: "cs2",
-        title: "Automated Invoice Processing Pipeline",
-        client: "FinServ Corp",
-        challenge: "Finance team spending 40+ hours/week manually processing and categorizing invoices.",
-        solution:
-          "Built an AI-powered document ingestion system using OCR and LLM classification to auto-process invoices end-to-end.",
-        results: [
-          { label: "Hours Saved / Week", value: "38hrs" },
-          { label: "Processing Accuracy", value: "99.2%" },
-        ],
-      },
-    ],
-    faqs: [
-      {
-        id: "faq1",
-        question: "How long does it take to deploy an AI automation solution?",
-        answer:
-          "Simple automations can be deployed in 2–3 weeks. Complex, enterprise-grade AI agents integrated across multiple systems typically take 8–12 weeks from discovery to deployment.",
-      },
-      {
-        id: "faq2",
-        question: "Is our company data secure when using AI?",
-        answer:
-          "Yes. We use enterprise-grade APIs with zero-data-retention policies. Your proprietary data is never used to train public models, and we can deploy open-source models on your private servers if required.",
-      },
-      {
-        id: "faq3",
-        question: "Can AI automation work with our existing software?",
-        answer:
-          "Absolutely. We specialize in integrating AI into existing tech stacks. Whether you use Salesforce, HubSpot, SAP, or a custom-built system, we build the connectors to make it work.",
-      },
-    ],
-    ctaHeadline: "Ready to Automate Your Operations?",
-    ctaDescription:
-      "Schedule a free AI discovery call to identify the top 3 processes you can automate today.",
-  },
-
-  /* ─────────────────────── 2. CUSTOM DEVELOPMENT ─────────────────────── */
+  /* ─────────────────────── 1. CUSTOM DEVELOPMENT ─────────────────────── */
   "custom-development": {
     id: "custom-development",
     title: "Custom Web Development",
@@ -616,7 +419,7 @@ export const servicesData: Record<string, ServiceData> = {
         title: "B2B Project Management SaaS",
         client: "Taskwise",
         challenge: "Founder had a validated idea but no technical co-founder to build the product.",
-        solution: "Built the full SaaS product — multi-tenant data model, Stripe billing, team workspaces, and a beautiful React dashboard.",
+        solution: "Built the full SaaS product — multi-tenant data model, Stripe billing, team collaboration features, and a beautiful React dashboard.",
         results: [
           { label: "MRR at 6 Months", value: "$18K" },
           { label: "Enterprise Clients", value: "12" },
@@ -775,7 +578,7 @@ export const servicesData: Record<string, ServiceData> = {
     ],
     faqs: [
       { id: "faq1", question: "What's the difference between a website and a web application?", answer: "A website primarily presents information. A web application is interactive — users log in, create data, manage workflows, and take actions that change the system's state. Think Gmail vs. a blog." },
-      { id: "faq2", question: "Can you build internal tools for my company?", answer: "Absolutely. We specialize in internal tools that dramatically boost productivity — custom dashboards, admin panels, reporting tools, CRM systems, and workflow automation platforms." },
+      { id: "faq2", question: "Can you build internal tools for my company?", answer: "Absolutely. We specialize in internal tools that dramatically boost productivity — custom dashboards, admin panels, reporting tools, and CRM systems." },
     ],
     ctaHeadline: "Launch Your Digital Platform",
     ctaDescription: "Tell us about your web application vision, and we'll build it with enterprise-grade quality.",
@@ -1076,82 +879,7 @@ export const servicesData: Record<string, ServiceData> = {
     ctaDescription: "Book a free needs assessment and discover how a custom HMS can transform patient care.",
   },
 
-  /* ─────────────────────── 12. BUSINESS AUTOMATION ─────────────────────── */
-  "business-automation": {
-    id: "business-automation",
-    title: "Business Automation",
-    badge: "Process Optimization",
-    heroHeadline: "Automate Your Business. Multiply Your Output.",
-    heroDescription:
-      "We identify, design, and implement end-to-end business automation solutions — from lead capture to fulfillment — that eliminate manual work and let your team operate at maximum leverage.",
-    seo: {
-      title: "Business Automation Services | Aformix",
-      description: "Aformix automates repetitive business processes — sales, marketing, operations, and HR — using custom integrations and AI-powered workflows.",
-      keywords: "Business Automation, Process Automation, Workflow Automation, RPA, Operational Efficiency",
-    },
-    problems: [
-      { id: "p1", title: "Your Team Does Grunt Work", description: "Talented employees spend their time on copy-paste tasks, manual data entry, and report generation instead of creating value.", icon: Users },
-      { id: "p2", title: "Inconsistent Process Execution", description: "Manual processes lead to inconsistency — some steps get skipped, quality varies, and customers get different experiences.", icon: RefreshCw },
-      { id: "p3", title: "Growth Creates More Chaos", description: "As your business grows, the complexity multiplies. More customers means more manual work, not more systems.", icon: TrendingUp },
-    ],
-    solution: {
-      title: "Systematize Everything. Automate the Rest.",
-      description: "We document, optimize, and automate your critical business processes — from marketing and sales to operations and finance — creating a business that runs efficiently at any scale.",
-      benefits: ["End-to-end process documentation", "Custom automation workflows", "CRM & ERP integration", "Automated reporting & dashboards"],
-    },
-    features: [
-      { id: "f1", title: "Sales Automation", description: "Automated lead scoring, follow-up sequences, and proposal generation.", icon: TrendingUp },
-      { id: "f2", title: "Marketing Automation", description: "Triggered email campaigns, lead nurturing flows, and social media scheduling.", icon: Share2 },
-      { id: "f3", title: "Operations Automation", description: "Automated order processing, inventory updates, and supplier communications.", icon: Settings },
-      { id: "f4", title: "Reporting Automation", description: "Auto-generated KPI dashboards and reports sent to stakeholders on schedule.", icon: BarChart },
-    ],
-    benefits: [
-      { id: "b1", title: "Reclaim Team Time", description: "Give your team back hours each week to focus on high-value, creative work.", metric: "20hrs", metricLabel: "Saved Per Week" },
-      { id: "b2", title: "Consistent Execution", description: "Automated processes execute perfectly every single time, without exception.", metric: "100%", metricLabel: "Consistency" },
-      { id: "b3", title: "Scale Without Hiring", description: "Double your output without doubling your headcount through intelligent automation.", metric: "2x", metricLabel: "Output" },
-    ],
-    process: [
-      { id: "pr1", title: "Process Mapping", description: "Documenting and analyzing every key business process to find automation opportunities.", icon: FileText },
-      { id: "pr2", title: "Automation Design", description: "Designing optimal automated workflows using the right tools for each process.", icon: Workflow },
-      { id: "pr3", title: "Build & Connect", description: "Building automations and connecting your existing software tools via APIs.", icon: PlugZap },
-      { id: "pr4", title: "Monitor & Optimize", description: "Ongoing monitoring of automation performance and continuous optimization.", icon: Activity },
-    ],
-    techStack: [
-      {
-        category: "Automation Platforms",
-        technologies: [
-          { name: "Make.com", icon: Workflow }, { name: "Zapier", icon: Zap }, { name: "n8n", icon: Code }, { name: "Microsoft Power Automate", icon: Settings },
-        ],
-      },
-      {
-        category: "Integration Targets",
-        technologies: [
-          { name: "Salesforce", icon: Users }, { name: "HubSpot", icon: TrendingUp }, { name: "Shopify", icon: ShoppingCart }, { name: "QuickBooks", icon: DollarSign },
-        ],
-      },
-    ],
-    caseStudies: [
-      {
-        id: "cs1",
-        title: "Marketing Agency Operations Automation",
-        client: "PixelForge Agency",
-        challenge: "Account managers spending 15+ hours/week on client reporting, onboarding documents, and invoice creation.",
-        solution: "Automated the entire client lifecycle — onboarding flows, monthly report generation, and invoice creation in HubSpot and QuickBooks.",
-        results: [
-          { label: "Admin Time Saved", value: "14hrs/wk" },
-          { label: "Client Onboarding Time", value: "-70%" },
-        ],
-      },
-    ],
-    faqs: [
-      { id: "faq1", question: "What tools do you automate?", answer: "We automate almost any combination of SaaS tools with APIs — Salesforce, HubSpot, Slack, Gmail, Shopify, QuickBooks, Xero, Airtable, Notion, and hundreds more." },
-      { id: "faq2", question: "Do we need to change our existing software?", answer: "Usually not. We integrate automation on top of your existing tools without requiring you to switch platforms. We work with what you have." },
-    ],
-    ctaHeadline: "Automate Your Business Operations",
-    ctaDescription: "Let's map your key processes and build automation that gives you back 20+ hours a week.",
-  },
-
-  /* ─────────────────────── 13. CRM DEVELOPMENT ─────────────────────── */
+  /* ─────────────────────── 12. CRM DEVELOPMENT ─────────────────────── */
   "crm-development": {
     id: "crm-development",
     title: "CRM Development",
@@ -1177,7 +905,7 @@ export const servicesData: Record<string, ServiceData> = {
     features: [
       { id: "f1", title: "Visual Pipeline Management", description: "Kanban and list views with drag-and-drop deal management across custom stages.", icon: Sliders },
       { id: "f2", title: "Contact & Company Profiles", description: "Rich contact profiles with full interaction history, notes, and file attachments.", icon: Users },
-      { id: "f3", title: "Automation & Sequences", description: "Automated email follow-ups, task creation, and stage transitions based on deal triggers.", icon: Zap },
+      { id: "f3", title: "Follow-ups & Sequences", description: "Scheduled email follow-ups, task creation, and stage transitions based on deal triggers.", icon: Zap },
       { id: "f4", title: "Sales Analytics", description: "Real-time dashboards for pipeline velocity, win rate, rep performance, and revenue forecasting.", icon: BarChart },
     ],
     benefits: [
@@ -1187,7 +915,7 @@ export const servicesData: Record<string, ServiceData> = {
     ],
     process: [
       { id: "pr1", title: "Sales Process Audit", description: "Mapping your current sales pipeline, stages, and common deal scenarios.", icon: Search },
-      { id: "pr2", title: "CRM Architecture", description: "Designing entity relationships, custom fields, automation triggers, and reporting structure.", icon: Layers },
+      { id: "pr2", title: "CRM Architecture", description: "Designing entity relationships, custom fields, trigger rules, and reporting structure.", icon: Layers },
       { id: "pr3", title: "Build & Test", description: "Development with sales team involvement to validate each feature before release.", icon: Code },
       { id: "pr4", title: "Migration & Training", description: "Data migration from your existing CRM and hands-on training for every sales rep.", icon: Rocket },
     ],

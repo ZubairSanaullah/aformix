@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {useRef} from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -320,11 +320,11 @@ const Hero: React.FC = () => {
 
             {/* Floating UI Elements / Glassmorphism Cards */}
 
-            {/* FLOATING CARD 1: Automation Workflow */}
+            {/* FLOATING CARD 1: Development Workflow */}
             <div className="floating-card-ui floating-card-ui--1">
               <div className="floating-card-hdr">
                 <Terminal size={14} className="text-primary" />
-                <span className="floating-card-title">AI Agent</span>
+                <span className="floating-card-title">Web App</span>
                 <span className="pulse-indicator" />
               </div>
               <div className="workflow-steps">

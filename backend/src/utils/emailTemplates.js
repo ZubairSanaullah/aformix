@@ -104,12 +104,12 @@ export const getWelcomeEmailTemplate = (unsubscribeUrl, websiteUrl) => {
       
       <h1>Welcome to the <span class="highlight">Insider Network</span> 🚀</h1>
       
-      <p>Thank you for joining our exclusive community. You're now on the list to receive our latest insights on AI automation, SaaS development, and digital growth strategies.</p>
+      <p>Thank you for joining our exclusive community. You're now on the list to receive our latest insights on SaaS development, web development, and digital growth strategies.</p>
       
       <div class="features">
         <div class="feature-item">
           <span class="feature-icon">✓</span>
-          <span>Weekly AI & Automation Strategies</span>
+          <span>Weekly Web Development Tips</span>
         </div>
         <div class="feature-item">
           <span class="feature-icon">✓</span>

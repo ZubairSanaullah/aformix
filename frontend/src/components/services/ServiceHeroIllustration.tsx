@@ -3,8 +3,6 @@ import { motion } from "framer-motion";
 import type { HeroVariant } from "../../constants/serviceNav";
 import type { LucideIcon } from "lucide-react";
 import {
-  Bot,
-  Brain,
   Code2,
   Database,
   Server,
@@ -42,17 +40,6 @@ const variantConfig: Record<
   HeroVariant,
   { primary: string; secondary: string; accent: string; nodes: FloatingNode[] }
 > = {
-  ai: {
-    primary: "rgba(49,185,143,0.35)",
-    secondary: "rgba(104,75,158,0.3)",
-    accent: "rgba(0,191,222,0.25)",
-    nodes: [
-      { icon: Bot, x: "15%", y: "20%", delay: 0 },
-      { icon: Brain, x: "70%", y: "15%", delay: 0.5 },
-      { icon: Zap, x: "75%", y: "65%", delay: 1 },
-      { icon: BarChart3, x: "20%", y: "70%", delay: 1.5 },
-    ],
-  },
   code: {
     primary: "rgba(49,185,143,0.3)",
     secondary: "rgba(0,191,222,0.25)",
@@ -161,17 +148,6 @@ const variantConfig: Record<
       { icon: Shield, x: "20%", y: "22%", delay: 0.5 },
       { icon: Database, x: "75%", y: "25%", delay: 1 },
       { icon: Users, x: "22%", y: "72%", delay: 1.5 },
-    ],
-  },
-  automation: {
-    primary: "rgba(0,191,222,0.28)",
-    secondary: "rgba(49,185,143,0.28)",
-    accent: "rgba(104,75,158,0.22)",
-    nodes: [
-      { icon: Workflow, x: "50%", y: "40%", delay: 0, size: 42 },
-      { icon: Zap, x: "18%", y: "22%", delay: 0.5 },
-      { icon: Bot, x: "75%", y: "28%", delay: 1 },
-      { icon: BarChart3, x: "22%", y: "70%", delay: 1.5 },
     ],
   },
   crm: {

@@ -73,7 +73,7 @@ const WhyChooseUs: React.FC = () => {
 
               {/* Feature badges */}
               <div className="flex flex-wrap gap-2 mb-6">
-                {["AI Automation", "Smart Workflows", "24/7 Support", "Data Insights"].map((tag) => (
+                {["Custom Development", "Smart Workflows", "24/7 Support", "Data Insights"].map((tag) => (
                   <span
                     key={tag}
                     className="px-3 py-1 rounded-full text-xs font-semibold bg-primary/8 border border-primary/15 text-primary/80"

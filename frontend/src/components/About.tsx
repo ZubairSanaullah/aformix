@@ -118,7 +118,7 @@ const About: React.FC = () => {
                 </div>
                 <h3 className="text-3xl font-black text-[var(--color-text)] mb-4">Crafting distinctive digital products that scale.</h3>
                 <p className="text-[var(--color-text-muted)] leading-relaxed mb-6">
-                  Orbit is our AI mascot that represents our commitment to intelligent automation and modern digital craftsmanship.
+                  Orbit is our AI mascot that represents our commitment to modern digital craftsmanship and exceptional user experiences.
                 </p>
                 <button
                   onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('open-orbit-ai')); }}

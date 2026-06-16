@@ -5,15 +5,14 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Target, Eye, Code, Smartphone, Globe, Search,
   Settings, Layout, Shield, Zap, CheckCircle,
-  TrendingUp, Award, Star, Lightbulb, Cpu, Cloud,
-  Layers, ArrowRight, Quote, Building2, Users,
-  ChartNoAxesCombined, ShieldCheck,
+  TrendingUp, Award, Star, Lightbulb, Cloud,
+  Layers, ArrowRight, Quote, Users,
+  ChartNoAxesCombined, ShieldCheck, ShoppingCart,
   Send, MapPin, Mail, Phone, Clock
 } from 'lucide-react';
 import { BsRobot } from "react-icons/bs";
 import { CiMobile1 } from "react-icons/ci";
 import Divider from '../components/Divider';
-import TechMarquee from '../components/TechMarquee';
 import Swal from 'sweetalert2';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -22,7 +21,7 @@ const ABOUT_SERVICES = [
   "Web Development",
   "E-Commerce Website",
   "Custom Software",
-  "Business Automation",
+  "Mobile App Development",
   "UI/UX Design",
   "Maintenance & Support",
   "Other",
@@ -247,7 +246,7 @@ const AboutUs: React.FC = () => {
                   </div>
                   <h3 className="text-3xl font-black text-[var(--color-text)] mb-4">Crafting distinctive digital products that scale.</h3>
                   <p className="text-[var(--color-text-muted)] leading-relaxed mb-6">
-                    Orbit is our AI mascot that represents our commitment to intelligent automation and modern digital craftsmanship.
+                    Orbit is our AI mascot that represents our commitment to modern digital craftsmanship and exceptional user experiences.
                   </p>
                   <button
                     onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('open-orbit-ai')); }}
@@ -349,7 +348,7 @@ const AboutUs: React.FC = () => {
                 </div>
                 <h3 className="text-3xl font-bold mb-4 text-[var(--color-text)]">Our Mission</h3>
                 <p className="text-[var(--color-text-muted)] text-lg leading-relaxed">
-                  To empower businesses with cutting-edge AI automation and bespoke software solutions that drive unprecedented efficiency, growth, and digital transformation.
+                  To empower businesses with cutting-edge bespoke software solutions that drive unprecedented efficiency, growth, and digital transformation.
                 </p>
               </div>
             </div>
@@ -387,13 +386,13 @@ const AboutUs: React.FC = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 about-grid">
             {[
-              { icon: Cpu, title: "AI Automation", desc: "Intelligent workflows that save thousands of hours." },
+              { icon: Users, title: "CRM Development", desc: "Custom sales pipelines built for your business." },
               { icon: Code, title: "Custom Development", desc: "Bespoke software tailored to your exact needs." },
               { icon: Cloud, title: "SaaS Platforms", desc: "Scalable, secure, and multi-tenant architectures." },
               { icon: Globe, title: "Web Applications", desc: "High-performance, modern web experiences." },
               { icon: Smartphone, title: "Mobile Applications", desc: "Native-feeling apps for iOS and Android." },
               { icon: Search, title: "SEO Solutions", desc: "Data-driven strategies for organic dominance." },
-              { icon: Zap, title: "Business Automation", desc: "Streamlining operations for maximum efficiency." },
+              { icon: ShoppingCart, title: "E-Commerce Development", desc: "High-converting online stores that scale." },
               { icon: Layout, title: "UI/UX Design", desc: "Award-winning interfaces that convert." }
             ].map((service, index) => (
               <div
@@ -567,7 +566,7 @@ const AboutUs: React.FC = () => {
               { category: "Mobile", tools: "React Native, Flutter, Swift" },
               { category: "Cloud", tools: "AWS, GCP, Azure, Vercel" },
               { category: "Databases", tools: "PostgreSQL, MongoDB, Redis" },
-              { category: "AI Tools", tools: "OpenAI, PyTorch, TensorFlow" }
+              { category: "DevOps", tools: "Docker, Kubernetes, CI/CD, GitHub Actions" }
             ].map((stack, i) => (
               <div
                 key={i}
@@ -599,8 +598,8 @@ const AboutUs: React.FC = () => {
                 text: "Aformix didn't just build our SaaS platform; they architected our entire digital future. The code quality is immaculate, and the design is breathtaking."
               },
               {
-                name: "David Chen", role: "Founder, DataSync AI",
-                text: "Their understanding of AI integration is unmatched. They automated workflows that saved our company thousands of manual hours within the first month."
+                name: "David Chen", role: "Founder, DataSync",
+                text: "Their full-stack expertise is unmatched. They delivered a scalable SaaS platform that transformed how our team manages client data."
               },
               {
                 name: "Elena Rodriguez", role: "VP of Product, Elevate",

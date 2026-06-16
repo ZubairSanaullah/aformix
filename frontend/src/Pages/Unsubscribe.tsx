@@ -69,7 +69,7 @@ const Unsubscribe: React.FC = () => {
             <h2 className="text-2xl font-bold text-[var(--color-text)] mb-4">You've Been Unsubscribed</h2>
             <p className="text-[var(--color-text-muted)] mb-8">
               We're sorry to see you go. You will no longer receive emails from our newsletter.
-              You can rejoin anytime to continue receiving AI, automation, and growth insights.
+              You can rejoin anytime to continue receiving web development and growth insights.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 w-full">
               <button

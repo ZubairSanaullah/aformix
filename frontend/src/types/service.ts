@@ -87,7 +87,6 @@ export interface ServiceSEO {
 }
 
 export type HeroVariant =
-  | "ai"
   | "code"
   | "mern"
   | "fullstack"
@@ -98,7 +97,6 @@ export type HeroVariant =
   | "design"
   | "portfolio"
   | "healthcare"
-  | "automation"
   | "crm"
   | "erp"
   | "ecommerce"
