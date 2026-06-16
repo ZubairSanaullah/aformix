@@ -1,4 +1,4 @@
-import React, {useRef} from "react";
+import React, { useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -20,8 +20,6 @@ import { BsRobot } from "react-icons/bs";
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-import ChromaKeyVideo from "./ChromaKeyVideo";
 
 /* ───────────────────── Background Particles ───────────────────── */
 const ParticleField: React.FC = () => {
@@ -269,10 +267,14 @@ const Hero: React.FC = () => {
             {/* Orbit Mascot Canvas Wrapper */}
             <div className="mascot-outer-container">
               <div className="mascot-wrapper">
-                <ChromaKeyVideo
+                <video
                   src="/vid/orbit.mp4"
-                  fallbackSrc="/images/orbit_mascot.png"
-                  className="mascot-video-element"
+                  className="mascot-video-element overflow-hidden object-cover"
+                  style={{ borderRadius: "30px" }}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                 />
               </div>
             </div>
