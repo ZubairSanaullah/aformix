@@ -1,6 +1,46 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { ArrowRight, BookOpen } from 'lucide-react';
 import { BLOG_ARTICLES } from '../../constants/blogData';
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+/* ───────────────────── Background Particles ───────────────────── */
+const ParticleField: React.FC = () => {
+  const particles = Array.from({ length: 40 }, (_, i) => ({
+    id: i,
+    x: Math.random() * 100,
+    y: Math.random() * 100,
+    size: Math.random() * 3 + 1,
+    duration: Math.random() * 20 + 20,
+    delay: Math.random() * 10,
+    opacity: Math.random() * 0.3 + 0.1,
+  }));
+
+  return (
+    <div className="hero-particles" aria-hidden="true">
+      {particles.map((p) => (
+        <div
+          key={p.id}
+          className="hero-particle"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            opacity: p.opacity,
+            animationDuration: `${p.duration}s`,
+            animationDelay: `${p.delay}s`,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
 
 interface HeroSectionProps {
   onExplore: () => void;
@@ -8,236 +48,208 @@ interface HeroSectionProps {
 }
 
 const HeroSection: React.FC<HeroSectionProps> = ({ onExplore, onSubscribe }) => {
+  const heroRef = useRef<HTMLDivElement>(null);
   const featuredArticles = BLOG_ARTICLES.slice(0, 3);
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
-    },
+  // Mouse move handler for premium 3D parallax layers
+  const handleMouseMove = (e: React.MouseEvent) => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    const rect = hero.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5; // -0.5 to 0.5
+
+    // Apply values to CSS custom variables for performant CSS transition transforms
+    hero.style.setProperty("--mouse-x", x.toFixed(4));
+    hero.style.setProperty("--mouse-y", y.toFixed(4));
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: 'easeOut' as const },
-    },
+  const handleMouseLeave = () => {
+    const hero = heroRef.current;
+    if (!hero) return;
+    // Reset values smoothly
+    gsap.to(hero, {
+      "--mouse-x": 0,
+      "--mouse-y": 0,
+      duration: 0.8,
+      ease: "power2.out",
+    });
   };
 
-  const floatingVariants = {
-    initial: { y: 0 },
-    animate: {
-      y: [0, -20, 0],
-      transition: {
-        duration: 6,
-        repeat: Infinity,
-        ease: 'easeInOut' as const,
-      },
-    },
-  };
+  useGSAP(() => {
+    // Entrance Timeline
+    const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+
+    tl.fromTo(".hero-badge", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 })
+      .fromTo(".hero-title-chunk", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 0.9, stagger: 0.1 }, "-=0.5")
+      .fromTo(".hero-description", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, "-=0.5")
+      .fromTo(".hero-cta-btn", { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, stagger: 0.12 }, "-=0.4")
+      .fromTo(".hero-trust-badge", { scale: 0.8, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.6, stagger: 0.08, ease: "back.out(1.5)" }, "-=0.3")
+      .fromTo(".floating-card-ui", { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.7, stagger: 0.12, ease: "back.out(1.6)" }, "-=0.7");
+
+    // Scroll ScrollTrigger Animations
+    // 1. Floating cards fly upward at staggered speeds
+    gsap.to(".floating-card-ui--1", {
+      y: -150,
+      x: -20,
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.8,
+      }
+    });
+
+    gsap.to(".floating-card-ui--2", {
+      y: -180,
+      x: 10,
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 1,
+      }
+    });
+
+    gsap.to(".floating-card-ui--3", {
+      y: -130,
+      x: -15,
+      scrollTrigger: {
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: 0.9,
+      }
+    });
+
+  }, { scope: heroRef });
 
   return (
-    <div
-      className="relative min-h-screen overflow-hidden py-12 md:py-20 bg-[var(--color-bg)]"
+    <section
+      ref={heroRef}
+      id="blog-hero"
+      className="hero-section"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      aria-label="Blog Hero section"
     >
-      {/* Animated Background Grid */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 opacity-5 bg-[var(--color-text)]">
-          <div
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `linear-gradient(0deg, transparent 24%, rgba(49, 185, 143, 0.1) 25%, rgba(49, 185, 143, 0.1) 26%, transparent 27%, transparent 74%, rgba(49, 185, 143, 0.1) 75%, rgba(49, 185, 143, 0.1) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(49, 185, 143, 0.1) 25%, rgba(49, 185, 143, 0.1) 26%, transparent 27%, transparent 74%, rgba(49, 185, 143, 0.1) 75%, rgba(49, 185, 143, 0.1) 76%, transparent 77%, transparent)`,
-              backgroundSize: '50px 50px',
-            }}
-          />
-        </div>
+      {/* ── Background Design Layers ── */}
+      <div className="hero-bg-grid" aria-hidden="true" />
+      <div className="hero-bg-glow hero-bg-glow--1" aria-hidden="true" />
+      <div className="hero-bg-glow hero-bg-glow--2" aria-hidden="true" />
+      <div className="hero-bg-glow hero-bg-glow--3" aria-hidden="true" />
+      <div className="hero-bg-streak hero-bg-streak--1" aria-hidden="true" />
+      <div className="hero-bg-streak hero-bg-streak--2" aria-hidden="true" />
+      <ParticleField />
 
-        {/* Aurora Gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 via-purple-500/5 to-cyan-500/10 blur-3xl" />
+      {/* ── Main Content Container ── */}
+      <div className="hero-container">
+        <div className="hero-grid">
 
-        {/* Floating Particles */}
-        {[...Array(15)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-emerald-400 rounded-full"
-            initial={{ opacity: 0, x: 0, y: 0 }}
-            animate={{
-              opacity: [0, 0.5, 0],
-              x: Math.random() * 300 - 150,
-              y: Math.random() * 300 - 150,
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: i * 0.1,
-            }}
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-          />
-        ))}
-      </div>
+          {/* LEFT SIDE: Brand & Value Prop */}
+          <div className="hero-left">
+            {/* Premium Badge */}
+            <div className="hero-badge">
+              <span className="hero-badge-pulse" />
+              <span className="hero-badge-text">INSIGHTS & INNOVATION</span>
+            </div>
 
-      {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6">
-        <motion.div
-          className="grid lg:grid-cols-2 gap-12 items-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Left Side - Text Content */}
-          <motion.div className="flex flex-col justify-center" variants={itemVariants}>
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2 }}
-              className="inline-flex items-center gap-2 w-fit mb-6"
-            >
-              <div className="w-2 h-2 rounded-full bg-emerald-500" />
-              <span
-                className="text-sm font-medium tracking-wide text-primary"
-              >
-                INSIGHTS & INNOVATION
+            {/* Headline */}
+            <h1 className="hero-headline">
+              <span className="hero-title-chunk">Insights,</span>
+              <br />
+              <span className="hero-headline-gradient">
+                <span className="hero-title-chunk">Innovation</span>
               </span>
-            </motion.div>
+              <br />
+              <span className="hero-title-chunk">& Digital Growth</span>
+            </h1>
 
-            {/* Main Heading */}
-            <motion.h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight text-[var(--color-text)]"
-              variants={itemVariants}
-            >
-              Insights,{' '}
-              <span className="bg-gradient-to-r from-emerald-500 via-purple-500 to-cyan-500 bg-clip-text text-transparent">
-                Innovation
-              </span>
-              {' '}& Digital Growth
-            </motion.h1>
-
-            {/* Subheading */}
-            <motion.p
-              className="text-lg md:text-xl mb-8 leading-relaxed text-[var(--color-text-muted)]"
-              variants={itemVariants}
-            >
-              Expert insights on AI, automation, web development, SaaS, SEO, business growth, and emerging technologies
+            {/* Subheadline */}
+            <p className="hero-description">
+              Expert insights on web development, SaaS, SEO, business growth, and emerging technologies
               that shape the future of digital innovation.
-            </motion.p>
+            </p>
 
             {/* CTA Buttons */}
-            <motion.div className="flex flex-col sm:flex-row gap-4 mb-8" variants={itemVariants}>
-              <motion.button
-                onClick={onExplore}
-                className="btn-primary text-base transform hover:scale-105"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Explore Articles
-              </motion.button>
-              <motion.button
-                onClick={onSubscribe}
-                className="btn-outline text-base transform hover:scale-105"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                Subscribe
-              </motion.button>
-            </motion.div>
+            <div className="hero-cta-group">
+              <button onClick={onExplore} className="hero-cta-btn hero-cta-primary">
+                <span>Explore Articles</span>
+                <ArrowRight size={18} className="hero-cta-arrow" />
+              </button>
+              <button onClick={onSubscribe} className="hero-cta-btn hero-cta-secondary">
+                <span>Subscribe</span>
+                <BookOpen size={16} />
+              </button>
+            </div>
 
-            {/* Stats */}
-            <motion.div
-              className="flex items-center gap-8 pt-8 border-t border-[var(--color-border)]"
-              variants={itemVariants}
-            >
+            {/* Trust Elements: Floating Badges */}
+            <div className="hero-trust-badges">
               {[
-                { label: 'Articles', value: '50+' },
-                { label: 'Authors', value: '20+' },
-                { label: 'Readers', value: '10K+' },
-              ].map((stat, i) => (
-                <div key={i}>
-                  <div
-                    className="text-2xl font-bold text-[var(--color-text)]"
-                  >
-                    {stat.value}
-                  </div>
-                  <div
-                    className="text-sm text-[var(--color-text-muted)]"
-                  >
-                    {stat.label}
-                  </div>
+                { label: "50+ Articles" },
+                { label: "20+ Authors" },
+                { label: "10K+ Readers" },
+              ].map((item, i) => (
+                <div key={i} className="hero-trust-badge">
+                  <span className="hero-trust-label">{item.label}</span>
                 </div>
               ))}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          {/* Right Side - Floating Cards */}
-          <motion.div
-            className="relative h-96 md:h-full"
-            variants={containerVariants}
-          >
+          {/* RIGHT SIDE: Visual Centerpiece */}
+          <div className="hero-right">
+            {/* Floating UI Elements / Glassmorphism Cards */}
             {featuredArticles.map((article, index) => (
-              <motion.div
-                key={article.id}
-                className="absolute w-72 rounded-2xl shadow-xl overflow-hidden cursor-pointer group bg-[var(--color-surface)] border border-[var(--color-border)]"
+              <div 
+                key={article.id} 
+                className={`floating-card-ui floating-card-ui--${index + 1} cursor-pointer group`}
                 style={{
-                  left: `${index * 30}%`,
-                  top: `${index * 40}px`,
-                  zIndex: index,
+                  width: '240px',
+                  padding: '12px',
+                  top: index === 0 ? '10%' : index === 1 ? '40%' : 'auto',
+                  bottom: index === 2 ? '10%' : 'auto',
+                  left: index === 1 ? '-20px' : 'auto',
+                  right: index !== 1 ? (index === 0 ? '-10px' : '10px') : 'auto',
+                  zIndex: 20 - index,
                 }}
-                variants={floatingVariants}
-                initial="initial"
-                animate="animate"
-                whileHover={{ scale: 1.05, y: -20, zIndex: 50 }}
               >
                 {/* Card Image */}
-                <div className="relative h-40 overflow-hidden bg-gradient-to-br from-emerald-400 to-purple-600">
+                <div className="relative h-32 mb-3 rounded-xl overflow-hidden bg-gradient-to-br from-emerald-400 to-purple-600">
                   <img
                     src={article.image}
                     alt={article.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-
+                  
                   {/* Category Badge */}
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-emerald-500 text-white text-xs font-semibold rounded-full">
+                  <div className="absolute top-2 left-2">
+                    <span className="px-2 py-1 bg-emerald-500 text-white text-[10px] font-bold rounded-full">
                       {article.category}
                     </span>
                   </div>
                 </div>
 
                 {/* Card Content */}
-                <div className="p-4">
-                  <h3
-                    className="font-bold text-sm line-clamp-2 mb-3 text-[var(--color-text)]"
-                  >
+                <div className="px-1 pb-1">
+                  <h3 className="font-bold text-sm line-clamp-2 mb-2 text-white">
                     {article.title}
                   </h3>
-
+                  
                   {/* Meta Info */}
-                  <div
-                    className="text-xs space-y-2 text-[var(--color-text-muted)]"
-                  >
-                    <div className="flex items-center justify-between">
-                      <span>{article.author.name}</span>
-                      <span>{article.readingTime}</span>
-                    </div>
-                    <div>{article.publishDate}</div>
+                  <div className="flex items-center justify-between text-[10px] text-slate-300">
+                    <span>{article.author.name}</span>
+                    <span>{article.readingTime}</span>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
-        </motion.div>
+          </div>
+
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

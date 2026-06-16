@@ -44,10 +44,10 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
   };
 
   return (
-    <section
-      className="py-20 bg-gradient-to-br from-[var(--color-bg)] via-[var(--color-surface)] to-[var(--color-bg)]"
-    >
-      <div className="max-w-4xl mx-auto px-6">
+    <section className="reveal section-padding relative w-full">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/5 rounded-full blur-[120px] -z-10"></div>
+      
+      <div className="max-w-4xl mx-auto px-6 relative z-10">
         <motion.div
           className="relative"
           variants={containerVariants}
@@ -55,30 +55,13 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
         >
-          {/* Animated Background Elements */}
-          <div className="absolute inset-0 -z-10 overflow-hidden rounded-3xl">
-            <motion.div
-              className="absolute inset-0 rounded-3xl blur-3xl bg-gradient-to-br from-primary/10 to-accent/10"
-              animate={{
-                scale: [1, 1.05, 1],
-                opacity: [0.5, 0.7, 0.5],
-              }}
-              transition={{
-                duration: 4,
-                repeat: Infinity,
-              }}
-            />
-          </div>
-
           {/* Main Container */}
-          <div
-            className="relative rounded-3xl border-2 p-12 md:p-16 bg-[var(--color-surface)]/80 backdrop-blur-xl border-primary/30"
-          >
+          <div className="card-premium relative rounded-3xl p-12 md:p-16">
             {/* Content */}
             <motion.div className="text-center mb-12" variants={containerVariants}>
               {/* Icon */}
               <motion.div
-                className="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-cyan-500"
+                className="w-16 h-16 rounded-full mx-auto mb-6 flex items-center justify-center bg-gradient-to-br from-emerald-500 to-cyan-500 shadow-[0_0_20px_rgba(49,185,143,0.4)]"
                 variants={itemVariants}
                 whileHover={{ scale: 1.1, rotate: 360 }}
                 transition={{ rotate: { duration: 0.6 } }}
@@ -88,10 +71,10 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
 
               {/* Heading */}
               <motion.h2
-                className="text-4xl md:text-5xl font-bold mb-4 text-[var(--color-text)]"
+                className="heading-2 !mb-4"
                 variants={itemVariants}
               >
-                Get Industry Insights Before Everyone Else
+                Get Industry Insights
               </motion.h2>
 
               {/* Subheading */}
@@ -99,26 +82,26 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
                 className="text-lg md:text-xl max-w-2xl mx-auto text-[var(--color-text-muted)]"
                 variants={itemVariants}
               >
-                Join 10,000+ tech professionals and entrepreneurs who receive curated insights on AI, SaaS, and digital transformation every week.
+                Join 10,000+ tech professionals and entrepreneurs who receive curated insights on SaaS, digital transformation, and emerging technologies every week.
               </motion.p>
             </motion.div>
 
             {/* Subscription Form */}
             <motion.form
               onSubmit={handleSubscribe}
-              className="max-w-md mx-auto mb-8"
+              className="max-w-md mx-auto mb-8 relative z-20"
               variants={itemVariants}
             >
-              <div className="relative flex flex-col sm:flex-row gap-3">
+              <div className="relative flex flex-col sm:flex-row gap-4">
                 {/* Email Input */}
-                <div className="flex-1 relative">
+                <div className="flex-1">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="your@email.com"
                     required
-                    className="input-field py-4"
+                    className="input-field w-full py-4 px-5 text-lg"
                   />
                 </div>
 
@@ -157,7 +140,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
 
               {/* Privacy Message */}
               <motion.p
-                className="text-xs mt-4 text-center text-[var(--color-text-muted)]"
+                className="text-sm mt-5 text-center text-[var(--color-text-muted)]"
                 variants={itemVariants}
               >
                 We respect your privacy. Unsubscribe anytime.
@@ -166,7 +149,7 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
 
             {/* Trust Indicators */}
             <motion.div
-              className="flex flex-wrap items-center justify-center gap-8 pt-8 border-t border-[var(--color-border)]"
+              className="flex flex-wrap items-center justify-center gap-8 pt-8 mt-8 border-t border-[var(--color-border)]"
               variants={containerVariants}
             >
               {[
@@ -179,14 +162,10 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
                   className="text-center"
                   variants={itemVariants}
                 >
-                  <div
-                    className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent"
-                  >
+                  <div className="text-3xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
                     {stat.label}
                   </div>
-                  <div
-                    className="text-sm text-[var(--color-text-muted)]"
-                  >
+                  <div className="text-sm font-medium mt-1 text-[var(--color-text-muted)] uppercase tracking-wide">
                     {stat.value}
                   </div>
                 </motion.div>
@@ -217,18 +196,14 @@ const NewsletterSection: React.FC<NewsletterSectionProps> = () => {
               ].map((benefit, i) => (
                 <motion.div
                   key={i}
-                  className="p-4 rounded-xl border bg-[var(--color-surface-elevated)] border-[var(--color-border)]"
+                  className="p-6 rounded-2xl border bg-[var(--color-surface)] border-[var(--color-border)] shadow-md hover:border-primary transition-colors duration-300"
                   variants={itemVariants}
                 >
-                  <div className="text-3xl mb-3">{benefit.icon}</div>
-                  <h4
-                    className="font-bold mb-2 text-[var(--color-text)]"
-                  >
+                  <div className="text-3xl mb-4">{benefit.icon}</div>
+                  <h4 className="font-bold text-lg mb-2 text-[var(--color-text)]">
                     {benefit.title}
                   </h4>
-                  <p
-                    className="text-sm text-[var(--color-text-muted)]"
-                  >
+                  <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">
                     {benefit.description}
                   </p>
                 </motion.div>

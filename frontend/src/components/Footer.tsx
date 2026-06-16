@@ -68,7 +68,7 @@ const Footer: React.FC = () => {
                 { label: "About Us", href: "/about-us" },
                 { label: "Blog", href: "/blog" },
                 { label: "Contact", href: "#contact" },
-                { label: "Book a Meeting", href: "https://calendly.com/aformixtech/30min", target: "_blank" },
+                { label: "Book a Meeting", href: "https://calendly.com/aformixtech/30min", target: "_blank", rel: "noopener noreferrer" },
               ].map((item) => (
                 <li key={item.label}>
                   <a href={item.href} className="footer-link text-[var(--color-text-muted)] hover:text-primary font-bold transition-all text-sm sm:text-base">

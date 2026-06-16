@@ -7,6 +7,7 @@ import SearchFiltering from '../components/Blog/SearchFiltering';
 import LatestArticles from '../components/Blog/LatestArticles';
 import TrendingTopics from '../components/Blog/TrendingTopics';
 import NewsletterSection from '../components/Blog/NewsletterSection';
+import useReveal from '../hooks/useReveal';
 import type { BlogArticle } from '../constants/blogData';
 
 const Blog: React.FC = () => {
@@ -15,9 +16,12 @@ const Blog: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
+  useReveal();
+
   // Scroll to top on mount
   useEffect(() => {
     window.scrollTo(0, 0);
+    document.title = "Blog - Aformix | Digital Growth Insights";
   }, []);
 
   // Handle article modal
@@ -51,25 +55,6 @@ const Blog: React.FC = () => {
 
   return (
     <>
-      {/* Meta Tags for SEO */}
-      <head>
-        <title>Blog - Aformix | AI, Automation & Digital Growth Insights</title>
-        <meta
-          name="description"
-          content="Expert insights on AI automation, web development, SaaS, SEO, and business growth. Stay updated with Aformix blog."
-        />
-        <meta
-          name="keywords"
-          content="AI automation, SaaS development, web development, SEO, digital transformation, business growth"
-        />
-        <meta property="og:title" content="Blog - Aformix | Insights & Innovation" />
-        <meta
-          property="og:description"
-          content="Expert insights on AI, automation, web development, SaaS, SEO, and business growth."
-        />
-        <meta property="og:type" content="website" />
-      </head>
-
       <main className="bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen">
         {/* Hero Section */}
         <HeroSection

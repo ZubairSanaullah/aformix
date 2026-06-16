@@ -34,7 +34,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, onArticleClick, variant = 
     return (
       <motion.div
         onClick={() => onArticleClick(article)}
-        className="group cursor-pointer flex gap-6 p-6 rounded-2xl border transition-all duration-300 hover:-translate-y-1 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary hover:shadow-lg"
+        className="group cursor-pointer flex gap-6 p-5 portfolio-card !rounded-[2rem]"
         whileHover={{ y: -4 }}
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -112,8 +112,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ article, onArticleClick, variant = 
   return (
     <motion.div
       onClick={() => onArticleClick(article)}
-      className="group cursor-pointer rounded-2xl overflow-hidden border transition-all duration-300 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary hover:shadow-xl"
-      whileHover={{ y: -8 }}
+      className="group cursor-pointer portfolio-card flex flex-col h-full !rounded-[2rem]"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}

@@ -24,8 +24,6 @@ export interface BlogArticle {
 }
 
 export const BLOG_CATEGORIES = [
-  "AI Automation",
-  "AI Agents",
   "Web Development",
   "SaaS",
   "Mobile Apps",
@@ -35,8 +33,6 @@ export const BLOG_CATEGORIES = [
 ];
 
 export const TRENDING_TOPICS = [
-  "AI Automation",
-  "AI Agents",
   "SaaS Development",
   "MERN Stack",
   "SEO",
@@ -50,58 +46,6 @@ export const TRENDING_TOPICS = [
 ];
 
 export const BLOG_ARTICLES: BlogArticle[] = [
-  {
-    id: "1",
-    title: "The Future of AI Automation: Transforming Enterprise Operations",
-    description:
-      "Discover how AI automation is revolutionizing enterprise workflows and delivering unprecedented efficiency gains across industries.",
-    content:
-      "AI automation is reshaping how enterprises operate. This comprehensive guide explores the latest developments...",
-    category: "AI Automation",
-    image: "https://images.unsplash.com/photo-1677442d019cecf8f13cb89f8f2c0b2d?w=800&h=500&fit=crop",
-    author: {
-      name: "Zubair Sanaullah",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
-      bio: "AI & Automation Specialist at Aformix",
-    },
-    publishDate: "2024-06-08",
-    readingTime: "8 min",
-    views: 4521,
-    featured: true,
-    slug: "ai-automation-future-enterprise",
-    tags: ["AI", "Automation", "Enterprise", "Efficiency"],
-    reactions: {
-      likes: 342,
-      comments: 45,
-      shares: 128,
-    },
-  },
-  {
-    id: "2",
-    title: "Building Intelligent AI Agents: A Developer's Guide",
-    description:
-      "Learn how to create sophisticated AI agents that can autonomously handle complex tasks and improve over time.",
-    content:
-      "Creating intelligent AI agents requires understanding core principles of machine learning and decision-making systems...",
-    category: "AI Agents",
-    image: "https://images.unsplash.com/photo-1677442c20e600b8e0e0e7e8f2d3e5f?w=800&h=500&fit=crop",
-    author: {
-      name: "Sarah Johnson",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop",
-      bio: "Senior AI Engineer",
-    },
-    publishDate: "2024-06-06",
-    readingTime: "10 min",
-    views: 3892,
-    featured: true,
-    slug: "building-ai-agents-guide",
-    tags: ["AI", "Agents", "Development", "Machine Learning"],
-    reactions: {
-      likes: 521,
-      comments: 87,
-      shares: 213,
-    },
-  },
   {
     id: "3",
     title: "SaaS Architecture Best Practices in 2024",
@@ -145,7 +89,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     publishDate: "2024-06-03",
     readingTime: "9 min",
     views: 2987,
-    featured: false,
+    featured: true,
     slug: "react-performance-optimization",
     tags: ["React", "Performance", "JavaScript", "Frontend"],
     reactions: {
@@ -171,7 +115,7 @@ export const BLOG_ARTICLES: BlogArticle[] = [
     publishDate: "2024-06-01",
     readingTime: "11 min",
     views: 2654,
-    featured: false,
+    featured: true,
     slug: "seo-strategy-saas",
     tags: ["SEO", "SaaS", "Marketing", "Growth"],
     reactions: {
@@ -204,32 +148,6 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       likes: 325,
       comments: 51,
       shares: 124,
-    },
-  },
-  {
-    id: "7",
-    title: "Automating Business Processes with AI: Real-World Case Study",
-    description:
-      "See how a Fortune 500 company increased productivity by 300% by implementing AI automation across operations.",
-    content:
-      "This case study documents the journey of implementing comprehensive AI automation. Discover measurable results...",
-    category: "Case Studies",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=500&fit=crop",
-    author: {
-      name: "James Wilson",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop",
-      bio: "Automation Consultant",
-    },
-    publishDate: "2024-05-28",
-    readingTime: "15 min",
-    views: 3156,
-    featured: false,
-    slug: "ai-automation-case-study",
-    tags: ["Case Study", "Automation", "Business", "ROI"],
-    reactions: {
-      likes: 467,
-      comments: 73,
-      shares: 198,
     },
   },
   {

@@ -46,31 +46,27 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
   };
 
   return (
-    <section className="py-20 bg-[var(--color-bg)]">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="reveal section-padding relative w-full overflow-hidden">
+      <div className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[500px] h-[500px] bg-secondary/5 rounded-full blur-[100px] -z-10"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <motion.div
-          className="mb-12"
+          className="mb-12 flex flex-col gap-4 text-center"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <span
-            className="text-sm font-semibold tracking-widest uppercase text-primary"
-          >
+          <span className="text-sm font-semibold tracking-widest uppercase text-primary">
             Latest Articles
           </span>
-          <h2
-            className="text-4xl md:text-5xl font-bold mt-3 text-[var(--color-text)]"
-          >
+          <h2 className="heading-2">
             {selectedCategory || selectedTag || searchQuery
               ? `Results for ${selectedCategory || selectedTag || `"${searchQuery}"`}`
               : 'Discover Our Latest Insights'}
           </h2>
-          <p
-            className="text-lg mt-4 text-[var(--color-text-muted)]"
-          >
+          <p className="text-[var(--color-text-muted)] text-lg mx-auto max-w-2xl">
             {filteredArticles.length} article{filteredArticles.length !== 1 ? 's' : ''} found
           </p>
         </motion.div>
@@ -78,17 +74,17 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
         {/* No Results */}
         {filteredArticles.length === 0 && (
           <motion.div
-            className="py-20 text-center rounded-2xl border-2 border-dashed bg-[var(--color-surface)] border-[var(--color-border)]"
+            className="py-20 text-center rounded-3xl border-2 border-dashed card-premium bg-transparent"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            <div className="text-5xl mb-4 text-[var(--color-text-muted)] opacity-60">
+            <div className="text-6xl mb-6 text-[var(--color-text-muted)] opacity-50">
               📝
             </div>
-            <h3 className="text-2xl font-bold mb-2 text-[var(--color-text)]">
+            <h3 className="text-2xl font-bold mb-3 text-[var(--color-text)]">
               No Articles Found
             </h3>
-            <p className="text-[var(--color-text-muted)]">
+            <p className="text-[var(--color-text-muted)] text-lg">
               Try adjusting your filters or search query
             </p>
           </motion.div>
@@ -110,6 +106,7 @@ const LatestArticles: React.FC<LatestArticlesProps> = ({
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: (index % 3) * 0.1 }}
+                className="h-full"
               >
                 <BlogCard
                   article={article}

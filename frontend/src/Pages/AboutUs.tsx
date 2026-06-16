@@ -1,47 +1,172 @@
-import React from 'react';
-import { motion, useScroll, useTransform, type Variants } from 'framer-motion';
+import React, { useEffect, useRef, useState } from 'react';
+import useReveal from '../hooks/useReveal';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Target, Eye, Code, Smartphone, Globe, Search,
   Settings, Layout, Shield, Zap, CheckCircle,
   TrendingUp, Award, Star, Lightbulb, Cpu, Cloud,
-  Layers, ArrowRight, Quote, Building2, Users
+  Layers, ArrowRight, Quote, Building2, Users,
+  ChartNoAxesCombined, ShieldCheck,
+  Send, MapPin, Mail, Phone, Clock
 } from 'lucide-react';
+import { BsRobot } from "react-icons/bs";
+import { CiMobile1 } from "react-icons/ci";
+import Divider from '../components/Divider';
+import TechMarquee from '../components/TechMarquee';
+import Swal from 'sweetalert2';
+
+gsap.registerPlugin(ScrollTrigger);
+
+const ABOUT_SERVICES = [
+  "Web Development",
+  "E-Commerce Website",
+  "Custom Software",
+  "Business Automation",
+  "UI/UX Design",
+  "Maintenance & Support",
+  "Other",
+];
+
+const ABOUT_CONTACT_INFO = [
+  { icon: MapPin, label: "Our Location", value: "Pakistan" },
+  { icon: Mail, label: "Email Us", value: "hello@aformix.com", href: "mailto:hello@aformix.com" },
+  { icon: Phone, label: "Call Us", value: "+92 301 9170936", href: "tel:+923019170936" },
+  { icon: Clock, label: "Response Time", value: "Within 24 hours" },
+];
 
 const AboutUs: React.FC = () => {
-  const { scrollYProgress } = useScroll();
-  useTransform(scrollYProgress, [0, 1], ['0%', '100%']);
+  const containerRef = useRef<HTMLDivElement>(null);
+  useReveal();
 
-  // --- Animation Variants ---
-  const fadeUpVariant: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } }
+  const [ctaForm, setCtaForm] = useState({ name: '', email: '', phone: '', service: '', message: '' });
+  const [ctaErrors, setCtaErrors] = useState<{ name?: string; email?: string; message?: string }>({});
+  const [ctaSubmitting, setCtaSubmitting] = useState(false);
+
+  const ctaValidate = () => {
+    const e: { name?: string; email?: string; message?: string } = {};
+    if (!ctaForm.name.trim()) e.name = 'Full name is required.';
+    if (!ctaForm.email.trim()) e.email = 'Email address is required.';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(ctaForm.email)) e.email = 'Enter a valid email address.';
+    if (!ctaForm.message.trim()) e.message = 'Please tell us about your project.';
+    else if (ctaForm.message.trim().length < 20) e.message = 'Message must be at least 20 characters.';
+    setCtaErrors(e);
+    return Object.keys(e).length === 0;
   };
 
-  const staggerContainer: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.2 }
+  const ctaHandleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setCtaForm(prev => ({ ...prev, [name]: value }));
+    if (ctaErrors[name as keyof typeof ctaErrors]) setCtaErrors(prev => ({ ...prev, [name]: undefined }));
+  };
+
+  const ctaHandleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!ctaValidate()) return;
+    setCtaSubmitting(true);
+    const data = new FormData();
+    data.append('access_key', import.meta.env.VITE_ACCESS_KEY);
+    data.append('from_name', 'Aformix About Us CTA');
+    data.append('subject', `New Lead — ${ctaForm.name}`);
+    data.append('name', ctaForm.name);
+    data.append('email', ctaForm.email);
+    data.append('phone', ctaForm.phone);
+    data.append('service', ctaForm.service || 'Not specified');
+    data.append('message', ctaForm.message);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+      const json = await res.json();
+      if (json.success) {
+        setCtaForm({ name: '', email: '', phone: '', service: '', message: '' });
+        await Swal.fire({ title: 'Message Sent!', text: "We'll get back to you within 24 hours.", icon: 'success', confirmButtonText: 'Great!', confirmButtonColor: '#27b990', background: 'var(--color-surface)', color: 'var(--color-text)' });
+      } else {
+        Swal.fire({ title: 'Oops!', text: json.message || 'Something went wrong.', icon: 'error', confirmButtonColor: '#27b990', background: 'var(--color-surface)', color: 'var(--color-text)' });
+      }
+    } catch {
+      Swal.fire({ title: 'Network Error', text: 'Please check your connection and try again.', icon: 'error', confirmButtonColor: '#27b990', background: 'var(--color-surface)', color: 'var(--color-text)' });
+    } finally {
+      setCtaSubmitting(false);
     }
   };
 
-  const scaleVariant: Variants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: "easeOut" } }
-  };
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // General animations for elements
+      gsap.utils.toArray<HTMLElement>('.about-animate').forEach((el) => {
+        gsap.fromTo(el,
+          { y: 40, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+          }
+        );
+      });
+
+      // Staggered animations for cards in grids
+      gsap.utils.toArray<HTMLElement>('.about-grid').forEach((grid) => {
+        gsap.fromTo(grid.children,
+          { y: 40, opacity: 0 },
+          {
+            scrollTrigger: {
+              trigger: grid,
+              start: "top 80%",
+              toggleActions: "play none none none",
+              once: true,
+            },
+            y: 0,
+            opacity: 1,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power3.out",
+          }
+        );
+      });
+
+      // Stats counters
+      const statsTargets = [10, 98, 8, 1];
+      const formatStat = (value: number, index: number) => {
+        if (index === 0) return `${Math.round(value)}+`;
+        if (index === 1) return `${Math.round(value)}%`;
+        if (index === 2) return `${Math.round(value)}+`;
+        if (index === 3) return `${Math.round(value)}M+`;
+        return `${Math.round(value)}`;
+      };
+
+      gsap.utils.toArray<HTMLParagraphElement>(".stat-number").forEach((el, index) => {
+        const counter = { value: 0 };
+        gsap.to(counter, {
+          value: statsTargets[index],
+          duration: 2,
+          ease: "power1.out",
+          scrollTrigger: {
+            trigger: el,
+            start: "top 90%",
+            once: true,
+          },
+          onUpdate: () => {
+            el.textContent = formatStat(counter.value, index);
+          },
+        });
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <div className="bg-[var(--color-bg)] text-[var(--color-text)] min-h-screen font-['Outfit',sans-serif] overflow-hidden selection:bg-[#31B98F] selection:text-white transition-colors duration-500">
+    <div ref={containerRef} className="w-full relative">
+      <div className="absolute inset-x-0 top-0 h-44 bg-gradient-to-b from-[var(--color-bg)] to-transparent pointer-events-none z-10"></div>
 
-      {/* SECTION 1 — PREMIUM HERO */}
-      <section className="relative min-h-screen flex items-center justify-center pt-20 pb-32 px-6 lg:px-20 overflow-hidden">
-        {/* Animated Background Gradients */}
-        {/* <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#684B9E] rounded-full mix-blend-screen filter blur-[150px] opacity-30 animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#31B98F] rounded-full mix-blend-screen filter blur-[150px] opacity-20" style={{ animation: 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#00BFDE] rounded-full mix-blend-screen filter blur-[200px] opacity-10"></div>
-          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-        </div> */}
+      {/* SECTION 1 — HERO */}
+      <section className="reveal section-padding relative overflow-hidden w-full pt-32 lg:pt-40">
         {/* ── Background Design Layers ── */}
         <div className="hero-bg-grid" aria-hidden="true" />
         <div className="hero-bg-glow hero-bg-glow--1" aria-hidden="true" />
@@ -50,43 +175,31 @@ const AboutUs: React.FC = () => {
         <div className="hero-bg-streak hero-bg-streak--1" aria-hidden="true" />
         <div className="hero-bg-streak hero-bg-streak--2" aria-hidden="true" />
 
-        <div className="relative z-10 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={staggerContainer}
-            className="flex flex-col items-start space-y-8"
-          >
-
-            <motion.h1 variants={fadeUpVariant} className="text-5xl lg:text-7xl font-bold leading-tight text-[var(--color-text)]">
-              Building <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#31B98F] to-[#00BFDE]">Intelligent</span> Digital Solutions for the Future
-            </motion.h1>
-
-            <motion.p variants={fadeUpVariant} className="text-xl text-[var(--color-text-muted)] leading-relaxed max-w-xl">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
+          <div className="flex flex-col items-start space-y-8 about-animate">
+            <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-[var(--color-text)]">
+              Building <span className="text-primary">Intelligent</span> Digital Solutions for the Future
+            </h1>
+            <p className="text-xl text-[var(--color-text-muted)] leading-relaxed max-w-xl">
               We engineer enterprise-grade software, harness the power of AI, and craft award-winning digital experiences that transform businesses and accelerate growth.
-            </motion.p>
-
-            <motion.div variants={fadeUpVariant} className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
-              <button className="btn-primary flex items-center justify-center group">
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto mt-4">
+              <button className="inline-flex items-center gap-2 rounded-full bg-primary text-white px-8 py-4 font-semibold transition hover:bg-primary/90 hover:scale-105 shadow-lg shadow-primary/20">
                 Start Your Project
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                <ArrowRight size={20} />
               </button>
-              <a className="btn-outline flex items-center justify-center"
+              <a
                 href="https://calendly.com/aformixtech/30min"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-[var(--color-glass-border)] glass-effect px-8 py-4 font-semibold text-[var(--color-text)] transition hover:bg-white/5"
               >
                 Book a Consultation
               </a>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
-            transition={{ duration: 1.2, ease: "easeOut" }}
-            className="relative hidden lg:block"
-          >
+          <div className="relative hidden lg:block about-animate">
             {/* Orbit Mascot Video Area */}
             <div className="relative w-full aspect-square rounded-[3rem] overflow-hidden flex items-center justify-center bg-[var(--color-surface-elevated)] border border-[var(--color-border)] shadow-2xl">
               <video
@@ -98,178 +211,224 @@ const AboutUs: React.FC = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* SECTION 2 — OUR STORY */}
-      <section className="py-24 px-6 lg:px-20 bg-[var(--color-surface)] relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeUpVariant}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-[var(--color-text)]">Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#684B9E] to-[#00BFDE]">Story</span></h2>
-            <p className="text-[var(--color-text-muted)] max-w-2xl mx-auto text-lg">A journey of innovation, relentless problem-solving, and a commitment to engineering excellence.</p>
-          </motion.div>
-
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeUpVariant}
-              className="space-y-6"
-            >
-              <div className="p-8 rounded-3xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)] hover:border-[#31B98F]/30 transition-colors">
-                <h3 className="text-2xl font-semibold mb-4 text-[var(--color-text)] flex items-center">
-                  <Building2 className="w-6 h-6 text-[#31B98F] mr-3" />
-                  The Genesis
-                </h3>
-                <p className="text-[var(--color-text-muted)] leading-relaxed">
-                  Aformix was founded with a singular vision: to bridge the gap between complex enterprise challenges and elegant, scalable technological solutions. We saw an industry cluttered with generic templates and inefficient workflows, and we set out to build a different kind of agency.
-                </p>
-              </div>
-              <div className="p-8 rounded-3xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)] hover:border-[#684B9E]/30 transition-colors">
-                <h3 className="text-2xl font-semibold mb-4 text-[var(--color-text)] flex items-center">
-                  <Target className="w-6 h-6 text-[#684B9E] mr-3" />
-                  The Problem We Solve
-                </h3>
-                <p className="text-[var(--color-text-muted)] leading-relaxed">
-                  Today's businesses struggle to integrate AI, automate processes, and build software that truly scales. We act as your elite engineering and design task force, transforming chaotic requirements into streamlined, visually stunning, and intelligent digital products.
-                </p>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={scaleVariant}
-              className="relative h-full min-h-[400px] rounded-3xl overflow-hidden group"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#684B9E] to-[#31B98F] opacity-20 group-hover:opacity-30 transition-opacity duration-500 z-10"></div>
-              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&q=80" alt="Team Collaboration" className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" />
-            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* SECTION 3 — COMPANY MISSION & VISION */}
-      <section className="py-24 px-6 lg:px-20 relative bg-[var(--color-bg)]">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-8">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariant}
-            className="group relative p-10 rounded-3xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)] hover:border-[#31B98F]/50 overflow-hidden transition-all duration-500 hover:-translate-y-2"
-          >
-            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 pointer-events-none">
-              <Target className="w-32 h-32 text-[#31B98F]" />
-            </div>
-            <div className="relative z-10">
-              <div className="w-14 h-14 rounded-2xl bg-[#31B98F]/20 flex items-center justify-center mb-6 border border-[#31B98F]/30">
-                <Target className="w-7 h-7 text-[#31B98F]" />
-              </div>
-              <h3 className="text-3xl font-bold mb-4 text-[var(--color-text)]">Our Mission</h3>
-              <p className="text-[var(--color-text-muted)] text-lg leading-relaxed">
-                To empower businesses with cutting-edge AI automation and bespoke software solutions that drive unprecedented efficiency, growth, and digital transformation.
-              </p>
-            </div>
-          </motion.div>
+      {/* SECTION 3 — OUR STORY & ORBIT AI */}
+      <section className="reveal section-padding relative w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="text-center mb-16 about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase">Origins</span>
+            <h2 className="heading-2 mt-6">A smarter agency for ambitious digital teams.</h2>
+            <p className="mx-auto mt-6 max-w-3xl text-[var(--color-text-muted)] text-xl leading-relaxed">
+              We build premium web products that combine beautiful design, technical precision, and measurable business impact. Our process is collaborative, transparent, and engineered to accelerate your next major digital move.
+            </p>
+          </div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariant}
-            className="group relative p-10 rounded-3xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)] hover:border-[#00BFDE]/50 overflow-hidden transition-all duration-500 hover:-translate-y-2"
-          >
-            <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 group-hover:scale-110 transition-all duration-500 pointer-events-none">
-              <Eye className="w-32 h-32 text-[#00BFDE]" />
-            </div>
-            <div className="relative z-10">
-              <div className="w-14 h-14 rounded-2xl bg-[#00BFDE]/20 flex items-center justify-center mb-6 border border-[#00BFDE]/30">
-                <Eye className="w-7 h-7 text-[#00BFDE]" />
+          <div className="grid gap-14 xl:grid-cols-[1.05fr_0.95fr] items-start">
+            <div className="space-y-8 about-animate">
+              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl border border-[var(--color-glass-border)] glass-effect">
+                <div className="relative overflow-hidden bg-gradient-to-br from-[#04040d] via-[#080c1a] to-[#04040d]">
+                  <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/20 rounded-full blur-[80px] pointer-events-none" />
+                  <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-secondary/15 rounded-full blur-[60px] pointer-events-none" />
+                  <img
+                    src="/img/banner.png"
+                    alt="Orbit — Aformix AI Mascot"
+                    className="w-full aspect-[4/5] object-cover object-center scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)]/95 via-[var(--color-bg)]/20 to-transparent"></div>
+                </div>
+
+                <div className="absolute left-8 right-8 bottom-8 rounded-[2.5rem] border border-[var(--color-glass-border)] glass-effect p-8 shadow-2xl">
+                  <div className="inline-flex items-center gap-3 rounded-full bg-primary/10 border border-primary/20 px-4 py-2 text-sm text-primary font-semibold mb-4">
+                    <span className="w-3 h-3 rounded-full bg-primary animate-pulse" />
+                    Meet Orbit — Your AI Assistant
+                  </div>
+                  <h3 className="text-3xl font-black text-[var(--color-text)] mb-4">Crafting distinctive digital products that scale.</h3>
+                  <p className="text-[var(--color-text-muted)] leading-relaxed mb-6">
+                    Orbit is our AI mascot that represents our commitment to intelligent automation and modern digital craftsmanship.
+                  </p>
+                  <button
+                    onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('open-orbit-ai')); }}
+                    className="inline-flex items-center gap-2 rounded-full bg-primary text-white px-6 py-3 font-semibold transition hover:bg-primary/90 hover:scale-105 shadow-lg shadow-primary/20 cursor-pointer"
+                  >
+                    <BsRobot size={18} />
+                    Open Orbit AI
+                  </button>
+                </div>
               </div>
-              <h3 className="text-3xl font-bold mb-4 text-[var(--color-text)]">Our Vision</h3>
-              <p className="text-[var(--color-text-muted)] text-lg leading-relaxed">
-                To be the global vanguard of intelligent technology, where every digital product we create sets a new standard for performance, aesthetics, and user experience.
-              </p>
+
+              <div className="grid gap-5 sm:grid-cols-2">
+                {[
+                  {
+                    icon: ChartNoAxesCombined,
+                    title: "SEO Optimized",
+                    description: "Search-Engine Optimized websites that rank higher and drive traffic.",
+                  },
+                  {
+                    icon: ShieldCheck,
+                    title: "Security Guarded",
+                    description: "High-end security features to protect your website from malware.",
+                  },
+                  {
+                    icon: CiMobile1,
+                    title: "Mobile Responsive",
+                    description: "Perfectly optimized for desktops, tablets, and smartphones.",
+                  },
+                  {
+                    icon: Globe,
+                    title: "Worldwide Clients",
+                    description: "Delivering intelligent digital solutions to clients globally.",
+                  },
+                ].map((item, index) => (
+                  <div key={index} className="glass-effect rounded-3xl border border-[var(--color-glass-border)] p-6 shadow-xl hover:-translate-y-1 transition-transform">
+                    <div className="flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-4">
+                      <item.icon size={24} />
+                    </div>
+                    <h4 className="text-xl font-semibold text-[var(--color-text)] mb-2">{item.title}</h4>
+                    <p className="text-[var(--color-text-muted)] leading-relaxed">{item.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-          </motion.div>
+
+            <div className="space-y-8 about-animate">
+              {/* Genesis & Problem from AboutUs */}
+              <div className="rounded-[3rem] border border-[var(--color-glass-border)] bg-[var(--color-surface)]/40 p-10 shadow-2xl glass-effect">
+                <span className="text-primary uppercase tracking-[0.35em] font-black text-sm">The Genesis</span>
+                <h3 className="mt-6 text-3xl font-black text-[var(--color-text)] leading-tight">
+                  Bridging the gap between enterprise challenges and scalable tech.
+                </h3>
+                <p className="mt-6 text-[var(--color-text-muted)] text-lg leading-relaxed">
+                  Aformix was founded with a singular vision: to bridge the gap between complex enterprise challenges and elegant, scalable technological solutions. We saw an industry cluttered with generic templates and inefficient workflows, and we set out to build a different kind of agency.
+                </p>
+              </div>
+
+              <div className="grid gap-6 rounded-[3rem] border border-[var(--color-glass-border)] bg-[var(--color-surface)]/20 p-8 shadow-2xl glass-effect">
+                <div className="flex items-start gap-4">
+                  <div className="min-w-[3rem] h-12 rounded-2xl bg-primary/10 text-primary grid place-items-center font-bold">1</div>
+                  <div>
+                    <h4 className="text-xl font-semibold text-[var(--color-text)]">Design with clarity</h4>
+                    <p className="text-[var(--color-text-muted)] leading-relaxed">Research-led interfaces that make complex products feel intuitive.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="min-w-[3rem] h-12 rounded-2xl bg-primary/10 text-primary grid place-items-center font-bold">2</div>
+                  <div>
+                    <h4 className="text-xl font-semibold text-[var(--color-text)]">Develop with precision</h4>
+                    <p className="text-[var(--color-text-muted)] leading-relaxed">Robust, scalable architecture built for performance and stability.</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-4">
+                  <div className="min-w-[3rem] h-12 rounded-2xl bg-primary/10 text-primary grid place-items-center font-bold">3</div>
+                  <div>
+                    <h4 className="text-xl font-semibold text-[var(--color-text)]">Grow with confidence</h4>
+                    <p className="text-[var(--color-text-muted)] leading-relaxed">Continuous improvement and strategic support beyond launch.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* SECTION 4 — WHAT WE DO */}
-      <section className="py-24 px-6 lg:px-20 bg-[var(--color-surface)]">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariant}
-            className="text-center mb-20"
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-[var(--color-text)]">What We <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#31B98F] to-[#00BFDE]">Do</span></h2>
-            <p className="text-[var(--color-text-muted)] max-w-2xl mx-auto text-lg">Comprehensive technology solutions designed to architect the future of your business.</p>
-          </motion.div>
+      <Divider />
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Cpu, title: "AI Automation", desc: "Intelligent workflows that save thousands of hours.", color: "#684B9E" },
-              { icon: Code, title: "Custom Development", desc: "Bespoke software tailored to your exact needs.", color: "#31B98F" },
-              { icon: Cloud, title: "SaaS Platforms", desc: "Scalable, secure, and multi-tenant architectures.", color: "#00BFDE" },
-              { icon: Globe, title: "Web Applications", desc: "High-performance, modern web experiences.", color: "#684B9E" },
-              { icon: Smartphone, title: "Mobile Applications", desc: "Native-feeling apps for iOS and Android.", color: "#31B98F" },
-              { icon: Search, title: "SEO Solutions", desc: "Data-driven strategies for organic dominance.", color: "#00BFDE" },
-              { icon: Zap, title: "Business Automation", desc: "Streamlining operations for maximum efficiency.", color: "#684B9E" },
-              { icon: Layout, title: "UI/UX Design", desc: "Award-winning interfaces that convert.", color: "#31B98F" }
-            ].map((service, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group p-6 rounded-2xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)] hover:bg-[var(--color-border)] transition-all duration-300 cursor-pointer"
-              >
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110" style={{ backgroundColor: `${service.color}20`, color: service.color }}>
-                  <service.icon className="w-6 h-6" />
+      {/* SECTION 4 — COMPANY MISSION & VISION */}
+      <section className="reveal section-padding relative w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="grid md:grid-cols-2 gap-8 about-grid">
+            <div className="group relative p-10 rounded-[3rem] glass-effect border border-[var(--color-glass-border)] hover:border-primary/50 overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2">
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500 pointer-events-none">
+                <Target className="w-32 h-32 text-primary" />
+              </div>
+              <div className="relative z-10">
+                <div className="w-16 h-16 rounded-[1.25rem] bg-primary/10 flex items-center justify-center mb-8 border border-primary/20">
+                  <Target className="w-8 h-8 text-primary" />
                 </div>
-                <h4 className="text-xl font-semibold mb-2 text-[var(--color-text)]">{service.title}</h4>
-                <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">{service.desc}</p>
-              </motion.div>
+                <h3 className="text-3xl font-bold mb-4 text-[var(--color-text)]">Our Mission</h3>
+                <p className="text-[var(--color-text-muted)] text-lg leading-relaxed">
+                  To empower businesses with cutting-edge AI automation and bespoke software solutions that drive unprecedented efficiency, growth, and digital transformation.
+                </p>
+              </div>
+            </div>
+
+            <div className="group relative p-10 rounded-[3rem] glass-effect border border-[var(--color-glass-border)] hover:border-primary/50 overflow-hidden shadow-2xl transition-all duration-500 hover:-translate-y-2">
+              <div className="absolute top-0 right-0 p-8 opacity-5 group-hover:opacity-10 group-hover:scale-110 transition-all duration-500 pointer-events-none">
+                <Eye className="w-32 h-32 text-primary" />
+              </div>
+              <div className="relative z-10">
+                <div className="w-16 h-16 rounded-[1.25rem] bg-primary/10 flex items-center justify-center mb-8 border border-primary/20">
+                  <Eye className="w-8 h-8 text-primary" />
+                </div>
+                <h3 className="text-3xl font-bold mb-4 text-[var(--color-text)]">Our Vision</h3>
+                <p className="text-[var(--color-text-muted)] text-lg leading-relaxed">
+                  To be the global vanguard of intelligent technology, where every digital product we create sets a new standard for performance, aesthetics, and user experience.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <Divider />
+
+      {/* SECTION 5 — WHAT WE DO */}
+      <section className="reveal section-padding relative w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="text-center mb-20 about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase">Services</span>
+            <h2 className="heading-2 mt-6">What We Do</h2>
+            <p className="mx-auto mt-6 max-w-2xl text-[var(--color-text-muted)] text-xl leading-relaxed">
+              Comprehensive technology solutions designed to architect the future of your business.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 about-grid">
+            {[
+              { icon: Cpu, title: "AI Automation", desc: "Intelligent workflows that save thousands of hours." },
+              { icon: Code, title: "Custom Development", desc: "Bespoke software tailored to your exact needs." },
+              { icon: Cloud, title: "SaaS Platforms", desc: "Scalable, secure, and multi-tenant architectures." },
+              { icon: Globe, title: "Web Applications", desc: "High-performance, modern web experiences." },
+              { icon: Smartphone, title: "Mobile Applications", desc: "Native-feeling apps for iOS and Android." },
+              { icon: Search, title: "SEO Solutions", desc: "Data-driven strategies for organic dominance." },
+              { icon: Zap, title: "Business Automation", desc: "Streamlining operations for maximum efficiency." },
+              { icon: Layout, title: "UI/UX Design", desc: "Award-winning interfaces that convert." }
+            ].map((service, index) => (
+              <div
+                key={index}
+                className="group p-8 rounded-[2rem] glass-effect border border-[var(--color-glass-border)] hover:border-primary/50 transition-all duration-300 shadow-xl hover:-translate-y-1"
+              >
+                <div className="w-14 h-14 rounded-[1.25rem] flex items-center justify-center mb-6 transition-transform duration-300 group-hover:scale-110 bg-primary/10 text-primary border border-primary/20">
+                  <service.icon className="w-7 h-7" />
+                </div>
+                <h4 className="text-xl font-semibold mb-3 text-[var(--color-text)]">{service.title}</h4>
+                <p className="text-[var(--color-text-muted)] leading-relaxed">{service.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 5 — WHY CHOOSE AFORMIX */}
-      <section className="py-24 px-6 lg:px-20 relative overflow-hidden bg-[var(--color-bg)]">
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#684B9E] rounded-full mix-blend-screen filter blur-[200px] opacity-20 pointer-events-none"></div>
+      <Divider />
 
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariant}
-            className="lg:w-1/3"
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 leading-tight text-[var(--color-text)]">Why Choose <br /><span className="text-[#31B98F]">Aformix?</span></h2>
-            <p className="text-[var(--color-text-muted)] text-lg mb-8">We don't just write code; we engineer scalable businesses. Partner with a team that treats your product as their own.</p>
-            <button className="flex items-center space-x-2 text-[var(--color-accent)] font-semibold hover:text-[var(--color-text)] transition-colors group">
+      {/* SECTION 6 — WHY CHOOSE AFORMIX */}
+      <section className="reveal section-padding relative w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
+          <div className="about-animate lg:sticky lg:top-32">
+            <span className="text-primary font-black tracking-[0.35em] uppercase">Value</span>
+            <h2 className="heading-2 mt-6">Why Choose <br />Aformix?</h2>
+            <p className="text-[var(--color-text-muted)] text-xl mt-6 mb-8 leading-relaxed">
+              We don't just write code; we engineer scalable businesses. Partner with a team that treats your product as their own.
+            </p>
+            <button className="inline-flex items-center gap-2 rounded-full border border-[var(--color-glass-border)] glass-effect px-6 py-3 font-semibold text-[var(--color-text)] transition hover:bg-white/5 group">
               <span>View Our Portfolio</span>
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </button>
-          </motion.div>
+          </div>
 
-          <div className="lg:w-2/3 grid sm:grid-cols-2 gap-6 relative z-10">
+          <div className="grid sm:grid-cols-2 gap-6 about-grid">
             {[
               { title: "Custom Solutions", desc: "No cookie-cutter templates. Everything is built specifically for your business logic." },
               { title: "Modern Technologies", desc: "We utilize the latest bleeding-edge stacks including React, Node, Python, and AWS." },
@@ -278,41 +437,34 @@ const AboutUs: React.FC = () => {
               { title: "Security First", desc: "Enterprise-grade encryption and security protocols implemented from day one." },
               { title: "Fast Delivery", desc: "Agile methodologies ensuring rapid iterations and faster time-to-market." }
             ].map((feature, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex items-start space-x-4 p-6 rounded-2xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)]"
+                className="p-8 rounded-[2rem] glass-effect border border-[var(--color-glass-border)] shadow-xl"
               >
-                <div className="mt-1 flex-shrink-0">
-                  <CheckCircle className="w-6 h-6 text-[#31B98F]" />
+                <div className="mb-4">
+                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <CheckCircle className="w-5 h-5 text-primary" />
+                  </div>
                 </div>
-                <div>
-                  <h4 className="text-lg font-semibold mb-2 text-[var(--color-text)]">{feature.title}</h4>
-                  <p className="text-sm text-[var(--color-text-muted)]">{feature.desc}</p>
-                </div>
-              </motion.div>
+                <h4 className="text-lg font-semibold mb-3 text-[var(--color-text)]">{feature.title}</h4>
+                <p className="text-sm text-[var(--color-text-muted)] leading-relaxed">{feature.desc}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 6 — COMPANY VALUES */}
-      <section className="py-24 px-6 lg:px-20 bg-[var(--color-surface)]">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariant}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-[var(--color-text)]">Our Core <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#684B9E] to-[#31B98F]">Values</span></h2>
-          </motion.div>
+      <Divider />
 
-          <div className="grid md:grid-cols-3 gap-8">
+      {/* SECTION 7 — COMPANY VALUES */}
+      <section className="reveal section-padding relative w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="text-center mb-16 about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase">Principles</span>
+            <h2 className="heading-2 mt-6">Our Core Values</h2>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 about-grid">
             {[
               { icon: Lightbulb, title: "Innovation", text: "Constantly pushing boundaries and exploring new technological frontiers." },
               { icon: Award, title: "Quality", text: "Refusing to compromise on code quality, design aesthetics, or performance." },
@@ -321,42 +473,35 @@ const AboutUs: React.FC = () => {
               { icon: TrendingUp, title: "Growth", text: "Committed to the continuous growth of our clients and our engineers." },
               { icon: Star, title: "Excellence", text: "Delivering nothing short of world-class, enterprise-grade digital products." }
             ].map((value, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="relative p-8 rounded-3xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)] group overflow-hidden"
+                className="p-10 rounded-[2.5rem] glass-effect border border-[var(--color-glass-border)] group overflow-hidden shadow-xl hover:border-primary/30 transition-colors"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-[#31B98F]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                <value.icon className="w-10 h-10 text-[#00BFDE] mb-6 group-hover:scale-110 transition-transform duration-300" />
-                <h4 className="text-2xl font-bold mb-3 text-[var(--color-text)]">{value.title}</h4>
-                <p className="text-[var(--color-text-muted)]">{value.text}</p>
-              </motion.div>
+                <div className="w-14 h-14 rounded-[1.25rem] bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                  <value.icon className="w-7 h-7" />
+                </div>
+                <h4 className="text-2xl font-bold mb-4 text-[var(--color-text)]">{value.title}</h4>
+                <p className="text-[var(--color-text-muted)] leading-relaxed">{value.text}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 7 — PROCESS */}
-      <section className="py-24 px-6 lg:px-20 relative bg-[var(--color-bg)]">
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariant}
-            className="text-center mb-20"
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-[var(--color-text)]">How We <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00BFDE] to-[#31B98F]">Build</span></h2>
-            <p className="text-[var(--color-text-muted)] text-lg">A refined, battle-tested methodology for delivering software success.</p>
-          </motion.div>
+      <Divider />
 
-          <div className="relative border-l border-[var(--color-border)] md:border-none">
-            {/* Desktop Center Line */}
-            <div className="hidden md:block absolute left-1/2 top-0 bottom-0 w-px bg-[var(--color-border)] -translate-x-1/2"></div>
+      {/* SECTION 8 — PROCESS */}
+      <section className="reveal section-padding relative w-full">
+        <div className="max-w-5xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="text-center mb-20 about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase">Methodology</span>
+            <h2 className="heading-2 mt-6">How We Build</h2>
+            <p className="mx-auto mt-6 text-[var(--color-text-muted)] text-xl">
+              A refined, battle-tested methodology for delivering software success.
+            </p>
+          </div>
 
+          <div className="relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-[var(--color-glass-border)] before:to-transparent">
             {[
               { num: "01", title: "Discovery", desc: "Deep diving into your business logic, requirements, and market positioning." },
               { num: "02", title: "Planning", desc: "Architecting the technical stack, database schemas, and project timelines." },
@@ -366,67 +511,56 @@ const AboutUs: React.FC = () => {
               { num: "06", title: "Launch", desc: "Seamless deployment to production with zero downtime." },
               { num: "07", title: "Support", desc: "Ongoing maintenance, feature additions, and scaling infrastructure." }
             ].map((step, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className={`relative flex flex-col md:flex-row items-start md:items-center justify-between mb-12 pl-8 md:pl-0 ${i % 2 === 0 ? 'md:flex-row-reverse' : ''}`}
-              >
-                {/* Node */}
-                <div className="absolute left-[-5px] md:left-1/2 top-2 md:top-1/2 w-3 h-3 bg-[#31B98F] rounded-full md:-translate-x-1/2 md:-translate-y-1/2 shadow-[0_0_15px_#31B98F] z-10"></div>
-
-                <div className={`md:w-5/12 ${i % 2 === 0 ? 'md:text-left' : 'md:text-right'}`}>
-                  <div className="inline-block px-3 py-1 rounded-full bg-[var(--color-surface-elevated)] text-sm font-mono text-[#00BFDE] mb-3 border border-[var(--color-border)]">Step {step.num}</div>
-                  <h4 className="text-2xl font-bold mb-2 text-[var(--color-text)]">{step.title}</h4>
-                  <p className="text-[var(--color-text-muted)]">{step.desc}</p>
+              <div key={i} className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active mb-12 about-animate">
+                <div className="flex items-center justify-center w-10 h-10 rounded-full border-4 border-[var(--color-bg)] bg-primary text-white shadow shadow-primary/20 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 relative z-10">
+                  <span className="text-sm font-bold">{i + 1}</span>
                 </div>
-                <div className="hidden md:block md:w-5/12"></div>
-              </motion.div>
+                <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] glass-effect p-8 rounded-[2rem] border border-[var(--color-glass-border)] shadow-xl hover:border-primary/30 transition-colors">
+                  <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-xs font-bold text-primary mb-4 uppercase tracking-wider">Step {step.num}</div>
+                  <h4 className="text-2xl font-bold mb-3 text-[var(--color-text)]">{step.title}</h4>
+                  <p className="text-[var(--color-text-muted)] leading-relaxed">{step.desc}</p>
+                </div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 8 — STATS SECTION */}
-      <section className="py-20 px-6 border-y border-[var(--color-border)] bg-[var(--color-surface)]">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {[
-            { num: "10+", label: "Projects Delivered", color: "text-[#31B98F]" },
-            { num: "98%", label: "Client Satisfaction", color: "text-[#00BFDE]" },
-            { num: "8+", label: "Industries Served", color: "text-[#684B9E]" },
-            { num: "1M+", label: "Lines of Code", color: "text-[var(--color-text)]" }
-          ].map((stat, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.5 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.1, type: "spring", stiffness: 100 }}
-              className="space-y-2"
-            >
-              <h3 className={`text-5xl lg:text-6xl font-bold ${stat.color} drop-shadow-lg`}>{stat.num}</h3>
-              <p className="text-[var(--color-text-muted)] font-medium tracking-wide uppercase text-sm">{stat.label}</p>
-            </motion.div>
-          ))}
+      <Divider />
+
+      {/* SECTION 9 — STATS SECTION */}
+      <section className="reveal section-padding relative w-full bg-[var(--color-bg)]">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 about-grid">
+            {[
+              { label: "Projects Delivered" },
+              { label: "Client Satisfaction" },
+              { label: "Industries Served" },
+              { label: "Lines of Code" }
+            ].map((stat, i) => (
+              <div key={i} className="glass-effect rounded-[2rem] border border-[var(--color-glass-border)] p-8 text-center shadow-2xl">
+                <p className="stat-number text-5xl lg:text-6xl font-black text-primary mb-4">0</p>
+                <p className="text-[var(--color-text)] font-medium tracking-wide uppercase text-sm">{stat.label}</p>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
-      {/* SECTION 9 — TECHNOLOGY STACK */}
-      <section className="py-24 px-6 lg:px-20 bg-[var(--color-bg)]">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariant}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-[var(--color-text)]">Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#31B98F] to-[#00BFDE]">Arsenal</span></h2>
-            <p className="text-[var(--color-text-muted)] max-w-2xl mx-auto text-lg">We use the most modern, robust, and scalable technologies available today.</p>
-          </motion.div>
+      <Divider />
 
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+      {/* SECTION 10 — TECHNOLOGY STACK */}
+      <section className="reveal section-padding relative w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="text-center mb-16 about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase">Arsenal</span>
+            <h2 className="heading-2 mt-6">Technology Stack</h2>
+            <p className="mx-auto mt-6 max-w-2xl text-[var(--color-text-muted)] text-xl leading-relaxed">
+              We use the most modern, robust, and scalable technologies available today.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 about-grid">
             {[
               { category: "Frontend", tools: "React, Next.js, Vue, Tailwind" },
               { category: "Backend", tools: "Node.js, Python, Go, Java" },
@@ -435,39 +569,30 @@ const AboutUs: React.FC = () => {
               { category: "Databases", tools: "PostgreSQL, MongoDB, Redis" },
               { category: "AI Tools", tools: "OpenAI, PyTorch, TensorFlow" }
             ].map((stack, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-6 rounded-2xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)] hover:border-[#31B98F]/50 transition-all duration-300 text-center group"
+                className="p-6 rounded-[2rem] glass-effect border border-[var(--color-glass-border)] hover:border-primary/50 transition-all duration-300 text-center group shadow-xl"
               >
-                <Layers className="w-8 h-8 mx-auto mb-4 text-[var(--color-text-muted)] group-hover:text-[#31B98F] transition-colors" />
+                <Layers className="w-8 h-8 mx-auto mb-4 text-primary opacity-70 group-hover:opacity-100 transition-opacity" />
                 <h4 className="text-lg font-bold mb-2 text-[var(--color-text)]">{stack.category}</h4>
                 <p className="text-xs text-[var(--color-text-muted)]">{stack.tools}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 10 — TESTIMONIALS */}
-      <section className="py-24 px-6 lg:px-20 relative bg-[var(--color-surface)] overflow-hidden">
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-[#00BFDE] rounded-full mix-blend-screen filter blur-[200px] opacity-10 pointer-events-none"></div>
+      <Divider />
 
-        <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariant}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl lg:text-5xl font-bold mb-6 text-[var(--color-text)]">Client <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#684B9E] to-[#31B98F]">Success</span></h2>
-          </motion.div>
+      {/* SECTION 11 — TESTIMONIALS */}
+      <section className="reveal section-padding relative w-full">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          <div className="text-center mb-16 about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase">Testimonials</span>
+            <h2 className="heading-2 mt-6">Client Success</h2>
+          </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 about-grid">
             {[
               {
                 name: "Sarah Jenkins", role: "CTO, TechFlow",
@@ -482,68 +607,196 @@ const AboutUs: React.FC = () => {
                 text: "Working with Aformix feels like having an elite internal engineering team. Their communication, transparency, and execution speed are phenomenal."
               }
             ].map((testimonial, i) => (
-              <motion.div
+              <div
                 key={i}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-3xl bg-[var(--color-surface-elevated)] border border-[var(--color-border)] relative"
+                className="p-8 rounded-[2.5rem] glass-effect border border-[var(--color-glass-border)] relative shadow-xl hover:-translate-y-1 transition-transform duration-300"
               >
-                <Quote className="absolute top-6 right-6 w-8 h-8 text-[var(--color-border)]" />
-                <div className="flex text-[#31B98F] mb-6 space-x-1">
-                  {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
+                <Quote className="absolute top-8 right-8 w-8 h-8 text-[var(--color-glass-border)]" />
+                <div className="flex text-primary mb-6 space-x-1">
+                  {[...Array(5)].map((_, j) => <Star key={j} className="w-5 h-5 fill-current" />)}
                 </div>
                 <p className="text-[var(--color-text)] text-lg mb-8 leading-relaxed">"{testimonial.text}"</p>
                 <div className="flex items-center space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#684B9E] to-[#31B98F] p-[2px]">
-                    <div className="w-full h-full rounded-full bg-[var(--color-surface)] flex items-center justify-center border-2 border-transparent">
-                      <Users className="w-5 h-5 text-[var(--color-text-muted)]" />
-                    </div>
+                  <div className="w-12 h-12 rounded-full glass-effect border border-[var(--color-glass-border)] flex items-center justify-center">
+                    <Users className="w-5 h-5 text-[var(--color-text-muted)]" />
                   </div>
                   <div>
                     <h5 className="font-bold text-[var(--color-text)]">{testimonial.name}</h5>
-                    <p className="text-sm text-[var(--color-text-muted)]">{testimonial.role}</p>
+                    <p className="text-sm text-primary">{testimonial.role}</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 11 — CTA SECTION */}
-      <section className="py-32 px-6 lg:px-20 relative overflow-hidden bg-[var(--color-bg)]">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-[#31B98F]/10 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#684B9E] rounded-t-full filter blur-[150px] opacity-20 pointer-events-none"></div>
+      <Divider />
 
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={scaleVariant}
-          className="relative z-10 max-w-4xl mx-auto text-center p-12 lg:p-20 rounded-[3rem] border border-[var(--color-border)] bg-[var(--color-surface)] shadow-2xl"
-        >
-          <h2 className="text-5xl lg:text-6xl font-bold mb-8 leading-tight text-[var(--color-text)]">Ready to Build Something <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#31B98F] to-[#00BFDE]">Extraordinary?</span></h2>
-          <p className="text-xl text-[var(--color-text-muted)] mb-12 max-w-2xl mx-auto">
-            Stop settling for mediocre software. Partner with Aformix and let's engineer a digital solution that dominates your market.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="btn-primary text-lg">
-              Start Your Project
-            </button>
-            <a
-              className="btn-outline text-lg flex items-center justify-center"
-              href="https://wa.me/+923019170936"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Book a Consultation
-            </a>
+      {/* SECTION 12 — CTA / CONTACT SECTION */}
+      <section className="reveal section-padding relative overflow-hidden w-full mb-20">
+        {/* Background glows — matches main page Contact */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[150px] -z-10 pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-secondary/6 rounded-full blur-[150px] -z-10 pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
+          {/* Header */}
+          <div className="text-center mb-20 about-animate">
+            <span className="inline-block text-primary font-black tracking-[0.35em] uppercase text-sm mb-6">
+              Get in Touch
+            </span>
+            <h2 className="heading-2 !mb-6">
+              Ready to Build Something <span className="text-primary">Extraordinary?</span>
+            </h2>
+            <p className="text-[var(--color-text-muted)] text-xl leading-relaxed max-w-2xl mx-auto">
+              Stop settling for mediocre software. Partner with Aformix and let's engineer a digital solution that dominates your market.
+            </p>
           </div>
-        </motion.div>
-      </section>
 
+          {/* Grid */}
+          <div className="grid lg:grid-cols-5 gap-12 items-start about-animate">
+            {/* Left: Contact Info */}
+            <div className="lg:col-span-2 space-y-5">
+              {ABOUT_CONTACT_INFO.map((item, i) => (
+                <div
+                  key={i}
+                  className="glass-effect rounded-3xl border border-[var(--color-glass-border)] p-6 flex items-center gap-5 group hover:-translate-y-1 transition-all duration-300 shadow-lg"
+                >
+                  <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary group-hover:text-white transition-all duration-300 shadow-md">
+                    <item.icon size={22} />
+                  </div>
+                  <div>
+                    <p className="text-[var(--color-text-muted)] text-xs font-black uppercase tracking-widest mb-1">{item.label}</p>
+                    {item.href ? (
+                      <a href={item.href} className="text-[var(--color-text)] font-semibold text-base hover:text-primary transition-colors">{item.value}</a>
+                    ) : (
+                      <p className="text-[var(--color-text)] font-semibold text-base">{item.value}</p>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {/* Trust badge */}
+              <div className="glass-effect rounded-3xl border border-[var(--color-glass-border)] p-6 mt-2">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex -space-x-2">
+                    {(['#27b990', '#684b9e', '#f43f5e'] as const).map((c, i) => (
+                      <div key={i} className="w-9 h-9 rounded-full border-2 border-[var(--color-surface)] flex items-center justify-center text-white text-xs font-bold" style={{ backgroundColor: c }}>
+                        {['J', 'S', 'M'][i]}
+                      </div>
+                    ))}
+                  </div>
+                  <div>
+                    <div className="flex text-yellow-400 text-sm">★★★★★</div>
+                    <p className="text-[var(--color-text-muted)] text-xs">Trusted by 45+ clients</p>
+                  </div>
+                </div>
+                <p className="text-[var(--color-text-muted)] text-sm leading-relaxed">
+                  "Aformix delivered our platform on time and exceeded all our expectations. Highly recommend!"
+                </p>
+              </div>
+            </div>
+
+            {/* Right: Form */}
+            <div className="lg:col-span-3">
+              <div className="glass-effect rounded-[2.5rem] border border-[var(--color-glass-border)] p-8 md:p-12 shadow-2xl relative overflow-hidden">
+                {/* Top accent line */}
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-70" />
+
+                <h3 className="text-2xl font-black text-[var(--color-text)] mb-8">Send us a message</h3>
+
+                <form onSubmit={ctaHandleSubmit} noValidate className="space-y-6">
+                  {/* Name + Email */}
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="about-cta-name" className="block text-xs font-black uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
+                        Full Name <span className="text-primary">*</span>
+                      </label>
+                      <input
+                        id="about-cta-name" type="text" name="name" value={ctaForm.name} onChange={ctaHandleChange}
+                        placeholder="John Doe"
+                        className={`input-field w-full ${ctaErrors.name ? '!border-red-500 !shadow-[0_0_0_2px_rgba(239,68,68,0.15)]' : ''}`}
+                      />
+                      {ctaErrors.name && <p className="text-red-500 text-xs mt-1.5 font-medium">{ctaErrors.name}</p>}
+                    </div>
+                    <div>
+                      <label htmlFor="about-cta-email" className="block text-xs font-black uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
+                        Email Address <span className="text-primary">*</span>
+                      </label>
+                      <input
+                        id="about-cta-email" type="email" name="email" value={ctaForm.email} onChange={ctaHandleChange}
+                        placeholder="john@example.com"
+                        className={`input-field w-full ${ctaErrors.email ? '!border-red-500 !shadow-[0_0_0_2px_rgba(239,68,68,0.15)]' : ''}`}
+                      />
+                      {ctaErrors.email && <p className="text-red-500 text-xs mt-1.5 font-medium">{ctaErrors.email}</p>}
+                    </div>
+                  </div>
+
+                  {/* Phone + Service */}
+                  <div className="grid sm:grid-cols-2 gap-5">
+                    <div>
+                      <label htmlFor="about-cta-phone" className="block text-xs font-black uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
+                        Phone Number
+                      </label>
+                      <input
+                        id="about-cta-phone" type="tel" name="phone" value={ctaForm.phone} onChange={ctaHandleChange}
+                        placeholder="+92 300 0000000"
+                        className="input-field w-full"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="about-cta-service" className="block text-xs font-black uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
+                        Service Needed
+                      </label>
+                      <select
+                        id="about-cta-service" name="service" value={ctaForm.service} onChange={ctaHandleChange}
+                        className="input-field w-full appearance-none cursor-pointer"
+                      >
+                        <option value="">Select a service…</option>
+                        {ABOUT_SERVICES.map(s => <option key={s} value={s}>{s}</option>)}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Message */}
+                  <div>
+                    <label htmlFor="about-cta-message" className="block text-xs font-black uppercase tracking-widest text-[var(--color-text-muted)] mb-2">
+                      Your Message <span className="text-primary">*</span>
+                    </label>
+                    <textarea
+                      id="about-cta-message" name="message" value={ctaForm.message} onChange={ctaHandleChange}
+                      placeholder="Tell us about your project, goals, and timeline…"
+                      rows={5}
+                      className={`input-field w-full resize-none ${ctaErrors.message ? '!border-red-500 !shadow-[0_0_0_2px_rgba(239,68,68,0.15)]' : ''}`}
+                    />
+                    {ctaErrors.message
+                      ? <p className="text-red-500 text-xs mt-1.5 font-medium">{ctaErrors.message}</p>
+                      : <p className="text-[var(--color-text-muted)] text-xs mt-1.5">Minimum 20 characters</p>
+                    }
+                  </div>
+
+                  {/* Submit */}
+                  <button
+                    type="submit"
+                    disabled={ctaSubmitting}
+                    className="btn-primary w-full flex items-center justify-center gap-3 py-4 text-base group disabled:opacity-60 disabled:cursor-not-allowed mt-2"
+                  >
+                    {ctaSubmitting ? (
+                      <><div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" /><span>Sending…</span></>
+                    ) : (
+                      <><span>Send Message</span><Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" /></>
+                    )}
+                  </button>
+
+                  <p className="text-center text-[var(--color-text-muted)] text-xs">
+                    We respect your privacy. Your information is never shared.
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 };

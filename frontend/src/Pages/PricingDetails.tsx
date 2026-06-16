@@ -63,7 +63,7 @@ const PricingDetails: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
         {/* HERO & PRICING CARD SECTION */}
-        <motion.section 
+        <motion.section
           className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-center mb-24"
           initial="hidden"
           animate="visible"
@@ -85,7 +85,7 @@ const PricingDetails: React.FC = () => {
             <p className="text-lg md:text-xl text-[var(--color-text-muted)] mb-8 leading-relaxed">
               {pkg.shortDescription}
             </p>
-            
+
             <div className="flex flex-wrap gap-6 mb-10">
               <div>
                 <p className="text-sm text-[var(--color-text-muted)] uppercase tracking-wider mb-1">Estimated Delivery</p>
@@ -102,7 +102,7 @@ const PricingDetails: React.FC = () => {
               <Link to="/contact" className="btn-primary flex items-center justify-center gap-2 py-4 px-8 text-base">
                 Get Started <ArrowRight size={18} />
               </Link>
-              <Link to="/contact" className="btn-outline flex items-center justify-center gap-2 py-4 px-8 text-base">
+              <Link to="https://calendly.com/aformixtech/30min" target="_blank" rel="noopener noreferrer" className="btn-outline flex items-center justify-center gap-2 py-4 px-8 text-base">
                 Book Free Consultation
               </Link>
             </div>
@@ -134,12 +134,12 @@ const PricingDetails: React.FC = () => {
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between items-center p-4 rounded-xl bg-[var(--color-bg)]/50 border border-[var(--color-border)]">
                   <span className="text-[var(--color-text)] font-medium">One-Time Payment</span>
-                    <span className="text-[var(--color-text)] font-bold">{convertAndFormatPriceString(pkg.oneTimeOption)}</span>
+                  <span className="text-[var(--color-text)] font-bold">{convertAndFormatPriceString(pkg.oneTimeOption)}</span>
                 </div>
                 {pkg.monthlyOption && (
                   <div className="flex justify-between items-center p-4 rounded-xl bg-[var(--color-bg)]/50 border border-[var(--color-border)]">
                     <span className="text-[var(--color-text)] font-medium">Monthly Option</span>
-                      <span className="text-[var(--color-text)] font-bold">{convertAndFormatPriceString(pkg.monthlyOption)}</span>
+                    <span className="text-[var(--color-text)] font-bold">{convertAndFormatPriceString(pkg.monthlyOption)}</span>
                   </div>
                 )}
               </div>
@@ -171,7 +171,7 @@ const PricingDetails: React.FC = () => {
         <Divider />
 
         {/* FEATURES SECTION */}
-        <motion.section 
+        <motion.section
           className="py-20"
           initial="hidden"
           whileInView="visible"
@@ -182,7 +182,7 @@ const PricingDetails: React.FC = () => {
             <h2 className="text-3xl md:text-5xl font-bold text-[var(--color-text)] mb-4">Everything You Need</h2>
             <p className="text-[var(--color-text-muted)] max-w-2xl mx-auto">Comprehensive features included in the {pkg.title} package to ensure your success.</p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {pkg.features.map((feature, i) => (
               <motion.div key={i} variants={itemVariants} className="glass-effect p-6 rounded-2xl border border-[var(--color-glass-border)] hover:border-primary/50 transition-colors group">
@@ -198,7 +198,7 @@ const PricingDetails: React.FC = () => {
 
         {/* BONUS OFFERS */}
         {pkg.bonusOffers.length > 0 && (
-          <motion.section 
+          <motion.section
             className="py-12"
             initial="hidden"
             whileInView="visible"
@@ -217,7 +217,7 @@ const PricingDetails: React.FC = () => {
                     <motion.div key={i} variants={itemVariants} className="bg-primary/5 border border-primary/20 p-6 rounded-2xl text-center relative overflow-hidden group">
                       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <h4 className="font-bold text-[var(--color-text)] mb-2">{bonus.title}</h4>
-                        <p className="text-primary font-black text-xl">Value: {convertAndFormatPriceString(bonus.value)}</p>
+                      <p className="text-primary font-black text-xl">Value: {convertAndFormatPriceString(bonus.value)}</p>
                     </motion.div>
                   ))}
                 </div>
@@ -234,7 +234,7 @@ const PricingDetails: React.FC = () => {
         <Divider />
 
         {/* TIMELINE & PROCESS */}
-        <motion.section 
+        <motion.section
           className="py-20"
           initial="hidden"
           whileInView="visible"
@@ -304,7 +304,7 @@ const PricingDetails: React.FC = () => {
         </motion.section>
 
         {/* TECH STACK */}
-        <motion.section 
+        <motion.section
           className="py-12 border-y border-[var(--color-border)] overflow-hidden"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -323,7 +323,7 @@ const PricingDetails: React.FC = () => {
         </motion.section>
 
         {/* COMPARISON TABLE */}
-        <motion.section 
+        <motion.section
           className="py-24"
           initial="hidden"
           whileInView="visible"
@@ -349,7 +349,7 @@ const PricingDetails: React.FC = () => {
                 {comparisonTableData.map((row, i) => (
                   <tr key={i} className="group hover:bg-[var(--color-bg)]/50 transition-colors">
                     <td className="p-4 border-b border-[var(--color-border)] text-[var(--color-text)] font-medium">{row.feature}</td>
-                    
+
                     {['starter', 'growth', 'enterprise'].map((planKey) => {
                       const value = row[planKey as keyof typeof row];
                       const isHighlighted = pkg.id === planKey;
@@ -371,7 +371,7 @@ const PricingDetails: React.FC = () => {
         </motion.section>
 
         {/* FAQ SECTION */}
-        <motion.section 
+        <motion.section
           className="py-20 max-w-4xl mx-auto"
           initial="hidden"
           whileInView="visible"
@@ -391,7 +391,7 @@ const PricingDetails: React.FC = () => {
         </motion.section>
 
         {/* CTA SECTION */}
-        <motion.section 
+        <motion.section
           className="py-24"
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -409,7 +409,7 @@ const PricingDetails: React.FC = () => {
                 <Link to="/contact" className="btn-primary py-4 px-10 text-lg">
                   Get Started Now
                 </Link>
-                <a href="https://wa.me/1234567890" target="_blank" rel="noreferrer" className="btn-outline py-4 px-10 text-lg flex items-center justify-center gap-2">
+                <a href="https://wa.me/+923019170936" target="_blank" rel="noreferrer" className="btn-outline py-4 px-10 text-lg flex items-center justify-center gap-2">
                   WhatsApp Us
                 </a>
               </div>
@@ -428,16 +428,16 @@ const FAQItem = ({ question, answer }: { question: string; answer: string }) => 
 
   return (
     <div className="glass-effect rounded-2xl border border-[var(--color-glass-border)] overflow-hidden transition-colors hover:border-primary/30">
-      <button 
+      <button
         className="w-full text-left p-6 flex justify-between items-center cursor-pointer focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="font-bold text-[var(--color-text)] pr-8">{question}</span>
-        <ChevronDown 
-          className={`w-5 h-5 text-primary transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180' : ''}`} 
+        <ChevronDown
+          className={`w-5 h-5 text-primary transition-transform duration-300 shrink-0 ${isOpen ? 'rotate-180' : ''}`}
         />
       </button>
-      <motion.div 
+      <motion.div
         initial={false}
         animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
         className="overflow-hidden"

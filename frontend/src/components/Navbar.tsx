@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router";
 import { navLinks } from "../constants";
 import { serviceNavItems, getServicePath } from "../constants/serviceNav";
-import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Briefcase, Users, ChevronDown, Smartphone } from "lucide-react";
+import { Menu, X, ArrowRight, Sun, Moon, Monitor, Layout, Users, ChevronDown, Smartphone, BookOpen, BriefcaseBusiness, Calendar1, FileText } from "lucide-react";
 import { useTheme } from "../contexts/ThemeContext";
 import logoImg from "../assets/logo.png";
 
@@ -17,8 +17,8 @@ const Navbar: React.FC = () => {
   const lastScrollY = useRef(0);
   const navigate = useNavigate();
   const baseApiUrl = import.meta.env.VITE_API_URL || "";
-  const apiUrl = baseApiUrl.includes("vercel.app") && !baseApiUrl.includes("/_/backend") 
-    ? `${baseApiUrl}/_/backend` 
+  const apiUrl = baseApiUrl.includes("vercel.app") && !baseApiUrl.includes("/_/backend")
+    ? `${baseApiUrl}/_/backend`
     : baseApiUrl;
 
   const checkAuth = () => {
@@ -67,7 +67,7 @@ const Navbar: React.FC = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      
+
       setIsScrolled(currentScrollY > 50);
 
       if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
@@ -84,20 +84,18 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 w-full z-[100] transition-transform duration-500 ease-in-out flex justify-center pointer-events-none ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      } ${isScrolled ? "py-4" : "py-8"}`}
+      className={`fixed top-0 left-0 w-full z-[100] transition-transform duration-500 ease-in-out flex justify-center pointer-events-none ${isVisible ? "translate-y-0" : "-translate-y-full"
+        } ${isScrolled ? "py-4" : "py-8"}`}
     >
       <div className="max-w-7xl mx-auto px-6 w-full pointer-events-auto">
-        <div className={`flex items-center justify-between px-4 md:px-8 py-3 md:py-4 rounded-3xl transition-all duration-500 ${
-          isScrolled 
-            ? "bg-[var(--color-bg)] shadow-2xl border border-[var(--color-glass-border)]" 
-            : "bg-transparent"
-        }`}>
+        <div className={`flex items-center justify-between px-4 md:px-8 py-3 md:py-4 rounded-3xl transition-all duration-500 ${isScrolled
+          ? "bg-[var(--color-bg)] shadow-2xl border border-[var(--color-glass-border)]"
+          : "bg-transparent"
+          }`}>
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 group">
             <img src={logoImg} alt="logo" className="w-5 md:w-7 cursor-pointer hover:scale-95 transition-transform" />
-              <p className="text-base md:text-xl text-[var(--color-text)] font-light transition-colors duration-500">Aformix</p>
+            <p className="text-base md:text-xl text-[var(--color-text)] font-light transition-colors duration-500">Aformix</p>
           </a>
 
           {/* Desktop Links */}
@@ -143,18 +141,16 @@ const Navbar: React.FC = () => {
                 {/* Dropdown Menu */}
                 {['Products', 'Services', 'Company'].includes(link.name) && (
                   <div
-                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-300 ease-out z-50 ${
-                      link.name === 'Services' ? 'w-[520px]' : 'w-[340px]'
-                    } ${
-                      hoveredMenu === link.name
+                    className={`absolute top-full left-1/2 -translate-x-1/2 pt-2 transition-all duration-300 ease-out z-50 ${link.name === 'Services' ? 'w-[520px]' : 'w-[340px]'
+                      } ${hoveredMenu === link.name
                         ? "opacity-100 translate-y-0 visible pointer-events-auto"
                         : "opacity-0 translate-y-4 invisible pointer-events-none"
-                    }`}
+                      }`}
                   >
                     <div className="glass-effect rounded-2xl p-2 border border-[var(--color-glass-border)] shadow-2xl relative overflow-hidden backdrop-blur-xl bg-[var(--color-bg)]/95">
                       {/* Glow line at top */}
                       <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[var(--color-primary)] to-transparent opacity-70" />
-                      
+
                       <div className="flex flex-col gap-1">
                         {link.name === 'Products' && (
                           <>
@@ -226,13 +222,43 @@ const Navbar: React.FC = () => {
                                 <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">Learn about our mission and vision.</p>
                               </div>
                             </Link>
-                            <a href="#" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
+                            <a href="/blog" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
                               <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
-                                <Briefcase size={20} />
+                                <BookOpen size={20} />
                               </div>
                               <div>
-                                <h4 className="text-[var(--color-text)] font-semibold text-sm group-hover/item:text-[var(--color-primary)] transition-colors">Careers</h4>
-                                <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">Join our world-class engineering team.</p>
+                                <h4 className="text-[var(--color-text)] font-semibold text-sm group-hover/item:text-[var(--color-primary)] transition-colors">Blog</h4>
+                                <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">Insights of Digital Growth</p>
+                              </div>
+                            </a>
+
+                            <a href="#portfolio" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
+                              <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
+                                <BriefcaseBusiness size={20} />
+                              </div>
+                              <div>
+                                <h4 className="text-[var(--color-text)] font-semibold text-sm group-hover/item:text-[var(--color-primary)] transition-colors">Portfolio</h4>
+                                <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">Showcase of our best work</p>
+                              </div>
+                            </a>
+
+                            <a href="https://calendly.com/aformixtech/30min" target="_blank" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
+                              <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
+                                <Calendar1 size={20} />
+                              </div>
+                              <div>
+                                <h4 className="text-[var(--color-text)] font-semibold text-sm group-hover/item:text-[var(--color-primary)] transition-colors">Book a Call</h4>
+                                <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">Get a free consultation</p>
+                              </div>
+                            </a>
+
+                            <a href="/terms-of-service" target="_blank" className="p-3 hover:bg-[var(--color-glass)] rounded-xl transition-all duration-300 group/item flex gap-4 items-start">
+                              <div className="w-10 h-10 rounded-lg bg-[var(--color-primary)]/10 text-[var(--color-primary)] flex items-center justify-center shrink-0 group-hover/item:scale-110 transition-transform">
+                                <FileText size={20} />
+                              </div>
+                              <div>
+                                <h4 className="text-[var(--color-text)] font-semibold text-sm group-hover/item:text-[var(--color-primary)] transition-colors">Terms of Service</h4>
+                                <p className="text-[var(--color-text-muted)] text-xs mt-1 leading-relaxed">Terms & conditions</p>
                               </div>
                             </a>
                           </>
@@ -343,7 +369,7 @@ const Navbar: React.FC = () => {
               {link.name}
             </a>
           ))}
-          
+
           <div className="h-px bg-[var(--color-border)] w-full my-2"></div>
 
           {!user && (

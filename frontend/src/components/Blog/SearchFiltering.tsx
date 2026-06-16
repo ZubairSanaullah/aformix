@@ -43,30 +43,30 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
   };
 
   return (
-    <section
-      className="py-12 border-y bg-[var(--color-surface)] border-[var(--color-border)]"
-    >
+    <section className="reveal section-padding relative w-full">
       <div className="max-w-7xl mx-auto px-6">
-        {/* Search Bar */}
         <motion.div
-          className="mb-8"
-          initial={{ opacity: 0, y: -20 }}
+          className="card-premium"
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
         >
-          <div
-            className={`relative group bg-[var(--color-bg)] border-[var(--color-border)] border-2 rounded-2xl transition-all duration-300 ${
-              isSearchFocused
-                ? 'border-primary shadow-lg'
-                : ''
-            }`}
-          >
-            <div className="flex items-center px-6 py-4">
-              <Search
-                size={20}
-                className={isSearchFocused ? 'text-primary' : 'text-[var(--color-text-muted)]'}
-              />
+          {/* Search Bar */}
+          <div className="mb-8 relative">
+            <div
+              className={`relative flex items-center transition-all duration-300 rounded-2xl border-2 ${
+                isSearchFocused
+                  ? 'border-primary shadow-[0_0_15px_rgba(49,185,143,0.3)] bg-[var(--color-bg)]'
+                  : 'border-[var(--color-border)] bg-[var(--color-surface-elevated)]'
+              }`}
+            >
+              <div className="pl-6 py-4">
+                <Search
+                  size={20}
+                  className={isSearchFocused ? 'text-primary' : 'text-[var(--color-text-muted)]'}
+                />
+              </div>
               <input
                 type="text"
                 placeholder="Search articles by title, keyword, or author..."
@@ -74,7 +74,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
                 onChange={(e) => onSearchChange(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => setIsSearchFocused(false)}
-                className="ml-4 flex-1 outline-none text-lg font-medium placeholder-gray-400 bg-transparent text-[var(--color-text)]"
+                className="w-full h-full py-4 px-4 bg-transparent outline-none text-lg font-medium placeholder-gray-400 text-[var(--color-text)]"
               />
               {searchQuery && (
                 <motion.button
@@ -82,7 +82,7 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
                   initial={{ opacity: 0, scale: 0.5 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.5 }}
-                  className="p-2 rounded-lg hover:bg-[var(--color-border)] text-[var(--color-text-muted)]"
+                  className="p-2 mr-4 rounded-lg hover:bg-[var(--color-border)] text-[var(--color-text-muted)] cursor-pointer"
                 >
                   <X size={20} />
                 </motion.button>
@@ -106,8 +106,12 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
                     {TRENDING_TOPICS.slice(0, 5).map((topic) => (
                       <motion.button
                         key={topic}
-                        onClick={() => onSearchChange(topic)}
-                        className="block w-full text-left px-3 py-2 rounded-lg transition-colors hover:bg-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)]"
+                        onMouseDown={(e) => {
+                          e.preventDefault(); // Prevent blur
+                          onSearchChange(topic);
+                          setIsSearchFocused(false);
+                        }}
+                        className="block w-full text-left px-3 py-2 rounded-lg transition-colors hover:bg-[var(--color-border)] text-[var(--color-text-muted)] hover:text-[var(--color-text)] cursor-pointer"
                         variants={itemVariants}
                       >
                         {topic}
@@ -118,151 +122,151 @@ const SearchFiltering: React.FC<SearchFilteringProps> = ({
               )}
             </AnimatePresence>
           </div>
-        </motion.div>
 
-        {/* Filters Toggle */}
-        <motion.button
-          onClick={() => setShowFilters(!showFilters)}
-          className="mb-6 px-4 py-2 rounded-lg font-semibold text-sm transition-all duration-300 bg-[var(--color-surface-elevated)] text-[var(--color-text-muted)] hover:bg-[var(--color-border)] border border-[var(--color-border)] cursor-pointer"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {showFilters ? '✕ Hide Filters' : '+ Show Filters'}
-        </motion.button>
+          {/* Filters Toggle */}
+          <motion.button
+            onClick={() => setShowFilters(!showFilters)}
+            className="mb-6 px-5 py-2 rounded-xl font-semibold text-sm transition-all duration-300 bg-[var(--color-surface-elevated)] text-[var(--color-text)] hover:bg-[var(--color-border)] border border-[var(--color-border)] cursor-pointer flex items-center gap-2"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            {showFilters ? '✕ Hide Filters' : '+ Show Filters'}
+          </motion.button>
 
-        {/* Filters */}
-        <AnimatePresence>
-          {showFilters && (
-            <motion.div
-              className="space-y-8"
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              {/* Category Filters */}
-              <div>
-                <motion.h3
-                  className="text-sm font-semibold uppercase tracking-wider mb-4 text-[var(--color-text-muted)]"
-                  variants={itemVariants}
-                >
-                  Categories
-                </motion.h3>
-                <motion.div
-                  className="flex flex-wrap gap-3"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  {BLOG_CATEGORIES.map((category) => (
-                    <motion.button
-                      key={category}
-                      onClick={() =>
-                        onCategoryChange(currentCategory === category ? null : category)
-                      }
-                      className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 border-2 cursor-pointer ${
-                        currentCategory === category
-                          ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 text-white border-emerald-500'
-                          : 'bg-[var(--color-bg)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-primary'
-                      }`}
-                      variants={itemVariants}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {category}
-                    </motion.button>
-                  ))}
-                </motion.div>
-              </div>
-
-              {/* Tag Filters */}
-              <div>
-                <motion.h3
-                  className="text-sm font-semibold uppercase tracking-wider mb-4 text-[var(--color-text-muted)]"
-                  variants={itemVariants}
-                >
-                  Topics
-                </motion.h3>
-                <motion.div
-                  className="flex flex-wrap gap-2"
-                  variants={containerVariants}
-                  initial="hidden"
-                  animate="visible"
-                >
-                  {TRENDING_TOPICS.map((topic) => (
-                    <motion.button
-                      key={topic}
-                      onClick={() =>
-                        onTagChange(currentTag === topic ? null : topic)
-                      }
-                      className={`px-3 py-1 rounded-full font-medium text-xs transition-all duration-300 border-2 cursor-pointer ${
-                        currentTag === topic
-                          ? 'bg-gradient-to-r from-cyan-500 to-cyan-600 text-white border-cyan-500'
-                          : 'bg-[var(--color-bg)] text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-accent'
-                      }`}
-                      variants={itemVariants}
-                      whileHover={{ scale: 1.08 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      {topic}
-                    </motion.button>
-                  ))}
-                </motion.div>
-              </div>
-
-              {/* Active Filters Display */}
-              {(currentCategory || currentTag || searchQuery) && (
-                <motion.div
-                  className="flex flex-wrap items-center gap-2 pt-4 border-t border-[var(--color-border)]"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <span
-                    className="text-xs font-semibold uppercase text-[var(--color-text-muted)]"
+          {/* Filters */}
+          <AnimatePresence>
+            {showFilters && (
+              <motion.div
+                className="space-y-8"
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                {/* Category Filters */}
+                <div>
+                  <motion.h3
+                    className="text-sm font-semibold uppercase tracking-wider mb-4 text-[var(--color-text-muted)]"
+                    variants={itemVariants}
                   >
-                    Active Filters:
-                  </span>
-                  {searchQuery && (
-                    <motion.div
-                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-primary/10 text-primary border border-primary/20"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
+                    Categories
+                  </motion.h3>
+                  <motion.div
+                    className="flex flex-wrap gap-3"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {BLOG_CATEGORIES.map((category) => (
+                      <motion.button
+                        key={category}
+                        onClick={() =>
+                          onCategoryChange(currentCategory === category ? null : category)
+                        }
+                        className={`px-4 py-2 rounded-full font-medium text-sm transition-all duration-300 border-2 cursor-pointer ${
+                          currentCategory === category
+                            ? 'bg-primary text-white border-primary shadow-[0_0_15px_rgba(49,185,143,0.3)]'
+                            : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-primary hover:text-[var(--color-text)]'
+                        }`}
+                        variants={itemVariants}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {category}
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                </div>
+
+                {/* Tag Filters */}
+                <div>
+                  <motion.h3
+                    className="text-sm font-semibold uppercase tracking-wider mb-4 text-[var(--color-text-muted)]"
+                    variants={itemVariants}
+                  >
+                    Topics
+                  </motion.h3>
+                  <motion.div
+                    className="flex flex-wrap gap-2"
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {TRENDING_TOPICS.map((topic) => (
+                      <motion.button
+                        key={topic}
+                        onClick={() =>
+                          onTagChange(currentTag === topic ? null : topic)
+                        }
+                        className={`px-3 py-1 rounded-full font-medium text-xs transition-all duration-300 border-2 cursor-pointer ${
+                          currentTag === topic
+                            ? 'bg-accent text-white border-accent shadow-[0_0_15px_rgba(0,191,222,0.3)]'
+                            : 'bg-transparent text-[var(--color-text-muted)] border-[var(--color-border)] hover:border-accent hover:text-[var(--color-text)]'
+                        }`}
+                        variants={itemVariants}
+                        whileHover={{ scale: 1.08 }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {topic}
+                      </motion.button>
+                    ))}
+                  </motion.div>
+                </div>
+
+                {/* Active Filters Display */}
+                {(currentCategory || currentTag || searchQuery) && (
+                  <motion.div
+                    className="flex flex-wrap items-center gap-2 pt-6 mt-2 border-t border-[var(--color-border)]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <span
+                      className="text-xs font-semibold uppercase text-[var(--color-text-muted)]"
                     >
-                      {searchQuery}
-                      <button onClick={() => onSearchChange('')} className="hover:opacity-70 cursor-pointer">
-                        ✕
-                      </button>
-                    </motion.div>
-                  )}
-                  {currentCategory && (
-                    <motion.div
-                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-primary/10 text-primary border border-primary/20"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                    >
-                      {currentCategory}
-                      <button onClick={() => onCategoryChange(null)} className="hover:opacity-70 cursor-pointer">
-                        ✕
-                      </button>
-                    </motion.div>
-                  )}
-                  {currentTag && (
-                    <motion.div
-                      className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-accent/10 text-accent border border-accent/20"
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                    >
-                      {currentTag}
-                      <button onClick={() => onTagChange(null)} className="hover:opacity-70 cursor-pointer">
-                        ✕
-                      </button>
-                    </motion.div>
-                  )}
-                </motion.div>
-              )}
-            </motion.div>
-          )}
-        </AnimatePresence>
+                      Active Filters:
+                    </span>
+                    {searchQuery && (
+                      <motion.div
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-primary/10 text-primary border border-primary/20"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                      >
+                        {searchQuery}
+                        <button onClick={() => onSearchChange('')} className="hover:opacity-70 cursor-pointer">
+                          ✕
+                        </button>
+                      </motion.div>
+                    )}
+                    {currentCategory && (
+                      <motion.div
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-primary/10 text-primary border border-primary/20"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                      >
+                        {currentCategory}
+                        <button onClick={() => onCategoryChange(null)} className="hover:opacity-70 cursor-pointer">
+                          ✕
+                        </button>
+                      </motion.div>
+                    )}
+                    {currentTag && (
+                      <motion.div
+                        className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs bg-accent/10 text-accent border border-accent/20"
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                      >
+                        {currentTag}
+                        <button onClick={() => onTagChange(null)} className="hover:opacity-70 cursor-pointer">
+                          ✕
+                        </button>
+                      </motion.div>
+                    )}
+                  </motion.div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       </div>
     </section>
   );

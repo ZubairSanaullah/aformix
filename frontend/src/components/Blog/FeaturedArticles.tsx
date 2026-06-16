@@ -31,36 +31,38 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ onArticleClick }) =
   };
 
   return (
-    <section
-      className="py-20 bg-[var(--color-bg)]"
-    >
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="reveal section-padding relative w-full overflow-hidden">
+      <div className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] -z-10"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <motion.div
-          className="mb-16"
+          className="mb-12 flex flex-col gap-4"
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-100px' }}
         >
-          <motion.span
-            className="text-sm font-semibold tracking-widest uppercase text-primary"
-            variants={itemVariants}
-          >
-            Featured Stories
-          </motion.span>
-          <motion.h2
-            className="text-4xl md:text-5xl font-bold mt-3 text-[var(--color-text)]"
-            variants={itemVariants}
-          >
-            Magazine-Style Selection
-          </motion.h2>
-          <motion.p
-            className="text-lg mt-4 text-[var(--color-text-muted)]"
-            variants={itemVariants}
-          >
-            Our carefully curated selection of premium articles on technology, business, and innovation
-          </motion.p>
+          <div>
+            <motion.span
+              className="text-sm font-semibold tracking-widest uppercase text-primary mb-2 block"
+              variants={itemVariants}
+            >
+              Featured Stories
+            </motion.span>
+            <motion.h2
+              className="heading-2 !text-left !mb-4"
+              variants={itemVariants}
+            >
+              Magazine-Style Selection
+            </motion.h2>
+            <motion.p
+              className="text-[var(--color-text-muted)] max-w-2xl text-lg"
+              variants={itemVariants}
+            >
+              Our carefully curated selection of premium articles on technology, business, and innovation
+            </motion.p>
+          </div>
         </motion.div>
 
         {/* Featured Grid */}
@@ -74,70 +76,64 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ onArticleClick }) =
           {/* Large Featured Article */}
           {featured[0] && (
             <motion.div
-              className="lg:col-span-2"
+              className="lg:col-span-2 h-full"
               variants={itemVariants}
             >
               <div
-                className="group relative rounded-3xl overflow-hidden cursor-pointer h-full bg-[var(--color-surface)] border border-[var(--color-border)]"
+                className="group portfolio-card h-full cursor-pointer flex flex-col justify-end"
                 onClick={() => onArticleClick(featured[0])}
               >
                 {/* Image Container */}
-                <div className="relative h-96 md:h-full overflow-hidden bg-gradient-to-br from-emerald-400 to-purple-600">
+                <div className="absolute inset-0">
                   <img
                     src={featured[0].image}
                     alt={featured[0].title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                </div>
 
-                  {/* Content Overlay */}
-                  <div className="absolute inset-0 flex flex-col justify-between p-8 md:p-12">
-                    <div className="flex items-start justify-between">
-                      <motion.span
-                        className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-cyan-500 text-white text-sm font-semibold rounded-full"
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {featured[0].category}
-                      </motion.span>
-                      <motion.span
-                        className="px-4 py-2 bg-white/20 backdrop-blur-md text-white text-sm font-medium rounded-full"
-                        whileHover={{ scale: 1.05 }}
-                      >
-                        {featured[0].readingTime} read
-                      </motion.span>
-                    </div>
+                {/* Content Overlay */}
+                <div className="relative z-10 p-8 md:p-12 flex flex-col h-full justify-between mt-48">
+                  <div className="flex items-start justify-between">
+                    <span className="px-4 py-2 bg-primary/90 backdrop-blur text-white text-sm font-semibold rounded-full shadow-lg">
+                      {featured[0].category}
+                    </span>
+                    <span className="px-4 py-2 bg-white/10 backdrop-blur-md text-white text-sm font-medium rounded-full border border-white/20">
+                      {featured[0].readingTime} read
+                    </span>
+                  </div>
 
-                    <div className="space-y-6">
-                      <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight">
-                        {featured[0].title}
-                      </h3>
+                  <div className="space-y-6 mt-auto pt-8">
+                    <h3 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                      {featured[0].title}
+                    </h3>
 
-                      <p className="text-gray-200 text-lg">
-                        {featured[0].description}
-                      </p>
+                    <p className="text-gray-300 text-lg line-clamp-2">
+                      {featured[0].description}
+                    </p>
 
-                      <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/20">
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={featured[0].author.avatar}
-                            alt={featured[0].author.name}
-                            className="w-10 h-10 rounded-full object-cover border-2 border-emerald-500"
-                          />
-                          <div>
-                            <div className="text-white font-semibold text-sm">
-                              {featured[0].author.name}
-                            </div>
-                            <div className="text-gray-300 text-xs">
-                              {featured[0].publishDate}
-                            </div>
+                    <div className="flex flex-wrap items-center gap-4 pt-6 border-t border-white/10">
+                      <div className="flex items-center gap-3">
+                        <img
+                          src={featured[0].author.avatar}
+                          alt={featured[0].author.name}
+                          className="w-10 h-10 rounded-full object-cover border-2 border-primary"
+                        />
+                        <div>
+                          <div className="text-white font-semibold text-sm">
+                            {featured[0].author.name}
+                          </div>
+                          <div className="text-gray-400 text-xs">
+                            {featured[0].publishDate}
                           </div>
                         </div>
+                      </div>
 
-                        <div className="flex items-center gap-4 ml-auto">
-                          <div className="flex items-center gap-2 text-gray-300">
-                            <Eye size={16} />
-                            <span className="text-sm">{featured[0].views.toLocaleString()}</span>
-                          </div>
+                      <div className="flex items-center gap-4 ml-auto">
+                        <div className="flex items-center gap-2 text-gray-400 bg-white/5 px-3 py-1.5 rounded-full backdrop-blur-sm border border-white/10">
+                          <Eye size={16} />
+                          <span className="text-sm font-medium">{featured[0].views.toLocaleString()}</span>
                         </div>
                       </div>
                     </div>
@@ -155,59 +151,50 @@ const FeaturedArticles: React.FC<FeaturedArticlesProps> = ({ onArticleClick }) =
             {featured.slice(1, 4).map((article) => (
               <motion.div
                 key={article.id}
-                className="group relative rounded-2xl overflow-hidden cursor-pointer p-6 border transition-all duration-300 bg-[var(--color-surface)] border-[var(--color-border)] hover:border-primary"
+                className="group portfolio-card cursor-pointer p-5 flex flex-col gap-4 !rounded-[2rem]"
                 onClick={() => onArticleClick(article)}
                 variants={itemVariants}
-                whileHover={{ y: -4 }}
               >
                 {/* Small Image */}
-                <div className="relative h-32 mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-purple-400 to-cyan-500">
+                <div className="relative h-40 w-full rounded-2xl overflow-hidden">
                   <img
                     src={article.image}
                     alt={article.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
 
                 {/* Content */}
-                <div className="space-y-3">
+                <div className="space-y-3 flex-1 flex flex-col">
                   <div className="flex items-center justify-between gap-2">
-                    <span
-                      className="text-xs font-semibold px-2 py-1 rounded-full bg-primary/10 text-primary"
-                    >
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20">
                       {article.category}
                     </span>
-                    <span
-                      className="text-xs font-medium text-[var(--color-text-muted)]"
-                    >
+                    <span className="text-xs font-medium text-[var(--color-text-muted)]">
                       {article.readingTime}
                     </span>
                   </div>
 
-                  <h4
-                    className="font-bold line-clamp-2 text-[var(--color-text)]"
-                  >
+                  <h4 className="font-bold text-lg line-clamp-2 text-[var(--color-text)] group-hover:text-primary transition-colors duration-300">
                     {article.title}
                   </h4>
 
-                  <div className="flex items-center justify-between pt-3 border-t border-[var(--color-border)]">
+                  <div className="flex items-center justify-between pt-4 mt-auto border-t border-[var(--color-border)]">
                     <div className="flex items-center gap-2">
                       <img
                         src={article.author.avatar}
                         alt={article.author.name}
-                        className="w-6 h-6 rounded-full object-cover"
+                        className="w-7 h-7 rounded-full object-cover border border-[var(--color-border)]"
                       />
-                      <span
-                        className="text-xs font-medium text-[var(--color-text-muted)]"
-                      >
+                      <span className="text-sm font-medium text-[var(--color-text-muted)]">
                         {article.author.name.split(' ')[0]}
                       </span>
                     </div>
 
-                    <div className="flex items-center gap-3 text-gray-500">
+                    <div className="flex items-center gap-2 text-[var(--color-text-muted)] bg-[var(--color-glass)] px-2.5 py-1 rounded-full border border-[var(--color-border)]">
                       <Eye size={14} />
-                      <span className="text-xs">{article.views}</span>
+                      <span className="text-xs font-medium">{article.views}</span>
                     </div>
                   </div>
                 </div>

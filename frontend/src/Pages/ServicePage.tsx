@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
+import useReveal from "../hooks/useReveal";
 import { servicesData } from "../constants/servicesData";
 import { serviceHeroConfig } from "../constants/serviceNav";
 
@@ -23,6 +24,8 @@ const ServicePage: React.FC = () => {
 
   const service = serviceId ? servicesData[serviceId] : null;
   const heroConfig = serviceId ? serviceHeroConfig[serviceId] : null;
+
+  useReveal();
 
   useEffect(() => {
     window.scrollTo(0, 0);
