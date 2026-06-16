@@ -280,8 +280,13 @@ const OrbitAI: React.FC = () => {
     setInputValue("");
     setStatus("typing");
 
+    const baseApiUrl = import.meta.env.VITE_API_URL || "";
+    const apiUrl = baseApiUrl.includes("vercel.app") && !baseApiUrl.includes("/_/backend") 
+      ? `${baseApiUrl}/_/backend` 
+      : baseApiUrl;
+
     try {
-      const response = await fetch("/api/orbit/chat", {
+      const response = await fetch(`${apiUrl}/api/orbit/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ query: userMessage.content, conversation: conversationWindow }),
