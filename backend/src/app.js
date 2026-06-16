@@ -74,8 +74,8 @@ app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
 app.use(["/api/auth", "/_/backend/api/auth", "/auth"], signupLimiter, loginLimiter, authRoutes);
-app.use(["/api/orbit"], apiLimiter, orbitRoutes);
-app.use(["/api/newsletter"], newsletterRoutes);
+app.use(["/api/orbit", "/_/backend/api/orbit"], apiLimiter, orbitRoutes);
+app.use(["/api/newsletter", "/_/backend/api/newsletter"], newsletterRoutes);
 app.use(["/api/", "/_/backend/api/", "/"], apiLimiter);
 
 app.get("/", (req, res) => {
