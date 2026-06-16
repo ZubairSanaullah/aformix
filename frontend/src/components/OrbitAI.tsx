@@ -1,11 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
 import {
-  CalendarDays,
   Maximize,
-  MessageCircle,
-  Rocket,
+  Minus,
   Send,
   X,
 } from "lucide-react";
@@ -16,53 +14,7 @@ type ChatMessage = {
   id: string;
   role: "assistant" | "user" | "system";
   content: string;
-};
-
-type LeadProfile = {
-  name: string;
-  email: string;
-  phone: string;
-  company: string;
-  industry: "Startup" | "Ecommerce" | "Agency" | "Enterprise" | "SaaS" | "Mobile App";
-  country: string;
-  businessSize: "1-10" | "11-50" | "51-200" | ">200";
-  monthlyRevenue: "< $10K" | "$10K-$50K" | "$50K-$150K" | ">$150K";
-  projectBudget: "<$5K" | "$5K-$15K" | "$15K-$50K" | ">$50K";
-  timeline: "1-3 months" | "3-6 months" | "6-12 months" | "Flexible";
-  goals: string;
-  currentChallenges: string;
-  preferredContactMethod: "Email" | "Phone" | "WhatsApp" | "Slack" | "Other";
-};
-
-const initialLeadProfile: LeadProfile = {
-  name: "",
-  email: "",
-  phone: "",
-  company: "",
-  industry: "Startup",
-  country: "",
-  businessSize: "1-10",
-  monthlyRevenue: "< $10K",
-  projectBudget: "<$5K",
-  timeline: "1-3 months",
-  goals: "",
-  currentChallenges: "",
-  preferredContactMethod: "Email",
-};
-
-const SERVICE_RECOMMENDATIONS: Record<string, string> = {
-  Startup: "Branding, Website Development, SEO, CRM Integration, and MVP Development.",
-  Ecommerce: "E-Commerce Development, CRM, Conversion Optimization, and Secure Checkout.",
-  Agency: "Client Portal Development, White-label SaaS, and Custom Web Applications.",
-  Enterprise: "Custom SaaS, Systems Integrations, Cloud Infrastructure, and Compliance-ready Platforms.",
-  SaaS: "API Development, Product-led Design, and Scalable Infrastructure.",
-  "Mobile App": "Mobile UX, Cross-platform App Development, and API Connectivity.",
-};
-
-const leadScoreFactors = {
-  budget: { "<$5K": 10, "$5K-$15K": 25, "$15K-$50K": 50, ">$50K": 80 },
-  timeline: { "1-3 months": 50, "3-6 months": 35, "6-12 months": 20, "Flexible": 15 },
-  businessSize: { "1-10": 15, "11-50": 35, "51-200": 55, ">200": 80 },
+  isTyping?: boolean;
 };
 
 const createMessageId = (() => {
@@ -71,29 +23,149 @@ const createMessageId = (() => {
 })();
 
 const friendlyGreeting = `Welcome to Aformix 👋
-I'm Orbit AI, your AI Growth Partner. Tell me what you're building and I’ll guide you through the best services, connect your team, and book a discovery call.`;
+I'm Orbit AI, your AI Assistant. How can I help you today?`;
+
+const MessageBubble: React.FC<{
+  message: ChatMessage;
+  isLight: boolean;
+  onTypingComplete: (id: string) => void;
+  onTypingStep?: () => void;
+}> = React.memo(({ message, isLight, onTypingComplete, onTypingStep }) => {
+  const [displayedText, setDisplayedText] = useState(message.isTyping ? "" : message.content);
+
+  useEffect(() => {
+    if (!message.isTyping) {
+      setDisplayedText(message.content);
+      return;
+    }
+
+    const chars = Array.from(message.content);
+    let index = 0;
+    setDisplayedText("");
+    
+    const timer = setInterval(() => {
+      setDisplayedText((prev) => prev + (chars[index] || ""));
+      index++;
+      if (onTypingStep) onTypingStep();
+      if (index >= chars.length) {
+        clearInterval(timer);
+        onTypingComplete(message.id);
+      }
+    }, 5);
+
+    return () => clearInterval(timer);
+  }, [message.content, message.isTyping, message.id, onTypingComplete, onTypingStep]);
+
+  return (
+    <div
+      className={`rounded-3xl p-3 md:p-4 mb-3 md:mb-4 max-w-[85%] md:max-w-[90%] text-sm md:text-base ${
+        message.role === "assistant"
+          ? isLight
+            ? "bg-slate-100/90 text-slate-900"
+            : "bg-slate-900/80 text-slate-100"
+          : isLight
+          ? "bg-slate-200 text-slate-900 self-end"
+          : "bg-white/10 text-white self-end"
+      }`}
+    >
+      <p className="whitespace-pre-line leading-6">
+        {displayedText}
+        {message.isTyping && displayedText.length < message.content.length && (
+          <span className="inline-block w-1.5 h-4 ml-1 align-middle bg-current animate-pulse" />
+        )}
+      </p>
+    </div>
+  );
+});
 
 const OrbitAI: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
   const [showWidget, setShowWidget] = useState(true);
-  const [hasInteracted, setHasInteracted] = useState(false);
   const [isMobileView, setIsMobileView] = useState(false);
-  const [activeTab, setActiveTab] = useState<"chat" | "lead" | "booking">("chat");
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
+  const [showConfirmClose, setShowConfirmClose] = useState(false);
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    try {
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        if (user && user.email) {
+          const saved = localStorage.getItem(`orbit_chat_${user.email}`);
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              return parsed.map((m: ChatMessage) => ({ ...m, isTyping: false }));
+            }
+          }
+        }
+      }
+    } catch (_) {}
+    return [{
       id: "orbit-1",
       role: "assistant",
       content: friendlyGreeting,
-    },
-  ]);
+      isTyping: true,
+    }];
+  });
   const [inputValue, setInputValue] = useState("");
   const [status, setStatus] = useState<"idle" | "typing" | "success" | "error">("idle");
-  const [leadProfile, setLeadProfile] = useState<LeadProfile>(initialLeadProfile);
-  const [formStatus, setFormStatus] = useState<"idle" | "saving" | "saved" | "failed">("idle");
-  const [errorMessage, setErrorMessage] = useState("");
   const { theme } = useTheme();
   const isLight = theme === "light";
+
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = React.useCallback(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages.length, scrollToBottom]);
+
+  useEffect(() => {
+    try {
+      const userStr = localStorage.getItem("user");
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        if (user && user.email) {
+          localStorage.setItem(`orbit_chat_${user.email}`, JSON.stringify(messages));
+        }
+      }
+    } catch (_) {}
+  }, [messages]);
+
+  useEffect(() => {
+    const handleAuthChange = () => {
+      try {
+        const userStr = localStorage.getItem("user");
+        if (userStr) {
+          const user = JSON.parse(userStr);
+          if (user && user.email) {
+            const saved = localStorage.getItem(`orbit_chat_${user.email}`);
+            if (saved) {
+              const parsed = JSON.parse(saved);
+              if (Array.isArray(parsed) && parsed.length > 0) {
+                setMessages(parsed.map((m: ChatMessage) => ({ ...m, isTyping: false })));
+                return;
+              }
+            }
+          }
+        }
+        setMessages([{
+          id: "orbit-1",
+          role: "assistant",
+          content: friendlyGreeting,
+          isTyping: true,
+        }]);
+      } catch (_) {}
+    };
+
+    window.addEventListener("authStateChange", handleAuthChange);
+    return () => window.removeEventListener("authStateChange", handleAuthChange);
+  }, []);
+
+  const handleTypingComplete = React.useCallback((id: string) => {
+    setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, isTyping: false } : m)));
+  }, []);
 
   const orbitTheme = {
     panel: isLight
@@ -125,19 +197,7 @@ const OrbitAI: React.FC = () => {
       : "border-white/10 bg-slate-900/80 text-white shadow-[0_10px_30px_rgba(0,0,0,0.4)] hover:bg-slate-800/90 hover:scale-105 hover:border-white/20",
   };
 
-  const recommendation = useMemo(() => {
-    return SERVICE_RECOMMENDATIONS[leadProfile.industry] ?? SERVICE_RECOMMENDATIONS.Startup;
-  }, [leadProfile.industry]);
-
   const orbitTransition = { type: "spring" as const, stiffness: 280, damping: 24, mass: 0.8 };
-
-  const leadScore = useMemo(() => {
-    const budgetScore = leadScoreFactors.budget[leadProfile.projectBudget as keyof typeof leadScoreFactors.budget] || 0;
-    const timelineScore = leadScoreFactors.timeline[leadProfile.timeline as keyof typeof leadScoreFactors.timeline] || 0;
-    const sizeScore = leadScoreFactors.businessSize[leadProfile.businessSize as keyof typeof leadScoreFactors.businessSize] || 0;
-    const score = Math.min(100, budgetScore + timelineScore + sizeScore + 5);
-    return score;
-  }, [leadProfile]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -148,7 +208,8 @@ const OrbitAI: React.FC = () => {
           {
             id: `orbit-welcome`,
             role: "assistant",
-            content: `Need a website or custom software? I can qualify your project, recommend services, and book the right discovery call.`,
+            content: `Need a website or custom software? I can help you find the right services.`,
+            isTyping: true,
           },
         ]);
       }
@@ -160,9 +221,7 @@ const OrbitAI: React.FC = () => {
     const handleOpenOrbitAI = () => {
       setShowWidget(true);
       setIsOpen(true);
-      setIsMinimized(false);
       setIsMobileView(window.innerWidth < 768);
-      setActiveTab("chat");
       setStatus("idle");
     };
 
@@ -179,9 +238,7 @@ const OrbitAI: React.FC = () => {
   const handleOpen = (mobileView = false) => {
     setShowWidget(true);
     setIsOpen(true);
-    setIsMinimized(false);
     setIsMobileView(mobileView);
-    setActiveTab("chat");
     setStatus("idle");
   };
 
@@ -190,24 +247,24 @@ const OrbitAI: React.FC = () => {
 
   const handleMinimize = () => {
     setIsOpen(false);
-    setIsMobileView(false);
-    if (hasInteracted) {
-      setIsMinimized(true);
-    } else {
-      setIsMinimized(false);
-    }
   };
 
   const handleClose = () => {
-    setShowWidget(false);
-    setIsOpen(false);
-    setIsMinimized(false);
-    setIsMobileView(false);
+    setShowConfirmClose(true);
   };
 
-  const addMessage = (message: ChatMessage) => {
-    setMessages((prevMessages) => [...prevMessages, message]);
+  const confirmClose = () => {
+    setShowWidget(false);
+    setIsOpen(false);
+    setIsMobileView(false);
+    setShowConfirmClose(false);
   };
+
+  const cancelClose = () => {
+    setShowConfirmClose(false);
+  };
+
+  // Remove addMessage function as it is not used in the component
 
   const handleSend = async () => {
     if (!inputValue.trim()) return;
@@ -219,7 +276,6 @@ const OrbitAI: React.FC = () => {
     };
 
     setMessages((prev) => [...prev, userMessage]);
-    setHasInteracted(true);
     const conversationWindow = [...messages, userMessage].slice(-8);
     setInputValue("");
     setStatus("typing");
@@ -244,67 +300,23 @@ const OrbitAI: React.FC = () => {
         text ||
         "I’m processing your request and will respond shortly.";
 
-      setMessages((prev) => [...prev, { id: createMessageId(), role: "assistant", content: assistantText }]);
+      setMessages((prev) => [...prev, { id: createMessageId(), role: "assistant", content: assistantText, isTyping: true }]);
       setStatus("success");
-      if (assistantText.toLowerCase().includes("book")) {
-        setActiveTab("booking");
-      }
     } catch (error) {
-      const message =
+      const messageStr =
         error instanceof Error ? error.message : "Orbit AI is temporarily unavailable. Please try again or ask a quick question.";
-      setErrorMessage(message);
       setStatus("error");
       setMessages((prev) => [
         ...prev,
-        { id: createMessageId(), role: "assistant", content: message },
+        { id: createMessageId(), role: "assistant", content: messageStr, isTyping: true },
       ]);
-    }
-  };
-
-  const handleLeadChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = event.target;
-    setLeadProfile((current) => ({ ...current, [name]: value }));
-  };
-
-  const handleLeadSubmit = async () => {
-    if (!leadProfile.name || !leadProfile.email || !leadProfile.goals) {
-      setErrorMessage("Name, email, and goals are required to continue.");
-      setFormStatus("failed");
-      return;
-    }
-
-    setFormStatus("saving");
-    try {
-      const response = await fetch("/api/orbit/lead", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...leadProfile, leadScore, source: "orbit-ai-widget" }),
-      });
-
-      if (!response.ok) {
-        const body = await response.json();
-        throw new Error(body.message || "Unable to save lead.");
-      }
-
-      setFormStatus("saved");
-      addMessage({
-        id: `orbit-lead-${Date.now()}`,
-        role: "assistant",
-        content: `Thanks ${leadProfile.name}! I have captured your plan and created a lead profile for the Aformix team. I recommend ${recommendation}`,
-      });
-      setActiveTab("booking");
-    } catch (error) {
-      setFormStatus("failed");
-      setErrorMessage(error instanceof Error ? error.message : "Failed to capture your lead.");
     }
   };
 
   const quickReplies = [
     "Show me your web development case studies",
     "I need a new website for my business",
-    "Book a discovery call",
+    "What services do you offer?",
   ];
 
   const handleQuickReply = (reply: string) => {
@@ -351,9 +363,17 @@ const OrbitAI: React.FC = () => {
                   </button>
                 )}
                 <button
+                  type="button"
                   onClick={handleMinimize}
-                  className={`flex h-9 md:h-10 w-9 md:w-10 items-center justify-center rounded-3xl border transition flex-shrink-0 ${isLight ? "border-slate-200/40 bg-slate-100 text-slate-900 hover:bg-slate-200" : "border-white/10 bg-white/5 text-white hover:bg-white/10"}`}
+                  className={`flex h-9 md:h-10 w-9 md:w-10 items-center justify-center rounded-3xl border transition flex-shrink-0 cursor-pointer ${isLight ? "border-slate-200/40 bg-slate-100 text-slate-900 hover:bg-slate-200" : "border-white/10 bg-white/5 text-white hover:bg-white/10"}`}
                   aria-label="Minimize Orbit AI chat"
+                >
+                  <Minus size={16} className={`cursor-pointer ${isLight ? "text-slate-600 hover:text-slate-800" : "text-slate-400 hover:text-slate-200"}`} />
+                </button>
+                <button
+                  onClick={handleClose}
+                  className={`flex h-9 md:h-10 w-9 md:w-10 items-center justify-center rounded-3xl border transition flex-shrink-0 cursor-pointer ${isLight ? "border-slate-200/40 bg-slate-100 text-slate-900 hover:bg-slate-200" : "border-white/10 bg-white/5 text-white hover:bg-white/10"}`}
+                  aria-label="Close Orbit AI chat"
                 >
                   <X
                     size={16}
@@ -365,51 +385,18 @@ const OrbitAI: React.FC = () => {
 
             <div className="grid grid-cols-12 gap-0 p-3 md:p-5">
               <div className="col-span-12 space-y-3 md:space-y-4">
-                <div className="grid grid-cols-3 gap-2 md:gap-3">
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab("chat")}
-                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${activeTab === "chat" ? orbitTheme.tabActive : orbitTheme.tabInactive
-                      }`}
-                  >
-                    Chat
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab("lead")}
-                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${activeTab === "lead" ? orbitTheme.tabActive : orbitTheme.tabInactive
-                      }`}
-                  >
-                    Lead Capture
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setActiveTab("booking")}
-                    className={`rounded-3xl px-2 md:px-3 py-2 text-xs md:text-sm font-semibold transition ${activeTab === "booking" ? orbitTheme.tabActive : orbitTheme.tabInactive
-                      }`}
-                  >
-                    Book Call
-                  </button>
-                </div>
-
-                {activeTab === "chat" && (
                   <div className="space-y-3 md:space-y-4">
                     <div className={`max-h-64 md:max-h-105 overflow-y-auto rounded-[24px] md:rounded-[28px] border p-3 md:p-4 shadow-inner ${orbitTheme.surface}`}>
                       {messages.map((message) => (
-                        <div
+                        <MessageBubble
                           key={message.id}
-                          className={`rounded-3xl p-3 md:p-4 mb-3 md:mb-4 max-w-[85%] md:max-w-[90%] text-sm md:text-base ${message.role === "assistant"
-                              ? isLight
-                                ? "bg-slate-100/90 text-slate-900"
-                                : "bg-slate-900/80 text-slate-100"
-                              : isLight
-                                ? "bg-slate-200 text-slate-900 self-end"
-                                : "bg-white/10 text-white self-end"
-                            }`}
-                        >
-                          <p className="whitespace-pre-line leading-6">{message.content}</p>
-                        </div>
+                          message={message}
+                          isLight={isLight}
+                          onTypingComplete={handleTypingComplete}
+                          onTypingStep={scrollToBottom}
+                        />
                       ))}
+                      <div ref={messagesEndRef} />
                     </div>
 
                     <div className="grid gap-2 md:gap-3">
@@ -452,205 +439,6 @@ const OrbitAI: React.FC = () => {
                       </div>
                     </div>
                   </div>
-                )}
-
-                {activeTab === "lead" && (
-                  <div className={`space-y-3 md:space-y-4 rounded-[24px] md:rounded-[28px] border p-3 md:p-4 shadow-inner ${orbitTheme.surface}`}>
-                    <div className="grid gap-3 md:gap-3">
-                      <div className="grid grid-cols-1 gap-3 md:gap-3 md:grid-cols-2">
-                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                          <span>Name</span>
-                          <input
-                            type="text"
-                            name="name"
-                            value={leadProfile.name}
-                            onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                            placeholder="Full name"
-                          />
-                        </label>
-                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                          <span>Email</span>
-                          <input
-                            type="email"
-                            name="email"
-                            value={leadProfile.email}
-                            onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                            placeholder="name@company.com"
-                          />
-                        </label>
-                      </div>
-
-                      <div className="grid grid-cols-1 gap-3 md:gap-3 md:grid-cols-2">
-                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                          <span>Company</span>
-                          <input
-                            type="text"
-                            name="company"
-                            value={leadProfile.company}
-                            onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                            placeholder="Aformix"
-                          />
-                        </label>
-                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                          <span>Industry</span>
-                          <select
-                            name="industry"
-                            value={leadProfile.industry}
-                            onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                          >
-                            <option>Startup</option>
-                            <option>Ecommerce</option>
-                            <option>Agency</option>
-                            <option>Enterprise</option>
-                            <option>SaaS</option>
-                            <option>Mobile App</option>
-                          </select>
-                        </label>
-                      </div>
-
-                      <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                        <span>What are the primary goals for this project?</span>
-                        <textarea
-                          name="goals"
-                          rows={3}
-                          value={leadProfile.goals}
-                          onChange={handleLeadChange}
-                          className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                          placeholder="Improve conversions, automate lead capture, launch a new product, etc."
-                        />
-                      </label>
-
-                      <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                        <span>Current challenges</span>
-                        <textarea
-                          name="currentChallenges"
-                          rows={2}
-                          value={leadProfile.currentChallenges}
-                          onChange={handleLeadChange}
-                          className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                          placeholder="We need faster onboarding, better funnel analytics, and stronger brand presence."
-                        />
-                      </label>
-
-                      <div className="grid gap-3 md:gap-3 grid-cols-1 md:grid-cols-3">
-                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                          <span>Budget</span>
-                          <select
-                            name="projectBudget"
-                            value={leadProfile.projectBudget}
-                            onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                          >
-                            <option>{"<$5K"}</option>
-                            <option>{"$5K-$15K"}</option>
-                            <option>{"$15K-$50K"}</option>
-                            <option>{">$50K"}</option>
-                          </select>
-                        </label>
-                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                          <span>Timeline</span>
-                          <select
-                            name="timeline"
-                            value={leadProfile.timeline}
-                            onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                          >
-                            <option>1-3 months</option>
-                            <option>3-6 months</option>
-                            <option>6-12 months</option>
-                            <option>Flexible</option>
-                          </select>
-                        </label>
-                        <label className="space-y-2 text-xs md:text-sm text-slate-300">
-                          <span>Preferred contact</span>
-                          <select
-                            name="preferredContactMethod"
-                            value={leadProfile.preferredContactMethod}
-                            onChange={handleLeadChange}
-                            className={`w-full rounded-2xl border px-3 md:px-4 py-2 md:py-3 outline-none text-sm ${orbitTheme.input}`}
-                          >
-                            <option>Email</option>
-                            <option>WhatsApp</option>
-                            <option>Phone</option>
-                            <option>Slack</option>
-                          </select>
-                        </label>
-                      </div>
-                    </div>
-
-                    <div className="rounded-3xl bg-slate-900/80 p-3 md:p-4 text-xs md:text-sm text-slate-300">
-                      <div className="flex items-center justify-between gap-3">
-                        <div>
-                          <p className="font-semibold text-white text-sm md:text-base">Lead score</p>
-                          <p className="text-base md:text-lg">{leadScore} / 100</p>
-                        </div>
-                        <div className="rounded-full bg-white/5 px-2 md:px-3 py-1 text-xs uppercase tracking-[0.25em] text-slate-300">
-                          {leadScore >= 80 ? "Hot" : leadScore >= 50 ? "Warm" : "Cold"}
-                        </div>
-                      </div>
-                      <p className="mt-2 md:mt-3 text-slate-400 text-xs md:text-sm">Recommended services: {recommendation}</p>
-                    </div>
-
-                    <div className="flex flex-col gap-2 md:gap-3 md:flex-row md:items-center md:justify-between">
-                      <button
-                        type="button"
-                        onClick={handleLeadSubmit}
-                        className="btn-primary w-full text-center md:w-auto text-sm md:text-base px-4 md:px-6 py-2 md:py-3"
-                        disabled={formStatus === "saving"}
-                      >
-                        {formStatus === "saving" ? "Saving lead..." : "Capture My Lead"}
-                      </button>
-                      <span className="text-xs text-slate-400">Orbit automatically shares the lead with Aformix CRM backend.</span>
-                    </div>
-
-                    {formStatus === "failed" && (
-                      <p className="text-xs md:text-sm text-red-300">{errorMessage}</p>
-                    )}
-                    {formStatus === "saved" && (
-                      <p className="text-xs md:text-sm text-emerald-300">Lead captured successfully. A discovery call is ready to be booked.</p>
-                    )}
-                  </div>
-                )}
-
-                {activeTab === "booking" && (
-                  <div className={`space-y-3 md:space-y-4 rounded-[24px] md:rounded-[28px] border p-3 md:p-6 shadow-inner ${orbitTheme.surface}`}>
-                    <div className="flex items-center gap-3 md:gap-4 rounded-3xl bg-linear-to-r from-primary/20 to-secondary/20 p-3 md:p-4 text-white">
-                      <div className="rounded-3xl bg-white/10 p-2 md:p-3 shrink-0">
-                        <CalendarDays className="w-5 h-5 md:w-6 md:h-6" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-xs md:text-sm uppercase tracking-[0.28em] text-primary/90">Discovery Call</p>
-                        <h4 className="text-base md:text-lg font-semibold">Book a 15-minute growth session</h4>
-                        <p className="text-slate-300 text-xs md:text-sm">Orbit recommends a live consultation when your project shows high intent.</p>
-                      </div>
-                    </div>
-
-                    <div className="space-y-2 md:space-y-3 rounded-3xl border border-white/10 bg-slate-900/80 p-3 md:p-4">
-                      <p className="text-xs md:text-sm text-slate-300">Suggested booking slot:</p>
-                      <div className="space-y-2 rounded-3xl bg-slate-950/90 p-3 md:p-4">
-                        <p className="text-sm md:text-base font-semibold text-white">Next available discovery call</p>
-                        <p className="text-xs md:text-sm text-slate-400">Choose a time that works best for your team.</p>
-                      </div>
-                    </div>
-
-                    <a
-                      href="https://calendly.com/aformix/discovery-call"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn-primary inline-flex items-center justify-center gap-2 w-full rounded-3xl px-4 md:px-5 py-2 md:py-3 text-center font-semibold text-sm md:text-base"
-                    >
-                      Book with Calendly <Rocket size={16} />
-                    </a>
-
-                    <p className="text-xs text-slate-500">
-                      The Aformix team will also receive a summary of the conversation so the first call is ready to move fast.
-                    </p>
-                  </div>
-                )}
               </div>
             </div>
           </motion.div>
@@ -658,7 +446,7 @@ const OrbitAI: React.FC = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        {showWidget && !isOpen && !isMinimized && (
+        {showWidget && !isOpen && (
           <motion.div
             layout
             layoutId="orbit-panel"
@@ -707,38 +495,40 @@ const OrbitAI: React.FC = () => {
       </AnimatePresence>
 
       <AnimatePresence>
-        {showWidget && isMinimized && !isOpen && (
+        {showConfirmClose && (
           <motion.div
-            layout
-            layoutId="orbit-panel"
-            initial={{ opacity: 0, y: 16, scale: 0.92 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 16, scale: 0.92 }}
-            transition={orbitTransition}
-            style={{ right: FIXED_RIGHT, bottom: FIXED_BOTTOM }}
-            className={`fixed bottom-24 md:bottom-8 right-4 md:right-[20%] z-[99] flex min-w-auto md:min-w-[250px] max-w-[calc(100vw-2rem)] items-center gap-2 md:gap-3 rounded-3xl border px-3 md:px-4 py-2 md:py-3 ${orbitTheme.panel}`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/40 backdrop-blur-sm"
           >
-            <div className="flex h-10 md:h-12 w-10 md:w-12 items-center justify-center rounded-3xl bg-primary text-white shadow-lg shadow-primary/20 shrink-0">
-              <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs md:text-sm font-semibold text-current truncate">Orbit is minimized</p>
-              <p className="text-xs text-slate-300 truncate">Resume your project qualification anytime.</p>
-            </div>
-            <button
-              type="button"
-              onClick={openPanel}
-              className="rounded-full bg-white/10 px-2 md:px-3 py-1 md:py-2 text-xs font-semibold text-white transition hover:bg-white/20 flex-shrink-0 whitespace-nowrap"
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className={`p-6 rounded-3xl border shadow-2xl max-w-sm w-full mx-4 ${isLight ? "bg-white border-slate-200" : "bg-slate-900 border-white/10"}`}
             >
-              Resume
-            </button>
-            <button
-              type="button"
-              onClick={handleClose}
-              className="rounded-full bg-white/5 px-2 md:px-3 py-1 md:py-2 text-xs text-slate-200 transition hover:bg-white/10 flex-shrink-0"
-            >
-              Close
-            </button>
+              <h3 className={`text-lg font-semibold mb-2 ${isLight ? "text-slate-900" : "text-white"}`}>
+                Close Orbit AI?
+              </h3>
+              <p className={`text-sm mb-6 ${isLight ? "text-slate-600" : "text-slate-300"}`}>
+                Are you sure you want to close the Orbit AI widget?
+              </p>
+              <div className="flex justify-end gap-3">
+                <button
+                  onClick={cancelClose}
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition cursor-pointer ${isLight ? "text-slate-600 hover:bg-slate-100" : "text-slate-300 hover:bg-white/10"}`}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={confirmClose}
+                  className="px-4 py-2 text-sm font-medium text-white bg-rose-500 hover:bg-rose-600 rounded-full transition shadow-lg shadow-rose-500/20 cursor-pointer"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

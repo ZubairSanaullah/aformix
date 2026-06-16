@@ -1,11 +1,9 @@
-import validator from "validator";
-import Lead from "../models/Lead.js";
 import openai from "../utils/openaiClient.js";
 
-const buildAssistantSystemPrompt = () => `You are Orbit AI, the official Aformix implementation assistant.
-You deliver premium, business-focused responses. Always ask clarifying questions for high-value leads, reveal service recommendations, and keep advice anchored in web development, SaaS, branding, and growth systems.
-If the user asks about Aformix services, offer concise but detailed reasoning for Website Development, SaaS Development, Branding, SEO, CRM Integration, or E-Commerce Development.
-Mention Calendly booking only when the lead is qualified and has explicit interest in a call.`;
+const buildAssistantSystemPrompt = () => `You are Orbit AI, the official Aformix assistant.
+You deliver premium, business-focused responses and helpful information about Aformix. 
+Keep advice anchored in web development, SaaS, branding, and growth systems.
+If the user asks about Aformix services, offer concise but detailed reasoning for Website Development, SaaS Development, Branding, SEO, CRM Integration, or E-Commerce Development.`;
 
 const normalizeConversation = (conversation = []) => {
   if (!Array.isArray(conversation)) return [];
@@ -35,7 +33,7 @@ export const chat = async (req, res, next) => {
     }
 
     const payload = {
-      model: "gpt-4o-mini",
+      model: "openai/gpt-4o-mini",
       messages: [
         { role: "system", content: systemPrompt },
         ...conversationWindow,
@@ -60,70 +58,3 @@ export const chat = async (req, res, next) => {
   }
 };
 
-export const captureLead = async (req, res, next) => {
-  try {
-    const {
-      name,
-      email,
-      phone,
-      company,
-      industry,
-      country,
-      businessSize,
-      monthlyRevenue,
-      projectBudget,
-      timeline,
-      goals,
-      currentChallenges,
-      preferredContactMethod,
-      source,
-      leadScore,
-    } = req.body;
-
-    if (!name || !email || !goals) {
-      res.status(400);
-      throw new Error("Name, email, and goals are required to capture the lead.");
-    }
-
-    if (!validator.isEmail(email)) {
-      res.status(400);
-      throw new Error("Please provide a valid email address.");
-    }
-
-    const serviceRecommendations = (() => {
-      const mapping = {
-        Startup: "Branding, Website Development, SEO, CRM Integration, and MVP Development.",
-        Ecommerce: "E-Commerce Development, CRM, Conversion Optimization, and Secure Checkout.",
-        Agency: "Client Portal Development, White-label SaaS, and Custom Web Applications.",
-        Enterprise: "Custom SaaS, Integrations, Infrastructure, Security, and Analytics.",
-        SaaS: "API Development, Product-led Design, and Scalable Infrastructure.",
-        "Mobile App": "Mobile UX, Cross-platform App Development, and API Connectivity.",
-      };
-      return mapping[industry] || mapping.Startup;
-    })();
-
-    const lead = await Lead.create({
-      name: name.trim(),
-      email: email.toLowerCase().trim(),
-      phone: String(phone || "").trim(),
-      company: String(company || "").trim(),
-      industry: industry || "Startup",
-      country: String(country || "").trim(),
-      businessSize: businessSize || "Unknown",
-      monthlyRevenue: monthlyRevenue || "Unknown",
-      projectBudget: projectBudget || "Unknown",
-      timeline: timeline || "Unknown",
-      goals: goals.trim(),
-      currentChallenges: String(currentChallenges || "").trim(),
-      preferredContactMethod: preferredContactMethod || "Email",
-      source: source || "orbit-ai-widget",
-      leadScore: Number(leadScore) || 0,
-      serviceRecommendations,
-      status: Number(leadScore) >= 80 ? "qualified" : "new",
-    });
-
-    res.status(201).json({ message: "Lead captured successfully.", leadId: lead._id, lead });
-  } catch (error) {
-    next(error);
-  }
-};
