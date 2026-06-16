@@ -22,6 +22,7 @@ import {
   Zap,
   BarChart3,
   Shield,
+  Bot,
 } from "lucide-react";
 
 interface ServiceHeroIllustrationProps {

@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import {
   Target, Eye, Code, Smartphone, Globe, Search,
-  Settings, Layout, Shield, Zap, CheckCircle,
+  Settings, Layout, Shield, CheckCircle,
   TrendingUp, Award, Star, Lightbulb, Cloud,
   Layers, ArrowRight, Quote, Users,
   ChartNoAxesCombined, ShieldCheck, ShoppingCart,
