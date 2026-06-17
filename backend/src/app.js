@@ -82,6 +82,55 @@ app.get("/", (req, res) => {
   res.status(200).json({ message: "Aformix backend is running." });
 });
 
+import mongoose from "mongoose";
+
+app.get("/api/test-db", async (req, res) => {
+  try {
+    const start = Date.now();
+    
+    if (!process.env.MONGODB_URI) {
+      return res.status(500).json({ error: "MONGODB_URI is not defined" });
+    }
+
+    // Attempt connection with a strict 5s timeout
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error("Connection attempt timed out after 5000ms")), 5000);
+    });
+
+    const connectPromise = mongoose.connect(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 4000,
+      connectTimeoutMS: 4000,
+      socketTimeoutMS: 4000,
+    });
+
+    await Promise.race([connectPromise, timeoutPromise]);
+    
+    // Test a simple operation
+    await mongoose.connection.db.admin().ping();
+    
+    const time = Date.now() - start;
+    
+    // Close the specific test connection if it's separate, but here we just used global mongoose.
+    // Actually, in Vercel it might be better to close after test, but let's leave it.
+    
+    res.status(200).json({ 
+      success: true, 
+      message: `Successfully connected to database and pinged admin in ${time}ms`,
+      readyState: mongoose.connection.readyState
+    });
+  } catch (error) {
+    console.error("Test DB Connection Error:", error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message,
+      name: error.name,
+      stack: error.stack
+    });
+  }
+});
+
 // Inngest webhook handler
 app.use("/api/inngest", serve({ client: inngest }));
 
