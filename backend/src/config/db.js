@@ -11,21 +11,24 @@ const connectDatabase = async () => {
     throw new Error("Missing MONGODB_URI in environment variables. Add it in Vercel Dashboard → Settings → Environment Variables.");
   }
 
-  // Return cached connection if already connected
-  if (cached.conn) {
+  // Return cached connection if already connected AND the connection is actually open
+  if (cached.conn && mongoose.connection.readyState === 1) {
     return cached.conn;
   }
 
   if (!cached.promise) {
     mongoose.set("strictQuery", true);
+    
+    // Globally disable buffering to fail fast instead of hanging for 10s
+    mongoose.set("bufferCommands", false);
 
     cached.promise = mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       serverSelectionTimeoutMS: 5000,  // Fail fast if can't reach server
       connectTimeoutMS: 5000,
-      socketTimeoutMS: 10000,
-      bufferCommands: false,           // Disable buffering - fail immediately if not connected
+      socketTimeoutMS: 30000,          // Give enough time for slow operations
+      bufferCommands: false,           // Disable buffering
     }).then((m) => {
       console.log("✅ MongoDB connected successfully");
       return m;
