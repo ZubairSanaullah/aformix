@@ -1,28 +1,31 @@
 import jwt from "jsonwebtoken";
 
-const accessSecret = process.env.JWT_SECRET;
-const refreshSecret = process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET;
+const getAccessSecret = () => {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) throw new Error("JWT_SECRET is required in environment variables");
+  return secret;
+};
 
-if (!accessSecret) {
-  throw new Error("JWT_SECRET is required in environment variables");
-}
+const getRefreshSecret = () => {
+  return process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET || getAccessSecret();
+};
 
 export const generateAccessToken = (payload) => {
-  return jwt.sign(payload, accessSecret, {
+  return jwt.sign(payload, getAccessSecret(), {
     expiresIn: "15m",
   });
 };
 
 export const generateRefreshToken = (payload) => {
-  return jwt.sign(payload, refreshSecret, {
+  return jwt.sign(payload, getRefreshSecret(), {
     expiresIn: "7d",
   });
 };
 
 export const verifyAccessToken = (token) => {
-  return jwt.verify(token, accessSecret);
+  return jwt.verify(token, getAccessSecret());
 };
 
 export const verifyRefreshToken = (token) => {
-  return jwt.verify(token, refreshSecret);
+  return jwt.verify(token, getRefreshSecret());
 };
