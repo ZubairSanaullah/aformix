@@ -106,7 +106,7 @@ const CountdownGate: React.FC = () => {
             { label: 'Hours', value: formatNumber(timeLeft.hours) },
             { label: 'Minutes', value: formatNumber(timeLeft.minutes) },
             { label: 'Seconds', value: formatNumber(timeLeft.seconds) },
-          ].map((item, idx) => (
+          ].map((item) => (
             <div 
               key={item.label}
               className="flex flex-col items-center justify-center p-6 border rounded-3xl bg-white/5 border-white/10 backdrop-blur-xl shadow-2xl relative overflow-hidden group"
