@@ -175,9 +175,14 @@ const AboutUs: React.FC = () => {
         <div className="hero-bg-streak hero-bg-streak--2" aria-hidden="true" />
 
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative z-10 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="flex flex-col items-start space-y-8 about-animate">
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight text-[var(--color-text)]">
-              Building <span className="text-primary">Intelligent</span> Digital Solutions for the Future
+          <div className="flex flex-col items-start space-y-8 pt-12">
+            {/* Premium Badge */}
+            <div className="hero-badge">
+              <span className="hero-badge-pulse" />
+              <span className="hero-badge-text">Aformix - Your Vision, Our Expertise</span>
+            </div>
+            <h1 className="hero-headline">
+              Building Intelligent Digital Solutions for the Future
             </h1>
             <p className="text-xl text-[var(--color-text-muted)] leading-relaxed max-w-xl">
               We engineer enterprise-grade software, harness the power of AI, and craft award-winning digital experiences that transform businesses and accelerate growth.
@@ -217,10 +222,10 @@ const AboutUs: React.FC = () => {
       {/* SECTION 3 — OUR STORY & ORBIT AI */}
       <section className="reveal section-padding relative w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="text-center mb-16 about-animate">
-            <span className="text-primary font-black tracking-[0.35em] uppercase">Origins</span>
-            <h2 className="heading-2 mt-6">A smarter agency for ambitious digital teams.</h2>
-            <p className="mx-auto mt-6 max-w-3xl text-[var(--color-text-muted)] text-xl leading-relaxed">
+          <div className="flex flex-col items-center mb-20 text-center about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Origins</span>
+            <h2 className="heading-2 mb-6">A smarter agency for ambitious digital teams.</h2>
+            <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
               We build premium web products that combine beautiful design, technical precision, and measurable business impact. Our process is collaborative, transparent, and engineered to accelerate your next major digital move.
             </p>
           </div>
@@ -376,10 +381,10 @@ const AboutUs: React.FC = () => {
       {/* SECTION 5 — WHAT WE DO */}
       <section className="reveal section-padding relative w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="text-center mb-20 about-animate">
-            <span className="text-primary font-black tracking-[0.35em] uppercase">Services</span>
-            <h2 className="heading-2 mt-6">What We Do</h2>
-            <p className="mx-auto mt-6 max-w-2xl text-[var(--color-text-muted)] text-xl leading-relaxed">
+          <div className="flex flex-col items-center mb-20 text-center about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Services</span>
+            <h2 className="heading-2 mb-6">What We Do</h2>
+            <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
               Comprehensive technology solutions designed to architect the future of your business.
             </p>
           </div>
@@ -416,9 +421,9 @@ const AboutUs: React.FC = () => {
       <section className="reveal section-padding relative w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 grid lg:grid-cols-[1fr_1.5fr] gap-16 items-start">
           <div className="about-animate lg:sticky lg:top-32">
-            <span className="text-primary font-black tracking-[0.35em] uppercase">Value</span>
-            <h2 className="heading-2 mt-6">Why Choose <br />Aformix?</h2>
-            <p className="text-[var(--color-text-muted)] text-xl mt-6 mb-8 leading-relaxed">
+            <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Value</span>
+            <h2 className="heading-2 mb-6">Why Choose <br />Aformix?</h2>
+            <p className="text-[var(--color-text-muted)] text-lg mb-8 leading-relaxed">
               We don't just write code; we engineer scalable businesses. Partner with a team that treats your product as their own.
             </p>
             <button className="inline-flex items-center gap-2 rounded-full border border-[var(--color-glass-border)] glass-effect px-6 py-3 font-semibold text-[var(--color-text)] transition hover:bg-white/5 group">
@@ -458,9 +463,9 @@ const AboutUs: React.FC = () => {
       {/* SECTION 7 — COMPANY VALUES */}
       <section className="reveal section-padding relative w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="text-center mb-16 about-animate">
-            <span className="text-primary font-black tracking-[0.35em] uppercase">Principles</span>
-            <h2 className="heading-2 mt-6">Our Core Values</h2>
+          <div className="flex flex-col items-center mb-20 text-center about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Principles</span>
+            <h2 className="heading-2 mb-6">Our Core Values</h2>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8 about-grid">
@@ -492,10 +497,10 @@ const AboutUs: React.FC = () => {
       {/* SECTION 8 — PROCESS */}
       <section className="reveal section-padding relative w-full">
         <div className="max-w-5xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="text-center mb-20 about-animate">
-            <span className="text-primary font-black tracking-[0.35em] uppercase">Methodology</span>
-            <h2 className="heading-2 mt-6">How We Build</h2>
-            <p className="mx-auto mt-6 text-[var(--color-text-muted)] text-xl">
+          <div className="flex flex-col items-center mb-20 text-center about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Methodology</span>
+            <h2 className="heading-2 mb-6">How We Build</h2>
+            <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
               A refined, battle-tested methodology for delivering software success.
             </p>
           </div>
@@ -551,10 +556,10 @@ const AboutUs: React.FC = () => {
       {/* SECTION 10 — TECHNOLOGY STACK */}
       <section className="reveal section-padding relative w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="text-center mb-16 about-animate">
-            <span className="text-primary font-black tracking-[0.35em] uppercase">Arsenal</span>
-            <h2 className="heading-2 mt-6">Technology Stack</h2>
-            <p className="mx-auto mt-6 max-w-2xl text-[var(--color-text-muted)] text-xl leading-relaxed">
+          <div className="flex flex-col items-center mb-20 text-center about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Arsenal</span>
+            <h2 className="heading-2 mb-6">Technology Stack</h2>
+            <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
               We use the most modern, robust, and scalable technologies available today.
             </p>
           </div>
@@ -586,9 +591,9 @@ const AboutUs: React.FC = () => {
       {/* SECTION 11 — TESTIMONIALS */}
       <section className="reveal section-padding relative w-full">
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
-          <div className="text-center mb-16 about-animate">
-            <span className="text-primary font-black tracking-[0.35em] uppercase">Testimonials</span>
-            <h2 className="heading-2 mt-6">Client Success</h2>
+          <div className="flex flex-col items-center mb-20 text-center about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Testimonials</span>
+            <h2 className="heading-2 mb-6">Client Success</h2>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 about-grid">
@@ -640,14 +645,14 @@ const AboutUs: React.FC = () => {
 
         <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
           {/* Header */}
-          <div className="text-center mb-20 about-animate">
-            <span className="inline-block text-primary font-black tracking-[0.35em] uppercase text-sm mb-6">
+          <div className="flex flex-col items-center mb-20 text-center about-animate">
+            <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">
               Get in Touch
             </span>
-            <h2 className="heading-2 !mb-6">
+            <h2 className="heading-2 mb-6">
               Ready to Build Something <span className="text-primary">Extraordinary?</span>
             </h2>
-            <p className="text-[var(--color-text-muted)] text-xl leading-relaxed max-w-2xl mx-auto">
+            <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
               Stop settling for mediocre software. Partner with Aformix and let's engineer a digital solution that dominates your market.
             </p>
           </div>

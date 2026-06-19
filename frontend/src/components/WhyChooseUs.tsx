@@ -1,5 +1,5 @@
 import React from "react";
-import { Zap, Shield, Crown, Smile, Bot, Sparkles } from "lucide-react";
+import { Zap, Shield, Crown, Smile, Bot } from "lucide-react";
 import Divider from "./Divider";
 
 const WhyChooseUs: React.FC = () => {
@@ -13,10 +13,10 @@ const WhyChooseUs: React.FC = () => {
   return (
     <section className="reveal section-padding w-full" style={{ backgroundColor: "var(--color-surface)" }}>
       <div className="max-w-7xl mx-auto px-6 md:px-10">
-        <div className="text-center mb-14">
-          <p className="text-primary font-black uppercase tracking-[0.35em] mb-4">Why Choose Us</p>
-          <h2 className="heading-2">Simple, trusted solutions for your next project</h2>
-          <p className="mt-4 text-[var(--color-text-muted)] max-w-2xl mx-auto leading-relaxed text-lg">
+        <div className="flex flex-col items-center mb-20 text-center">
+          <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Why Choose Us</span>
+          <h2 className="heading-2 mb-6">Simple, trusted solutions for your next project</h2>
+          <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
             We keep the process clear and focused so you can move faster. Our team delivers reliable products with strong support and modern craftsmanship.
           </p>
         </div>
@@ -37,7 +37,8 @@ const WhyChooseUs: React.FC = () => {
           </div>
 
           {/* Right: Orbit Mascot Showcase */}
-          <div className="orbit-why-card relative rounded-[3rem] overflow-hidden border border-[var(--color-glass-border)] glass-effect shadow-2xl">
+          <div className="orbit-why-card-wrapper">
+            <div className="orbit-why-card relative rounded-[3rem] overflow-hidden border border-[var(--color-glass-border)] glass-effect shadow-2xl">
             {/* Glow blobs */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
               <div className="absolute top-1/4 left-1/3 w-56 h-56 bg-primary/20 rounded-full blur-[80px]" />
@@ -65,10 +66,10 @@ const WhyChooseUs: React.FC = () => {
                   <p className="text-[var(--color-text)] font-bold text-sm">Orbit AI</p>
                   <p className="text-[var(--color-text-muted)] text-xs">Your intelligent digital partner</p>
                 </div>
-                <div className="ml-auto flex items-center gap-1.5 text-primary">
+                {/* <div className="ml-auto flex items-center gap-1.5 text-primary">
                   <Sparkles size={14} />
                   <span className="text-xs font-semibold">Active</span>
-                </div>
+                </div> */}
               </div>
 
               {/* Feature badges */}
@@ -91,6 +92,7 @@ const WhyChooseUs: React.FC = () => {
                 Open Orbit AI
               </button>
             </div>
+          </div>
           </div>
         </div>
       </div>

@@ -94,8 +94,8 @@ const Navbar: React.FC = () => {
           }`}>
           {/* Logo */}
           <a href="/" className="flex items-center gap-2 group">
-            <img src={logoImg} alt="logo" className="w-5 md:w-7 cursor-pointer hover:scale-95 transition-transform" />
-            <p className="text-base md:text-xl text-[var(--color-text)] font-light transition-colors duration-500">Aformix</p>
+            <img src={logoImg} alt="logo" className="w-4 md:w-7 cursor-pointer hover:scale-95 transition-transform" />
+            <p className="text-base md:text-xl text-[var(--color-text)] font-bold transition-colors duration-500">Aformix</p>
           </a>
 
           {/* Desktop Links */}

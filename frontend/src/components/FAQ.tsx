@@ -36,9 +36,10 @@ const FAQ: React.FC = () => {
   return (
     <section id="faq" className="reveal section-padding w-full">
       <div className="relative max-w-4xl mx-auto px-6 md:px-12">
-        <div className="text-center mb-20 relative z-10">
-          <h2 className="heading-2">Got Questions?</h2>
-          <p className="text-[var(--color-text-muted)] text-lg max-w-2xl mx-auto">
+        <div className="flex flex-col items-center mb-20 text-center relative z-10">
+          <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">FAQ</span>
+          <h2 className="heading-2 mb-6">Got Questions?</h2>
+          <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
             Transparent answers to help you navigate our process, timelines, and post-launch capabilities.
           </p>
         </div>

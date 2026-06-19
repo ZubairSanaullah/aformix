@@ -1,322 +1,133 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { CheckCircle2, Cpu, Database, Terminal, Zap } from "lucide-react";
+import { BsRobot } from "react-icons/bs";
 import type { HeroVariant } from "../../constants/serviceNav";
-import type { LucideIcon } from "lucide-react";
-import {
-  Code2,
-  Database,
-  Server,
-  Layers,
-  Cloud,
-  Smartphone,
-  Globe,
-  Search,
-  PenTool,
-  Briefcase,
-  HeartPulse,
-  Workflow,
-  Users,
-  Building2,
-  ShoppingCart,
-  Layout,
-  Zap,
-  BarChart3,
-  Shield,
-  Bot,
-} from "lucide-react";
 
 interface ServiceHeroIllustrationProps {
   variant: HeroVariant;
 }
 
-interface FloatingNode {
-  icon: LucideIcon;
-  x: string;
-  y: string;
-  delay: number;
-  size?: number;
-}
-
-const variantConfig: Record<
-  HeroVariant,
-  { primary: string; secondary: string; accent: string; nodes: FloatingNode[] }
-> = {
-  code: {
-    primary: "rgba(49,185,143,0.3)",
-    secondary: "rgba(0,191,222,0.25)",
-    accent: "rgba(104,75,158,0.2)",
-    nodes: [
-      { icon: Code2, x: "18%", y: "25%", delay: 0 },
-      { icon: Layers, x: "68%", y: "18%", delay: 0.4 },
-      { icon: Server, x: "72%", y: "68%", delay: 0.8 },
-      { icon: Database, x: "22%", y: "72%", delay: 1.2 },
-    ],
-  },
-  mern: {
-    primary: "rgba(49,185,143,0.32)",
-    secondary: "rgba(104,75,158,0.28)",
-    accent: "rgba(0,191,222,0.22)",
-    nodes: [
-      { icon: Database, x: "20%", y: "22%", delay: 0 },
-      { icon: Server, x: "65%", y: "20%", delay: 0.3 },
-      { icon: Code2, x: "70%", y: "65%", delay: 0.6 },
-      { icon: Layers, x: "18%", y: "68%", delay: 0.9 },
-    ],
-  },
-  fullstack: {
-    primary: "rgba(104,75,158,0.32)",
-    secondary: "rgba(49,185,143,0.28)",
-    accent: "rgba(0,191,222,0.22)",
-    nodes: [
-      { icon: Layers, x: "50%", y: "12%", delay: 0, size: 28 },
-      { icon: Code2, x: "15%", y: "50%", delay: 0.4 },
-      { icon: Server, x: "78%", y: "45%", delay: 0.8 },
-      { icon: Database, x: "50%", y: "78%", delay: 1.2 },
-    ],
-  },
-  saas: {
-    primary: "rgba(0,191,222,0.3)",
-    secondary: "rgba(49,185,143,0.28)",
-    accent: "rgba(104,75,158,0.22)",
-    nodes: [
-      { icon: Cloud, x: "50%", y: "18%", delay: 0, size: 32 },
-      { icon: BarChart3, x: "18%", y: "55%", delay: 0.5 },
-      { icon: Users, x: "75%", y: "50%", delay: 1 },
-      { icon: Zap, x: "50%", y: "75%", delay: 1.5 },
-    ],
-  },
-  mobile: {
-    primary: "rgba(49,185,143,0.3)",
-    secondary: "rgba(104,75,158,0.25)",
-    accent: "rgba(0,191,222,0.28)",
-    nodes: [
-      { icon: Smartphone, x: "50%", y: "50%", delay: 0, size: 48 },
-      { icon: Zap, x: "20%", y: "25%", delay: 0.6 },
-      { icon: Shield, x: "75%", y: "30%", delay: 1.2 },
-      { icon: BarChart3, x: "25%", y: "72%", delay: 1.8 },
-    ],
-  },
-  webapp: {
-    primary: "rgba(49,185,143,0.28)",
-    secondary: "rgba(0,191,222,0.26)",
-    accent: "rgba(104,75,158,0.2)",
-    nodes: [
-      { icon: Globe, x: "50%", y: "45%", delay: 0, size: 40 },
-      { icon: Code2, x: "18%", y: "22%", delay: 0.5 },
-      { icon: Server, x: "78%", y: "25%", delay: 1 },
-      { icon: Database, x: "22%", y: "72%", delay: 1.5 },
-    ],
-  },
-  seo: {
-    primary: "rgba(0,191,222,0.3)",
-    secondary: "rgba(49,185,143,0.25)",
-    accent: "rgba(104,75,158,0.2)",
-    nodes: [
-      { icon: Search, x: "50%", y: "40%", delay: 0, size: 44 },
-      { icon: BarChart3, x: "20%", y: "22%", delay: 0.5 },
-      { icon: Globe, x: "75%", y: "65%", delay: 1 },
-      { icon: Zap, x: "18%", y: "68%", delay: 1.5 },
-    ],
-  },
-  design: {
-    primary: "rgba(104,75,158,0.32)",
-    secondary: "rgba(0,191,222,0.25)",
-    accent: "rgba(49,185,143,0.2)",
-    nodes: [
-      { icon: PenTool, x: "50%", y: "42%", delay: 0, size: 42 },
-      { icon: Layers, x: "20%", y: "20%", delay: 0.5 },
-      { icon: Zap, x: "75%", y: "22%", delay: 1 },
-      { icon: Briefcase, x: "22%", y: "72%", delay: 1.5 },
-    ],
-  },
-  portfolio: {
-    primary: "rgba(49,185,143,0.28)",
-    secondary: "rgba(104,75,158,0.26)",
-    accent: "rgba(0,191,222,0.22)",
-    nodes: [
-      { icon: Briefcase, x: "50%", y: "42%", delay: 0, size: 40 },
-      { icon: PenTool, x: "18%", y: "22%", delay: 0.5 },
-      { icon: Globe, x: "75%", y: "28%", delay: 1 },
-      { icon: Zap, x: "22%", y: "70%", delay: 1.5 },
-    ],
-  },
-  healthcare: {
-    primary: "rgba(49,185,143,0.3)",
-    secondary: "rgba(0,191,222,0.25)",
-    accent: "rgba(104,75,158,0.2)",
-    nodes: [
-      { icon: HeartPulse, x: "50%", y: "42%", delay: 0, size: 44 },
-      { icon: Shield, x: "20%", y: "22%", delay: 0.5 },
-      { icon: Database, x: "75%", y: "25%", delay: 1 },
-      { icon: Users, x: "22%", y: "72%", delay: 1.5 },
-    ],
-  },
-  crm: {
-    primary: "rgba(49,185,143,0.28)",
-    secondary: "rgba(104,75,158,0.28)",
-    accent: "rgba(0,191,222,0.22)",
-    nodes: [
-      { icon: Users, x: "50%", y: "42%", delay: 0, size: 42 },
-      { icon: BarChart3, x: "18%", y: "22%", delay: 0.5 },
-      { icon: Zap, x: "75%", y: "28%", delay: 1 },
-      { icon: Workflow, x: "22%", y: "70%", delay: 1.5 },
-    ],
-  },
-  erp: {
-    primary: "rgba(104,75,158,0.32)",
-    secondary: "rgba(49,185,143,0.25)",
-    accent: "rgba(0,191,222,0.2)",
-    nodes: [
-      { icon: Building2, x: "50%", y: "42%", delay: 0, size: 44 },
-      { icon: Database, x: "18%", y: "22%", delay: 0.5 },
-      { icon: Layers, x: "75%", y: "28%", delay: 1 },
-      { icon: BarChart3, x: "22%", y: "70%", delay: 1.5 },
-    ],
-  },
-  ecommerce: {
-    primary: "rgba(49,185,143,0.3)",
-    secondary: "rgba(0,191,222,0.26)",
-    accent: "rgba(104,75,158,0.2)",
-    nodes: [
-      { icon: ShoppingCart, x: "50%", y: "42%", delay: 0, size: 44 },
-      { icon: BarChart3, x: "18%", y: "22%", delay: 0.5 },
-      { icon: Globe, x: "75%", y: "28%", delay: 1 },
-      { icon: Zap, x: "22%", y: "70%", delay: 1.5 },
-    ],
-  },
-  wordpress: {
-    primary: "rgba(0,191,222,0.28)",
-    secondary: "rgba(49,185,143,0.26)",
-    accent: "rgba(104,75,158,0.22)",
-    nodes: [
-      { icon: Layout, x: "50%", y: "42%", delay: 0, size: 44 },
-      { icon: Code2, x: "18%", y: "22%", delay: 0.5 },
-      { icon: Globe, x: "75%", y: "28%", delay: 1 },
-      { icon: Search, x: "22%", y: "70%", delay: 1.5 },
-    ],
-  },
-};
-
 const ServiceHeroIllustration: React.FC<ServiceHeroIllustrationProps> = ({ variant }) => {
-  const config = variantConfig[variant];
-
   return (
-    <div
-      className="relative w-full aspect-square max-w-[480px] mx-auto lg:mx-0"
-      aria-hidden="true"
-    >
-      {/* Outer ring */}
-      <motion.div
-        className="absolute inset-4 rounded-[2.5rem]"
-        style={{
-          border: "1px solid var(--color-glass-border)",
-          background: "var(--color-glass)",
-          backdropFilter: "blur(24px)",
-        }}
-        animate={{ rotate: [0, 1, 0, -1, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-      />
-
-      {/* Gradient orbs */}
-      <motion.div
-        className="absolute rounded-full"
-        style={{
-          width: "55%",
-          height: "55%",
-          top: "5%",
-          left: "5%",
-          background: `radial-gradient(circle, ${config.primary}, transparent 70%)`,
-          filter: "blur(40px)",
-        }}
-        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.9, 0.5] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute rounded-full"
-        style={{
-          width: "50%",
-          height: "50%",
-          bottom: "5%",
-          right: "5%",
-          background: `radial-gradient(circle, ${config.secondary}, transparent 70%)`,
-          filter: "blur(40px)",
-        }}
-        animate={{ scale: [1.1, 1, 1.1], opacity: [0.4, 0.8, 0.4] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-      />
-      <motion.div
-        className="absolute rounded-full"
-        style={{
-          width: "35%",
-          height: "35%",
-          top: "35%",
-          left: "35%",
-          background: `radial-gradient(circle, ${config.accent}, transparent 70%)`,
-          filter: "blur(30px)",
-        }}
-        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.7, 0.3] }}
-        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut", delay: 4 }}
-      />
-
-      {/* Center hub */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <motion.div
-          className="w-24 h-24 rounded-3xl flex items-center justify-center"
-          style={{
-            background: "linear-gradient(135deg, var(--color-primary), var(--color-secondary))",
-            boxShadow: "0 20px 60px rgba(49,185,143,0.25)",
-          }}
-          animate={{ y: [0, -8, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          {(() => {
-            const CenterIcon = config.nodes[0]?.icon ?? Bot;
-            return <CenterIcon size={40} color="white" />;
-          })()}
-        </motion.div>
+    <div className="hero-right w-full h-full min-h-[400px]">
+      {/* Animated Glowing Rings behind Orbit */}
+      <div className="glowing-rings-container" aria-hidden="true">
+        <div className="glowing-rings-inner">
+          <div className="glowing-ring glowing-ring--1" />
+          <div className="glowing-ring glowing-ring--2" />
+          <div className="glowing-ring glowing-ring--3" />
+        </div>
       </div>
 
-      {/* Floating satellite nodes */}
-      {config.nodes.map((node, i) => {
-        const Icon = node.icon;
-        return (
-          <motion.div
-            key={i}
-            className="absolute w-14 h-14 rounded-2xl flex items-center justify-center"
-            style={{
-              left: node.x,
-              top: node.y,
-              transform: "translate(-50%, -50%)",
-              background: "var(--color-glass)",
-              border: "1px solid var(--color-glass-border)",
-              backdropFilter: "blur(16px)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.12)",
-            }}
-            animate={{ y: [0, -10, 0] }}
-            transition={{
-              duration: 3 + i * 0.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: node.delay,
-            }}
-          >
-            <Icon size={node.size ?? 22} style={{ color: "var(--color-primary)" }} />
-          </motion.div>
-        );
-      })}
+      {/* Orbit Mascot Canvas Wrapper */}
+      <div className="mascot-outer-container">
+        <div className="mascot-wrapper">
+          <video
+            src="/vid/orbit2.mp4"
+            className="mascot-video-element overflow-hidden object-cover"
+            style={{ borderRadius: "30px" }}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        </div>
+      </div>
 
-      {/* Connection lines (decorative) */}
-      <svg className="absolute inset-0 w-full h-full opacity-20 pointer-events-none">
-        <circle
-          cx="50%"
-          cy="50%"
-          r="38%"
+      {/* SVG Connection Nodes & Data Streams */}
+      <svg className="workflow-connections-svg" viewBox="0 0 500 500" aria-hidden="true">
+        <defs>
+          <linearGradient id="lineGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#27b990" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#00d4ff" stopOpacity="0.2" />
+          </linearGradient>
+          <linearGradient id="lineGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#684b9e" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#27b990" stopOpacity="0.2" />
+          </linearGradient>
+        </defs>
+        {/* Path 1: From Workflow Card to Orbit */}
+        <path
+          className="workflow-connector-line"
+          d="M 90 310 C 120 280, 160 250, 210 240"
           fill="none"
-          stroke="var(--color-primary)"
-          strokeWidth="1"
-          strokeDasharray="6 8"
+          stroke="url(#lineGrad1)"
+          strokeWidth="1.5"
+          strokeDasharray="8 6"
+        />
+        {/* Path 2: From Network Status to Orbit */}
+        <path
+          className="workflow-connector-line"
+          d="M 400 130 C 370 170, 340 200, 290 220"
+          fill="none"
+          stroke="url(#lineGrad2)"
+          strokeWidth="1.5"
+          strokeDasharray="8 6"
+        />
+        {/* Path 3: From Stats Card to Orbit */}
+        <path
+          className="workflow-connector-line"
+          d="M 390 380 C 340 370, 300 340, 260 280"
+          fill="none"
+          stroke="url(#lineGrad1)"
+          strokeWidth="1.5"
+          strokeDasharray="8 6"
         />
       </svg>
+
+      {/* Floating UI Elements / Glassmorphism Cards */}
+
+      {/* FLOATING CARD 1: Development Workflow */}
+      <div className="floating-card-ui floating-card-ui--1">
+        <div className="floating-card-hdr">
+          <Terminal size={14} className="text-primary" />
+          <span className="floating-card-title">Processing</span>
+          <span className="pulse-indicator" />
+        </div>
+        <div className="workflow-steps">
+          <div className="workflow-step active">
+            <CheckCircle2 size={12} className="text-primary" />
+            <span>Analyzing Request</span>
+          </div>
+          <div className="workflow-step-connector" />
+          <div className="workflow-step processing">
+            <Cpu size={12} className="text-secondary-color text-pulse" />
+            <span>Processing Request</span>
+          </div>
+          <div className="workflow-step-connector" />
+          <div className="workflow-step">
+            <Database size={12} className="text-muted" />
+            <span>Sending Response</span>
+          </div>
+        </div>
+      </div>
+
+      {/* FLOATING CARD 2: Network / Agent Status */}
+      <div className="floating-card-ui floating-card-ui--2">
+        <div className="agent-status-layout">
+          <div className="agent-avatar-ring">
+            <BsRobot size={16} className="text-white" />
+          </div>
+          <div className="agent-status-info">
+            <span className="agent-status-label">Orbit Assistant</span>
+            <span className="agent-status-message">Optimizing workflow...</span>
+          </div>
+        </div>
+      </div>
+
+      {/* FLOATING CARD 3: Performance Metric */}
+      <div className="floating-card-ui floating-card-ui--3">
+        <div className="metric-card-layout">
+          <span className="metric-label">Efficiency Boost</span>
+          <div className="metric-value-row">
+            <span className="metric-value">+94%</span>
+            <Zap size={14} className="text-primary fill-primary" />
+          </div>
+          <div className="metric-bar-bg">
+            <div className="metric-bar-fill" />
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

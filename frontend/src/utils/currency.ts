@@ -8,8 +8,9 @@ export const currencySymbols: Record<string, string> = {
   PKR: "₨",
 };
 
-// Rates are relative to USD (1 USD = rates[currency])
-export const rates: Record<string, number> = {
+// Default rates are relative to USD (1 USD = rates[currency])
+// We keep this for fallback and backward compatibility
+export const fallbackRates: Record<string, number> = {
   USD: 1,
   EUR: 0.92,
   GBP: 0.78,
@@ -42,8 +43,9 @@ export function extractNumberFromString(s: string): number | null {
   return m ? parseFloat(m[0]) : null;
 }
 
-export function convertUsdTo(amountUsd: number, currency: string): number {
-  const rate = rates[currency] ?? 1;
+export function convertUsdTo(amountUsd: number, currency: string, customRates?: Record<string, number>): number {
+  const currentRates = customRates || fallbackRates;
+  const rate = currentRates[currency] ?? 1;
   return amountUsd * rate;
 }
 
@@ -58,11 +60,11 @@ export function formatCurrencyAmount(value: number, currency: string, maximumFra
 }
 
 // Convert a price-like string (e.g. "$499", "$50/mo (12 months)") to the selected currency and preserve suffixes.
-export function convertAndFormatPriceString(priceStr: string, currency?: string): string {
+export function convertAndFormatPriceString(priceStr: string, currency?: string, customRates?: Record<string, number>): string {
   const target = currency || getSelectedCurrency();
   const num = extractNumberFromString(priceStr);
   if (num === null) return priceStr;
-  const converted = convertUsdTo(num, target);
+  const converted = convertUsdTo(num, target, customRates);
   const formatter = formatCurrencyAmount(converted, target, 0);
 
   // Replace the first occurrence of currency symbol+number or number with the formatted currency
@@ -75,11 +77,11 @@ export function convertAndFormatPriceString(priceStr: string, currency?: string)
 }
 
 // Sum an array of bonus value strings and return formatted total in selected currency
-export function sumAndFormatBonusValues(values: string[], currency?: string): string {
+export function sumAndFormatBonusValues(values: string[], currency?: string, customRates?: Record<string, number>): string {
   const target = currency || getSelectedCurrency();
   const numsUsd = values.map((v) => extractNumberFromString(v) ?? 0);
   const totalUsd = numsUsd.reduce((a, b) => a + b, 0);
-  const converted = convertUsdTo(totalUsd, target);
+  const converted = convertUsdTo(totalUsd, target, customRates);
   return formatCurrencyAmount(converted, target, 0);
 }
 

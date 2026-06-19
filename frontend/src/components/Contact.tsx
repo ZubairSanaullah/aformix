@@ -224,14 +224,14 @@ const Contact: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         {/* Header */}
-        <div className="text-center mb-20">
-          <span className="contact-badge inline-block text-primary font-black tracking-[0.35em] uppercase text-sm mb-6">
+        <div className="flex flex-col items-center mb-20 text-center">
+          <span className="contact-badge text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">
             Get in Touch
           </span>
-          <h2 className="contact-heading heading-2 !mb-6">
+          <h2 className="contact-heading heading-2 mb-6">
             Let's Build Something Great
           </h2>
-          <p className="contact-sub text-[var(--color-text-muted)] text-xl leading-relaxed max-w-2xl mx-auto">
+          <p className="contact-sub text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
             Have a project in mind? Tell us about it and we'll craft a solution
             tailored to your goals.
           </p>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { motion, type Variants } from "framer-motion";
 import { CheckCircle2, ArrowRight, ChevronDown, Check, X, Shield } from "lucide-react";
@@ -7,15 +7,15 @@ import Divider from "../components/Divider";
 import { Link } from "react-router";
 import {
   CURRENCIES,
-  getSelectedCurrency,
-  setSelectedCurrency,
   convertAndFormatPriceString,
   sumAndFormatBonusValues,
 } from "../utils/currency";
+import { useCurrency } from "../context/CurrencyContext";
 
 const PricingDetails: React.FC = () => {
   const { packageId } = useParams<{ packageId: string }>();
   const navigate = useNavigate();
+  const { currency, rates } = useCurrency();
 
   const pkg = packageId && pricingData[packageId] ? pricingData[packageId] : null;
 
@@ -115,7 +115,7 @@ const PricingDetails: React.FC = () => {
                 <div>
                   <p className="text-[var(--color-text-muted)] text-sm uppercase tracking-wider mb-2">Starting at</p>
                   <div className="flex items-end gap-2">
-                    <h2 className="text-5xl font-black text-[var(--color-text)]">{convertAndFormatPriceString(pkg.startingPrice)}</h2>
+                    <h2 className="text-5xl font-black text-[var(--color-text)]">{convertAndFormatPriceString(pkg.startingPrice, currency, rates)}</h2>
                   </div>
                 </div>
                 {pkg.discountPercentage && (
@@ -134,12 +134,12 @@ const PricingDetails: React.FC = () => {
               <div className="space-y-4 mb-8">
                 <div className="flex justify-between items-center p-4 rounded-xl bg-[var(--color-bg)]/50 border border-[var(--color-border)]">
                   <span className="text-[var(--color-text)] font-medium">One-Time Payment</span>
-                  <span className="text-[var(--color-text)] font-bold">{convertAndFormatPriceString(pkg.oneTimeOption)}</span>
+                  <span className="text-[var(--color-text)] font-bold">{convertAndFormatPriceString(pkg.oneTimeOption, currency, rates)}</span>
                 </div>
                 {pkg.monthlyOption && (
                   <div className="flex justify-between items-center p-4 rounded-xl bg-[var(--color-bg)]/50 border border-[var(--color-border)]">
                     <span className="text-[var(--color-text)] font-medium">Monthly Option</span>
-                    <span className="text-[var(--color-text)] font-bold">{convertAndFormatPriceString(pkg.monthlyOption)}</span>
+                    <span className="text-[var(--color-text)] font-bold">{convertAndFormatPriceString(pkg.monthlyOption, currency, rates)}</span>
                   </div>
                 )}
               </div>
@@ -217,13 +217,13 @@ const PricingDetails: React.FC = () => {
                     <motion.div key={i} variants={itemVariants} className="bg-primary/5 border border-primary/20 p-6 rounded-2xl text-center relative overflow-hidden group">
                       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                       <h4 className="font-bold text-[var(--color-text)] mb-2">{bonus.title}</h4>
-                      <p className="text-primary font-black text-xl">Value: {convertAndFormatPriceString(bonus.value)}</p>
+                      <p className="text-primary font-black text-xl">Value: {convertAndFormatPriceString(bonus.value, currency, rates)}</p>
                     </motion.div>
                   ))}
                 </div>
                 <div className="mt-10 text-center">
                   <p className="text-lg text-[var(--color-text)] font-medium">Total Bonus Value: <span className="text-primary font-bold">{
-                    sumAndFormatBonusValues(pkg.bonusOffers.map((b) => b.value))
+                    sumAndFormatBonusValues(pkg.bonusOffers.map((b) => b.value), currency, rates)
                   }</span> - Yours FREE!</p>
                 </div>
               </div>
@@ -454,16 +454,12 @@ export default PricingDetails;
 
 // Small currency selector used on the pricing pages
 const CurrencySelector = () => {
-  const [currency, setCurrencyState] = useState<string>(getSelectedCurrency());
-
-  useEffect(() => {
-    setSelectedCurrency(currency);
-  }, [currency]);
+  const { currency, setCurrency } = useCurrency();
 
   return (
     <select
       value={currency}
-      onChange={(e) => setCurrencyState(e.target.value)}
+      onChange={(e) => setCurrency(e.target.value)}
       className="bg-transparent border border-[var(--color-border)] px-3 py-1 rounded-md text-[var(--color-text)]"
     >
       {CURRENCIES.map((c) => (

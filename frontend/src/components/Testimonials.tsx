@@ -8,8 +8,11 @@ const Testimonials: React.FC = () => {
     <section className="reveal section-padding relative w-full">
       <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24">
         <div className="flex flex-col items-center mb-20 text-center">
-          <span className="text-primary font-black tracking-widest uppercase mb-4 block">Testimonials</span>
-          <h2 className="heading-2">Trusted by Global <br /> <span className="gradient-text">Innovators</span></h2>
+          <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Testimonials</span>
+          <h2 className="heading-2 mb-6">Trusted by Global <br /> <span className="gradient-text">Innovators</span></h2>
+          <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
+            Discover what our clients have to say about partnering with Aformix.
+          </p>
         </div>
 
         <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-3">

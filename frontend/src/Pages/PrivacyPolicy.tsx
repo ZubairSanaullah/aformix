@@ -211,7 +211,7 @@ const sectionLinks = [
   { id: "contact", label: "Contact" },
 ];
 
-const contactEmail = "privacy@aformix.com";
+const contactEmail = "contact@aformix.com";
 
 const sectionAnimation = {
   hidden: { opacity: 0, y: 32 },
@@ -281,7 +281,7 @@ const PrivacyPolicyPage: React.FC = () => {
       <div className="absolute right-12 top-40 h-60 w-60 rounded-full bg-secondary/10 blur-3xl" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,var(--color-primary)/15,transparent_35%),radial-gradient(circle_at_bottom_right,var(--color-secondary)/12,transparent_25%)] pointer-events-none" />
 
-      <main className="relative mx-auto flex w-full max-w-7xl flex-col px-6 pb-24 pt-24 overflow-x-hidden sm:px-8 lg:px-10">
+      <main className="relative mx-auto flex w-full max-w-7xl flex-col px-6 pb-24 pt-24 overflow-x-hidden sm:px-8 lg:px-10 mt-16">
         <motion.section
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
@@ -334,11 +334,10 @@ const PrivacyPolicyPage: React.FC = () => {
                   <a
                     key={section.id}
                     href={`#${section.id}`}
-                    className={`group block rounded-3xl border px-4 py-3 transition duration-200 ${
-                      activeSection === section.id
-                        ? "border-primary/50 bg-[var(--color-surface-elevated)] text-[var(--color-text)] shadow-lg"
-                        : "border-transparent hover:border-primary/30 hover:bg-[var(--color-surface-elevated)]"
-                    }`}
+                    className={`group block rounded-3xl border px-4 py-3 transition duration-200 ${activeSection === section.id
+                      ? "border-primary/50 bg-[var(--color-surface-elevated)] text-[var(--color-text)] shadow-lg"
+                      : "border-transparent hover:border-primary/30 hover:bg-[var(--color-surface-elevated)]"
+                      }`}
                   >
                     {section.label}
                   </a>

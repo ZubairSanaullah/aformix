@@ -6,6 +6,7 @@ import {
   Minus,
   Send,
   X,
+  ChevronDown,
 } from "lucide-react";
 import { BsRobot } from "react-icons/bs";
 import { FaRobot } from "react-icons/fa6";
@@ -51,7 +52,7 @@ const MessageBubble: React.FC<{
         clearInterval(timer);
         onTypingComplete(message.id);
       }
-    }, 5);
+    }, 20);
 
     return () => clearInterval(timer);
   }, [message.content, message.isTyping, message.id, onTypingComplete, onTypingStep]);
@@ -112,14 +113,27 @@ const OrbitAI: React.FC = () => {
   const isLight = theme === "light";
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  const handleScroll = React.useCallback(() => {
+    if (containerRef.current) {
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
+      setShowScrollButton(scrollHeight - scrollTop - clientHeight > 30);
+    }
+  }, []);
 
   const scrollToBottom = React.useCallback(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages.length, scrollToBottom]);
+    if (isOpen) {
+      setTimeout(() => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "auto" });
+      }, 100);
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     try {
@@ -334,8 +348,6 @@ const OrbitAI: React.FC = () => {
       <AnimatePresence>
         {showWidget && isOpen && (
           <motion.div
-            layout
-            layoutId="orbit-panel"
             initial={{ opacity: 0, y: 40, scale: 0.96 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 40, scale: 0.96 }}
@@ -391,17 +403,36 @@ const OrbitAI: React.FC = () => {
             <div className="grid grid-cols-12 gap-0 p-3 md:p-5">
               <div className="col-span-12 space-y-3 md:space-y-4">
                   <div className="space-y-3 md:space-y-4">
-                    <div className={`max-h-64 md:max-h-105 overflow-y-auto rounded-[24px] md:rounded-[28px] border p-3 md:p-4 shadow-inner ${orbitTheme.surface}`}>
-                      {messages.map((message) => (
-                        <MessageBubble
-                          key={message.id}
-                          message={message}
-                          isLight={isLight}
-                          onTypingComplete={handleTypingComplete}
-                          onTypingStep={scrollToBottom}
-                        />
-                      ))}
-                      <div ref={messagesEndRef} />
+                    <div className="relative">
+                      <div 
+                        ref={containerRef}
+                        onScroll={handleScroll}
+                        className={`max-h-64 md:max-h-105 overflow-y-auto rounded-[24px] md:rounded-[28px] border p-3 md:p-4 shadow-inner ${orbitTheme.surface}`}
+                      >
+                        {messages.map((message) => (
+                          <MessageBubble
+                            key={message.id}
+                            message={message}
+                            isLight={isLight}
+                            onTypingComplete={handleTypingComplete}
+                          />
+                        ))}
+                        <div ref={messagesEndRef} />
+                      </div>
+                      <AnimatePresence>
+                        {showScrollButton && (
+                          <motion.button
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            onClick={scrollToBottom}
+                            className={`absolute bottom-4 left-1/2 -translate-x-1/2 p-2 rounded-full shadow-lg z-10 cursor-pointer ${isLight ? "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50" : "bg-slate-800 text-slate-300 border border-slate-600 hover:bg-slate-700"}`}
+                            aria-label="Scroll to bottom"
+                          >
+                            <ChevronDown size={20} />
+                          </motion.button>
+                        )}
+                      </AnimatePresence>
                     </div>
 
                     <div className="grid gap-2 md:gap-3">
@@ -453,8 +484,6 @@ const OrbitAI: React.FC = () => {
       <AnimatePresence>
         {showWidget && !isOpen && (
           <motion.div
-            layout
-            layoutId="orbit-panel"
             initial={{ opacity: 0, y: 16, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 16, scale: 0.92 }}

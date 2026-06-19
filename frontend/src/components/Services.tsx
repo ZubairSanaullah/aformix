@@ -63,15 +63,13 @@ const Services: React.FC = () => {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-secondary/5 rounded-full blur-[120px] -z-10"></div>
 
       <div className="max-w-7xl mx-auto relative z-10 px-6 md:px-12 lg:px-24">
-        <div className="mb-12 flex flex-col gap-6 lg:gap-0 lg:flex-row lg:items-end lg:justify-between">
-          <div>
-            <h2 className="heading-2">World-Class Solutions</h2>
-            <p className="text-[var(--color-text-muted)] max-w-2xl text-lg">
-              From custom architectures to enterprise-scale systems, we deliver technology that empowers your business to scale effortlessly.
-            </p>
-          </div>
-
-          <div className="flex items-center gap-3">
+        <div className="flex flex-col items-center mb-20 text-center">
+          <span className="text-primary font-black tracking-[0.35em] uppercase mb-4 inline-block">Our Services</span>
+          <h2 className="heading-2 mb-6">World-Class Solutions</h2>
+          <p className="text-[var(--color-text-muted)] text-lg max-w-2xl leading-relaxed">
+            From custom architectures to enterprise-scale systems, we deliver technology that empowers your business to scale effortlessly.
+          </p>
+          <div className="flex items-center gap-3 mt-8">
             <button
               type="button"
               onClick={() => scrollSlider("left")}

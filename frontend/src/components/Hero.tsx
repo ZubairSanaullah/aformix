@@ -212,7 +212,7 @@ const Hero: React.FC = () => {
             </h1>
 
             {/* Subheadline */}
-            <p className="hero-description">
+            <p className="text-xl text-[var(--color-text-muted)] leading-relaxed max-w-xl">
               Aformix helps businesses make intelligent digital products, launch modern web platforms,
               and transform ideas into powerful digital products.
             </p>
@@ -229,7 +229,7 @@ const Hero: React.FC = () => {
               </a>
               <button
                 onClick={(e) => { e.preventDefault(); window.dispatchEvent(new Event('open-orbit-ai')); }}
-                className="hero-cta-btn hero-cta-secondary cursor-pointer"
+                className="hero-cta-btn hero-cta-secondary"
               >
                 <span>Open Orbit AI</span>
                 <BsRobot size={16} />

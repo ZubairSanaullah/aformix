@@ -4,17 +4,19 @@ import { BrowserRouter } from "react-router"
 import { HelmetProvider } from "react-helmet-async"
 import App from "./App"
 import { ThemeProvider } from "./contexts/ThemeContext"
+import { CurrencyProvider } from "./context/CurrencyContext"
 import "./index.css"
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <HelmetProvider>
       <ThemeProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <CurrencyProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CurrencyProvider>
       </ThemeProvider>
     </HelmetProvider>
   </React.StrictMode>
 )
-

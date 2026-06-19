@@ -221,8 +221,121 @@ export const pricingData: Record<string, PackageType> = {
       { question: "Can you build complex custom features?", answer: "Yes, we build advanced custom functionality including complex business logic, third-party integrations, and scalable backend systems." },
       { question: "How do you handle QA?", answer: "We employ comprehensive automated testing (unit, integration, e2e) alongside manual QA and third-party security audits." }
     ]
+  },
+  "saas-mvp": {
+    id: "saas-mvp",
+    title: "SaaS MVP",
+    shortDescription: "Get your SaaS idea to market in 8 weeks with core features, auth, and billing.",
+    startingPrice: "$9,999",
+    oneTimeOption: "$9,999 One-Time",
+    monthlyOption: "$1,500/mo (8 months)",
+    popularBadge: false,
+    deliveryTime: "8-10 Weeks",
+    paymentTerms: "Milestones",
+    moneyBackGuarantee: true,
+    features: [
+      { icon: Layers, title: "Multi-Tenant Architecture", description: "Secure data isolation for each customer." },
+      { icon: Zap, title: "Stripe Billing Integration", description: "Flexible subscriptions, trials, and invoices." },
+      { icon: Shield, title: "Auth & User Management", description: "Role-based access control and onboarding." }
+    ],
+    bonusOffers: [],
+    timeline: [],
+    process: [],
+    techStack: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
+    idealClients: ["Founders", "Startups"],
+    faqs: []
+  },
+  "saas-scale": {
+    id: "saas-scale",
+    title: "SaaS Scale",
+    shortDescription: "For growing SaaS platforms needing performance, analytics, and integrations.",
+    startingPrice: "$24,999",
+    oneTimeOption: "$24,999 One-Time",
+    popularBadge: true,
+    deliveryTime: "12-16 Weeks",
+    paymentTerms: "Milestones",
+    moneyBackGuarantee: true,
+    features: [
+      { icon: Server, title: "Scalable Infrastructure", description: "Cloud-native setup for high concurrency." },
+      { icon: BarChart, title: "Admin & Analytics", description: "Real-time metrics and user management dashboards." },
+      { icon: Code2, title: "API Development", description: "Expose your own APIs for external integrations." }
+    ],
+    bonusOffers: [],
+    timeline: [],
+    process: [],
+    techStack: ["Next.js", "Docker", "AWS", "Redis"],
+    idealClients: ["Funded Startups"],
+    faqs: []
+  },
+  "seo-local": {
+    id: "seo-local",
+    title: "Local Dominance",
+    shortDescription: "Own the local search results and drive foot traffic or local leads.",
+    startingPrice: "$899",
+    oneTimeOption: "N/A",
+    monthlyOption: "$899/mo",
+    popularBadge: false,
+    deliveryTime: "Ongoing",
+    paymentTerms: "Monthly Retainer",
+    moneyBackGuarantee: false,
+    features: [
+      { icon: Search, title: "Google Business Optimization", description: "Rank in the Google Local Pack." },
+      { icon: Settings, title: "On-Page SEO", description: "Keyword optimization for local intent." },
+      { icon: Code2, title: "Technical SEO Audit", description: "Fix site speed and indexability issues." }
+    ],
+    bonusOffers: [],
+    timeline: [],
+    process: [],
+    techStack: ["Ahrefs", "Google Search Console"],
+    idealClients: ["Local Businesses", "Clinics", "Law Firms"],
+    faqs: []
+  },
+  "design-system": {
+    id: "design-system",
+    title: "Design System",
+    shortDescription: "A comprehensive UI kit and component library for your product suite.",
+    startingPrice: "$4,500",
+    oneTimeOption: "$4,500 One-Time",
+    popularBadge: true,
+    deliveryTime: "4-6 Weeks",
+    paymentTerms: "50% upfront, 50% upon completion",
+    moneyBackGuarantee: true,
+    features: [
+      { icon: PenTool, title: "Figma Component Library", description: "Reusable, scalable components." },
+      { icon: LayoutTemplate, title: "Design Guidelines", description: "Typography, color, spacing, and usage rules." },
+      { icon: Code2, title: "Developer Handoff", description: "Pixel-perfect specifications and assets." }
+    ],
+    bonusOffers: [],
+    timeline: [],
+    process: [],
+    techStack: ["Figma", "Storybook", "Tailwind"],
+    idealClients: ["Enterprise", "Product Teams"],
+    faqs: []
   }
 };
+
+export const pricingCategories = [
+  {
+    id: "web",
+    label: "Web Development",
+    packages: ["starter", "growth", "enterprise"]
+  },
+  {
+    id: "saas",
+    label: "SaaS Development",
+    packages: ["saas-mvp", "saas-scale"]
+  },
+  {
+    id: "seo",
+    label: "SEO Services",
+    packages: ["seo-local"]
+  },
+  {
+    id: "design",
+    label: "UI/UX Design",
+    packages: ["design-system"]
+  }
+];
 
 export const comparisonTableData = [
   { feature: "Custom Design", starter: true, growth: true, enterprise: true },

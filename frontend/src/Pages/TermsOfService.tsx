@@ -113,12 +113,12 @@ const TermsOfService: React.FC = () => {
 
       <div className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] transition-colors duration-300">
         {/* Animated Background */}
-        <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
+        {/* <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/20 rounded-full blur-3xl animate-pulse" />
           <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-secondary/20 rounded-full blur-3xl animate-pulse" style={{animationDelay: '0.7s'}} />
           <div className="absolute top-1/2 right-0 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
           <div className="absolute inset-0 bg-[linear-gradient(to_bottom,var(--color-primary)/3,transparent,var(--color-secondary)/3)]" />
-        </div>
+        </div> */}
 
         {/* Content */}
         <div className="relative z-10">
@@ -145,7 +145,7 @@ const TermsOfService: React.FC = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
               >
-                <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
+                <h1 className="text-5xl md:text-7xl font-bold mb-6 mt-16">
                   Terms of Service
                 </h1>
               </motion.div>
@@ -205,11 +205,10 @@ const TermsOfService: React.FC = () => {
                             <motion.button
                               key={index}
                               onClick={() => scrollToSection(sectionId)}
-                              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-300 flex items-center gap-2 group ${
-                                isActive
-                                  ? 'bg-gradient-to-r from-primary/30 to-secondary/30 text-primary border border-primary/50'
-                                  : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-primary/10'
-                              }`}
+                              className={`w-full text-left px-3 py-2 rounded-lg text-sm transition-all duration-300 flex items-center gap-2 group ${isActive
+                                ? 'bg-gradient-to-r from-primary/30 to-secondary/30 text-primary border border-primary/50'
+                                : 'text-[var(--color-text-muted)] hover:text-[var(--color-text)] hover:bg-primary/10'
+                                }`}
                               whileHover={{ x: 4 }}
                             >
                               <motion.span

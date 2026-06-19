@@ -467,12 +467,14 @@ html.light .hero-headline-gradient {
   width: 100%;
   height: 100%;
   display: block;
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(calc(var(--mouse-x, 0) * 25px), calc(var(--mouse-y, 0) * 25px), 0px) rotateX(calc(var(--mouse-y, 0) * -12deg)) rotateY(calc(var(--mouse-x, 0) * 12deg));
+  transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
+  transform-style: preserve-3d;
 }
 
 .mascot-video-element:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translate3d(calc(var(--mouse-x, 0) * 25px), calc(var(--mouse-y, 0) * 25px - 8px), 0px) rotateX(calc(var(--mouse-y, 0) * -12deg)) rotateY(calc(var(--mouse-x, 0) * 12deg)) scale(1.02);
   box-shadow: 0 20px 40px rgba(39, 185, 144, 0.25), 0 0 25px rgba(0, 212, 255, 0.15);
 }
 
@@ -563,10 +565,11 @@ html.light .hero-headline-gradient {
 }
 
 .floating-card-ui:hover {
-  border-color: rgba(39, 185, 144, 0.3);
+  border-color: rgba(39, 185, 144, 0.4);
   box-shadow:
-    0 25px 50px rgba(0, 0, 0, 0.55),
-    0 0 15px rgba(39, 185, 144, 0.2);
+    0 30px 60px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(39, 185, 144, 0.25);
+  z-index: 20;
 }
 
 /* Layout bindings for parallax tilting via custom mouse coordinates */
@@ -580,6 +583,12 @@ html.light .hero-headline-gradient {
   transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+.floating-card-ui--1:hover {
+  transform: translate3d(calc(var(--mouse-x, 0) * -45px),
+      calc((var(--mouse-y, 0) * -45px) - 8px),
+      30px) rotateX(calc(var(--mouse-y, 0) * -15deg)) rotateY(calc(var(--mouse-x, 0) * 15deg)) scale(1.02);
+}
+
 .floating-card-ui--2 {
   top: 10%;
   right: -10px;
@@ -590,6 +599,12 @@ html.light .hero-headline-gradient {
   transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
+.floating-card-ui--2:hover {
+  transform: translate3d(calc(var(--mouse-x, 0) * 40px),
+      calc((var(--mouse-y, 0) * 40px) - 8px),
+      50px) rotateX(calc(var(--mouse-y, 0) * -18deg)) rotateY(calc(var(--mouse-x, 0) * 18deg)) scale(1.02);
+}
+
 .floating-card-ui--3 {
   bottom: 8%;
   right: 15px;
@@ -598,6 +613,12 @@ html.light .hero-headline-gradient {
       calc(var(--mouse-y, 0) * -30px),
       15px) rotateX(calc(var(--mouse-y, 0) * -10deg)) rotateY(calc(var(--mouse-x, 0) * 10deg));
   transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.floating-card-ui--3:hover {
+  transform: translate3d(calc(var(--mouse-x, 0) * -30px),
+      calc((var(--mouse-y, 0) * -30px) - 8px),
+      15px) rotateX(calc(var(--mouse-y, 0) * -10deg)) rotateY(calc(var(--mouse-x, 0) * 10deg)) scale(1.02);
 }
 
 /* ── Floating Card Elements Style ── */
@@ -838,6 +859,7 @@ html.light .hero-cta-secondary {
 html.light .hero-cta-secondary:hover {
   background: rgba(15, 23, 42, 0.06);
   border-color: rgba(39, 185, 144, 0.4);
+  color: #0f172a;
 }
 
 html.light .hero-trust-badge {
