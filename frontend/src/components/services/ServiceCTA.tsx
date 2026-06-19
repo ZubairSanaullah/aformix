@@ -4,12 +4,10 @@ import { ArrowRight, Calendar, MessageSquare } from "lucide-react";
 import { Link } from "react-router";
 
 interface ServiceCTAProps {
-  headline?: string;
   description?: string;
 }
 
 const ServiceCTA: React.FC<ServiceCTAProps> = ({
-  headline = "Ready to Transform Your Business?",
   description = "Get in touch today to discuss your project requirements and receive a custom proposal within 24 hours.",
 }) => {
   return (

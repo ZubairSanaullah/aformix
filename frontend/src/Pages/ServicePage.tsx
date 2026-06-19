@@ -74,7 +74,6 @@ const ServicePage: React.FC = () => {
       <ServiceFAQ faqs={service.faqs} />
 
       <ServiceCTA
-        headline={service.ctaHeadline}
         description={service.ctaDescription}
       />
     </div>

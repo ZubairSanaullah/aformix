@@ -7,7 +7,7 @@ interface ServiceHeroIllustrationProps {
   variant: HeroVariant;
 }
 
-const ServiceHeroIllustration: React.FC<ServiceHeroIllustrationProps> = ({ variant }) => {
+const ServiceHeroIllustration: React.FC<ServiceHeroIllustrationProps> = () => {
   return (
     <div className="hero-right w-full h-full min-h-[400px]">
       {/* Animated Glowing Rings behind Orbit */}

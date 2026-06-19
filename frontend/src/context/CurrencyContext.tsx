@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { CURRENCIES, getSelectedCurrency, setSelectedCurrency as persistSelectedCurrency } from '../utils/currency';
 
 interface Rates {
