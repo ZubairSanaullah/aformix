@@ -19,6 +19,10 @@ import { ArrowUp } from "lucide-react";
 import useReveal from "./hooks/useReveal";
 import Contact from "./components/Contact";
 import AboutUs from "./Pages/AboutUs";
+import { useLaunchStatus } from "./hooks/useLaunchStatus";
+import CountdownGate from "./components/launch/CountdownGate";
+import PremiumLoader from "./components/launch/PremiumLoader";
+import LaunchCelebration from "./components/launch/LaunchCelebration";
 
 const PrivacyPolicyPage = lazy(() => import("./Pages/PrivacyPolicy"));
 const TermsOfService = lazy(() => import("./Pages/TermsOfService"));
@@ -45,6 +49,7 @@ const HomeContent: React.FC = () => (
 );
 
 const App: React.FC = () => {
+  const { launchState } = useLaunchStatus();
   const [loading, setLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
@@ -103,6 +108,10 @@ const App: React.FC = () => {
 
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
+
+  if (launchState === 'countdown') return <CountdownGate />;
+  if (launchState === 'loader') return <PremiumLoader />;
+  if (launchState === 'celebration') return <LaunchCelebration />;
 
   return (
     <>
