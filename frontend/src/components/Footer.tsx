@@ -12,7 +12,7 @@ const socialLinks = [
   { name: "Discord", icon: FaDiscord, href: "https://discord.com/channels/1510971122164699237/1510971123288899607" },
   { name: "TikTok", icon: FaTiktok, href: "https://www.tiktok.com/@aformixtech" },
   { name: "X", icon: FaXTwitter, href: "https://x.com/Afromixtech" },
-  { name: "Email", icon: FaEnvelope, href: "mailto:aformixtech@gmail.com" },
+  { name: "Email", icon: FaEnvelope, href: "mailto:hello@aformix.com" },
 ];
 
 const Footer: React.FC = () => {
