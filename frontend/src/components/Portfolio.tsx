@@ -48,6 +48,7 @@ const Portfolio: React.FC = () => {
                       muted
                       loop
                       playsInline
+                      preload="none"
                       className="absolute inset-0 h-full w-full object-contain transition-transform duration-1000 group-hover:scale-110"
                     />
                     <img
