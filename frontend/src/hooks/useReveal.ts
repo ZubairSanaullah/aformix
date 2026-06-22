@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router";
 
-const useReveal = (selector = ".reveal", rootMargin = "0px 0px -8% 0px") => {
+const useReveal = (selector = ".reveal", rootMargin = "0px 0px -8% 0px", trigger?: any) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const useReveal = (selector = ".reveal", rootMargin = "0px 0px -8% 0px") => {
     });
 
     return () => observer.disconnect();
-  }, [selector, rootMargin, location.pathname]);
+  }, [selector, rootMargin, location.pathname, trigger]);
 };
 
 export default useReveal;

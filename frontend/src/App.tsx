@@ -104,7 +104,7 @@ const App: React.FC = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useReveal();
+  useReveal(".reveal", "0px 0px -8% 0px", `${launchState}-${loading}`);
 
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
