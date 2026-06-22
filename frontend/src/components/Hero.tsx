@@ -102,7 +102,7 @@ const Hero: React.FC = () => {
       y: -100,
       scale: 1.05,
       scrollTrigger: {
-        trigger: "#hero",
+        trigger: heroRef.current,
         start: "top top",
         end: "bottom top",
         scrub: 1.2,
@@ -114,7 +114,7 @@ const Hero: React.FC = () => {
       rotation: 180,
       scale: 1.15,
       scrollTrigger: {
-        trigger: "#hero",
+        trigger: heroRef.current,
         start: "top top",
         end: "bottom top",
         scrub: 1,
@@ -126,7 +126,7 @@ const Hero: React.FC = () => {
       y: -150,
       x: -20,
       scrollTrigger: {
-        trigger: "#hero",
+        trigger: heroRef.current,
         start: "top top",
         end: "bottom top",
         scrub: 0.8,
@@ -138,7 +138,7 @@ const Hero: React.FC = () => {
       y: -180,
       x: 10,
       scrollTrigger: {
-        trigger: "#hero",
+        trigger: heroRef.current,
         start: "top top",
         end: "bottom top",
         scrub: 1,
@@ -150,7 +150,7 @@ const Hero: React.FC = () => {
       y: -130,
       x: -15,
       scrollTrigger: {
-        trigger: "#hero",
+        trigger: heroRef.current,
         start: "top top",
         end: "bottom top",
         scrub: 0.9,
@@ -161,7 +161,7 @@ const Hero: React.FC = () => {
     gsap.to(".workflow-connector-line", {
       strokeDashoffset: 0,
       scrollTrigger: {
-        trigger: "#hero",
+        trigger: heroRef.current,
         start: "top 20%",
         end: "bottom top",
         scrub: 0.5,
@@ -212,7 +212,7 @@ const Hero: React.FC = () => {
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl text-[var(--color-text-muted)] leading-relaxed max-w-xl">
+            <p className="hero-description text-xl text-[var(--color-text-muted)] leading-relaxed max-w-xl">
               Aformix helps businesses make intelligent digital products, launch modern web platforms,
               and transform ideas into powerful digital products.
             </p>
