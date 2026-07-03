@@ -49,8 +49,8 @@ const SocialProof: React.FC = () => {
   return (
     <section className="px-6 pb-16 w-full max-w-3xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold links-section-title text-slate-900 mb-2">Trusted by Leaders</h2>
-        <p className="links-section-subtitle text-slate-500 text-sm">Don't just take our word for it.</p>
+        <h2 className="text-2xl font-bold links-section-title text-[var(--color-text)] mb-2">Trusted by Leaders</h2>
+        <p className="links-section-subtitle text-[var(--color-text-muted)] text-sm">Don't just take our word for it.</p>
       </div>
 
       <motion.div
@@ -64,10 +64,10 @@ const SocialProof: React.FC = () => {
           <motion.div
             key={index}
             variants={itemVariants}
-            className="testimonial-card p-6 rounded-2xl bg-white shadow-sm border border-slate-100 relative overflow-hidden"
+            className="testimonial-card p-6 rounded-2xl bg-[var(--color-surface)] shadow-sm border border-[var(--color-border)] relative overflow-hidden"
           >
             {/* Quote watermark */}
-            <div className="absolute -top-4 -right-4 text-slate-100 text-8xl font-serif leading-none pointer-events-none select-none">
+            <div className="absolute -top-4 -right-4 text-[var(--color-text-muted)] opacity-20 text-8xl font-serif leading-none pointer-events-none select-none">
               "
             </div>
 
@@ -78,7 +78,7 @@ const SocialProof: React.FC = () => {
                 ))}
               </div>
 
-              <p className="testimonial-review text-slate-600 italic mb-6">
+              <p className="testimonial-review text-[var(--color-text-muted)] italic mb-6">
                 "{testimonial.review}"
               </p>
 
@@ -86,13 +86,13 @@ const SocialProof: React.FC = () => {
                 <img
                   src={testimonial.avatar}
                   alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-slate-100"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-[var(--color-border)]"
                 />
                 <div>
-                  <h4 className="testimonial-name font-bold text-sm text-slate-900">
+                  <h4 className="testimonial-name font-bold text-sm text-[var(--color-text)]">
                     {testimonial.name}
                   </h4>
-                  <p className="testimonial-role text-xs text-slate-500">
+                  <p className="testimonial-role text-xs text-[var(--color-text-muted)]">
                     {testimonial.role}, {testimonial.company}
                   </p>
                 </div>

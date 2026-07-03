@@ -18,10 +18,10 @@ const CallToAction: React.FC = () => {
         <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-secondary blur-[80px] rounded-full" />
 
         <div className="relative z-10">
-          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-[var(--color-text)] mb-4">
             Let's Build Something <span className="text-primary">Exceptional.</span>
           </h2>
-          <p className="text-slate-300 mb-8 max-w-lg mx-auto">
+          <p className="text-[var(--color-text-muted)] mb-8 max-w-lg mx-auto">
             Ready to elevate your digital presence? We're here to help you turn your vision into reality.
           </p>
 
@@ -37,7 +37,7 @@ const CallToAction: React.FC = () => {
               href="https://wa.me/+923019170936"
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 rounded-2xl font-bold text-white bg-white/10 hover:bg-white/20 transition-colors backdrop-blur-md"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3 rounded-2xl font-bold text-[var(--color-text)] bg-[var(--color-text)]/5 hover:bg-[var(--color-text)]/10 border border-[var(--color-border)] transition-colors backdrop-blur-md"
             >
               <MessageCircle className="w-5 h-5" />
               WhatsApp

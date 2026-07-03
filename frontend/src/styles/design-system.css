@@ -955,21 +955,12 @@ html.light .links-back-top-icon {
   background: #f1f5f9 !important;
 }
 
-/* CTA section — always dark, on both themes */
+/* CTA section */
 .links-cta-card {
-  background-color: #0f172a;
+  background-color: var(--color-surface-elevated);
+  border: 1px solid var(--color-border);
 }
 
 html.light .links-cta-card {
-  background-color: #1e293b;
-}
-
-/* Ensure CTA text always stays white */
-.links-cta-card h2,
-.links-cta-card p {
-  color: #fff !important;
-}
-
-.links-cta-card p {
-  color: #cbd5e1 !important;
+  background-color: var(--color-surface-elevated);
 }

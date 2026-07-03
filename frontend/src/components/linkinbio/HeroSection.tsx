@@ -53,7 +53,7 @@ const HeroSection: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-        className="text-4xl md:text-5xl font-black mb-4 tracking-tight leading-tight links-section-title text-slate-900"
+        className="text-4xl md:text-5xl font-black mb-4 tracking-tight leading-tight links-section-title text-[var(--color-text)]"
       >
         Digital Products That <br className="hidden md:block" />
         <span className="gradient-text">Move Businesses Forward.</span>
@@ -64,7 +64,7 @@ const HeroSection: React.FC = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-        className="text-lg links-section-subtitle text-slate-600 max-w-2xl mx-auto mb-10"
+        className="text-lg links-section-subtitle text-[var(--color-text-muted)] max-w-2xl mx-auto mb-10"
       >
         We build premium websites, web applications, mobile apps, and SEO solutions that help businesses grow and scale effortlessly.
       </motion.p>
@@ -89,7 +89,7 @@ const HeroSection: React.FC = () => {
           href="https://wa.me/+923019170936"
           target="_blank"
           rel="noopener noreferrer"
-          className="btn-outline w-full sm:w-auto flex items-center justify-center gap-2 bg-white/5"
+          className="btn-outline w-full sm:w-auto flex items-center justify-center gap-2 bg-[var(--color-surface)]/5"
         >
           <MessageCircle className="w-5 h-5" />
           Chat on WhatsApp

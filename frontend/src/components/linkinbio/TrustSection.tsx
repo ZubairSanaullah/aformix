@@ -42,8 +42,8 @@ const TrustSection: React.FC = () => {
   return (
     <section className="px-6 pb-16 w-full max-w-3xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold links-section-title text-slate-900 mb-2">Why Businesses Choose Aformix</h2>
-        <p className="links-section-subtitle text-slate-500 text-sm">We deliver results, not just code.</p>
+        <h2 className="text-2xl font-bold links-section-title text-[var(--color-text)] mb-2">Why Businesses Choose Aformix</h2>
+        <p className="links-section-subtitle text-[var(--color-text-muted)] text-sm">We deliver results, not just code.</p>
       </div>
 
       <motion.div
@@ -57,13 +57,13 @@ const TrustSection: React.FC = () => {
           <motion.div
             key={index}
             variants={itemVariants}
-            className="trust-feature-card flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3 p-4 rounded-xl bg-slate-50/80 border border-slate-100 hover:border-primary/30 transition-colors"
+            className="trust-feature-card flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3 p-4 rounded-xl bg-[var(--color-surface)]/80 border border-[var(--color-border)] hover:border-primary/30 transition-colors"
           >
             <div className="flex-shrink-0 text-primary bg-primary/10 p-2 rounded-lg">
               {feature.icon}
             </div>
             <div className="flex items-center h-full">
-              <h3 className="trust-feature-title font-semibold text-sm sm:text-base text-slate-800">
+              <h3 className="trust-feature-title font-semibold text-sm sm:text-base text-[var(--color-text)]">
                 {feature.title}
               </h3>
             </div>
