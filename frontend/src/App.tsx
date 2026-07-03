@@ -32,6 +32,7 @@ const Blog = lazy(() => import("./Pages/Blog"));
 const UnsubscribePage = lazy(() => import("./Pages/Unsubscribe"));
 const NewsletterDashboard = lazy(() => import("./Pages/Admin/NewsletterDashboard"));
 const ServicePage = lazy(() => import("./Pages/ServicePage"));
+const LinkInBio = lazy(() => import("./Pages/LinkInBio"));
 
 const HomeContent: React.FC = () => (
   <>
@@ -108,6 +109,7 @@ const App: React.FC = () => {
 
   const location = useLocation();
   const isLoginPage = location.pathname === "/login";
+  const isStandalonePage = isLoginPage || location.pathname === "/links";
 
   if (launchState === 'countdown') return <CountdownGate />;
   if (launchState === 'loader') return <PremiumLoader />;
@@ -117,7 +119,7 @@ const App: React.FC = () => {
     <>
       {loading && <LoadingSpinner />}
       <div className={`transition-opacity duration-1000 ${loading ? "opacity-0" : "opacity-100"} relative w-full`}>
-        <div className={isLoginPage ? "hidden md:block" : ""}>
+        <div className={isStandalonePage ? "hidden" : "hidden md:block"}>
           <Navbar />
         </div>
         <main className="relative w-full">
@@ -134,26 +136,29 @@ const App: React.FC = () => {
               <Route path="/admin/newsletter" element={<NewsletterDashboard />} />
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/services/:serviceId" element={<ServicePage />} />
+              <Route path="/links" element={<LinkInBio />} />
 
             </Routes>
           </Suspense>
         </main>
-        <div className={isLoginPage ? "hidden md:block" : ""}>
+        <div className={isStandalonePage ? "hidden" : "hidden md:block"}>
           <Footer />
         </div>
-        <CookieConsent />
-        <WhatsAppBtn />
-        <button
-          onClick={scrollToTop}
-          aria-label="Scroll to top"
-          className={`fixed right-8 bottom-28 z-90 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/25 transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${showScrollTop
-              ? "opacity-100 translate-y-0 pointer-events-auto"
-              : "opacity-0 translate-y-4 pointer-events-none"
-            }`}
-        >
-          <ArrowUp size={24} />
-        </button>
-        {!isLoginPage && <OrbitAI />}
+        {!isStandalonePage && <CookieConsent />}
+        {!isStandalonePage && <WhatsAppBtn />}
+        {!isStandalonePage && (
+          <button
+            onClick={scrollToTop}
+            aria-label="Scroll to top"
+            className={`fixed right-8 bottom-28 z-90 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/25 transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${showScrollTop
+                ? "opacity-100 translate-y-0 pointer-events-auto"
+                : "opacity-0 translate-y-4 pointer-events-none"
+              }`}
+          >
+            <ArrowUp size={24} />
+          </button>
+        )}
+        {!isStandalonePage && <OrbitAI />}
       </div>
     </>
   );
