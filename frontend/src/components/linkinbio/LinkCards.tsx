@@ -98,7 +98,7 @@ const LinkCards: React.FC = () => {
             className={`group relative flex items-center p-4 sm:p-5 rounded-2xl transition-all duration-300 ease-out overflow-hidden
               ${link.primary
                 ? "bg-gradient-to-r from-primary to-secondary text-white shadow-lg shadow-primary/25 hover:shadow-primary/40 border border-transparent hover:-translate-y-1"
-                : "bg-white/60 dark:bg-slate-900/60 backdrop-blur-xl border border-slate-200 dark:border-white/10 hover:border-primary/50 hover:shadow-xl hover:-translate-y-1 dark:text-white"
+                : "link-card-default bg-white/60 backdrop-blur-xl border border-slate-200 hover:border-primary/50 hover:shadow-xl hover:-translate-y-1"
               }
             `}
           >
@@ -111,7 +111,7 @@ const LinkCards: React.FC = () => {
               className={`flex-shrink-0 flex items-center justify-center w-12 h-12 rounded-xl mr-4
                 ${link.primary
                   ? "bg-white/20 text-white"
-                  : "bg-slate-100 dark:bg-slate-800 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300"
+                  : "link-card-icon bg-slate-100 text-primary group-hover:bg-primary group-hover:text-white transition-colors duration-300"
                 }
               `}
             >
@@ -120,13 +120,17 @@ const LinkCards: React.FC = () => {
 
             <div className="flex-1 min-w-0 pr-4">
               <h3
-                className={`font-bold text-lg mb-0.5 truncate ${link.primary ? "text-white" : "text-slate-900 dark:text-white group-hover:text-primary transition-colors"
+                className={`font-bold text-lg mb-0.5 truncate ${link.primary
+                  ? "text-white"
+                  : "link-card-title text-slate-900 group-hover:text-primary transition-colors"
                   }`}
               >
                 {link.title}
               </h3>
               <p
-                className={`text-sm truncate ${link.primary ? "text-white/80" : "text-slate-500 dark:text-slate-400"
+                className={`text-sm truncate ${link.primary
+                  ? "text-white/80"
+                  : "link-card-desc text-slate-500"
                   }`}
               >
                 {link.description}
@@ -137,7 +141,7 @@ const LinkCards: React.FC = () => {
               className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-transform duration-300
                 ${link.primary
                   ? "bg-white/20 text-white group-hover:translate-x-1"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:bg-primary group-hover:text-white group-hover:translate-x-1"
+                  : "link-card-arrow bg-slate-100 text-slate-400 group-hover:bg-primary group-hover:text-white group-hover:translate-x-1"
                 }
               `}
             >

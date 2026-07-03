@@ -54,7 +54,7 @@ const LinkInBio: React.FC = () => {
         </script>
       </Helmet>
 
-      <div className="min-h-screen bg-bg dark:bg-bg selection:bg-primary/30">
+      <div className="links-page-root min-h-screen bg-bg selection:bg-primary/30">
         <HeroSection />
         <LinkCards />
         <ServicePreview />

@@ -79,8 +79,8 @@ const ServicePreview: React.FC = () => {
   return (
     <section className="px-6 pb-16 w-full max-w-3xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Our Capabilities</h2>
-        <p className="text-slate-500 dark:text-slate-400 text-sm">Everything you need to succeed online.</p>
+        <h2 className="text-2xl font-bold links-section-title text-slate-900 mb-2">Our Capabilities</h2>
+        <p className="links-section-subtitle text-slate-500 text-sm">Everything you need to succeed online.</p>
       </div>
 
       <motion.div
@@ -94,20 +94,20 @@ const ServicePreview: React.FC = () => {
           <motion.div
             key={index}
             variants={itemVariants}
-            className="group relative flex flex-col p-5 rounded-2xl bg-white/40 dark:bg-slate-900/40 backdrop-blur-md border border-slate-200/60 dark:border-white/5 hover:bg-white/80 dark:hover:bg-slate-800/80 transition-all duration-300 overflow-hidden cursor-default"
+            className="group relative flex flex-col p-5 rounded-2xl service-preview-card bg-white/40 backdrop-blur-md border border-slate-200/60 hover:bg-white/80 transition-all duration-300 overflow-hidden cursor-default"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
-            
+
             <div className="flex items-center gap-4 mb-2">
-              <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 dark:bg-slate-800 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
+              <div className="service-preview-icon flex items-center justify-center w-10 h-10 rounded-lg bg-slate-100 text-primary group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-300">
                 {service.icon}
               </div>
-              <h3 className="font-bold text-slate-900 dark:text-white group-hover:text-primary transition-colors">
+              <h3 className="service-preview-title font-bold text-slate-900 group-hover:text-primary transition-colors">
                 {service.title}
               </h3>
             </div>
-            
-            <p className="text-sm text-slate-500 dark:text-slate-400 pl-14">
+
+            <p className="service-preview-desc text-sm text-slate-500 pl-14">
               {service.description}
             </p>
           </motion.div>

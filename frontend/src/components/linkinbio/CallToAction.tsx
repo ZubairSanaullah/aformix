@@ -10,7 +10,7 @@ const CallToAction: React.FC = () => {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.5 }}
-        className="relative rounded-3xl p-8 sm:p-12 text-center overflow-hidden bg-slate-900 dark:bg-slate-800"
+        className="links-cta-card relative rounded-3xl p-8 sm:p-12 text-center overflow-hidden"
       >
         {/* Background gradient effects */}
         <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/20 to-secondary/20 opacity-50" />

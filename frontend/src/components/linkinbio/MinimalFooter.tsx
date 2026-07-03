@@ -10,8 +10,8 @@ const MinimalFooter: React.FC = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="w-full pb-8 pt-4 px-6 text-center">
-      <div className="max-w-3xl mx-auto border-t border-slate-200 dark:border-white/10 pt-8 flex flex-col items-center">
+    <footer className="links-footer w-full pb-8 pt-4 px-6 text-center">
+      <div className="max-w-3xl mx-auto border-t border-slate-200 pt-8 flex flex-col items-center">
 
         {/* Social Icons */}
         <div className="flex items-center gap-4 mb-6">
@@ -30,23 +30,23 @@ const MinimalFooter: React.FC = () => {
         </div>
 
         {/* Links */}
-        <div className="flex items-center justify-center gap-6 text-sm text-slate-500 dark:text-slate-400 mb-6">
+        <div className="flex items-center justify-center gap-6 text-sm links-footer-text text-slate-500 mb-6">
           <a href="/" className="hover:text-primary transition-colors">Website</a>
           <a href="/privacy-policy" className="hover:text-primary transition-colors">Privacy</a>
           <a href="/terms-of-service" className="hover:text-primary transition-colors">Terms</a>
         </div>
 
         {/* Copyright */}
-        <p className="text-sm text-slate-400 dark:text-slate-500 mb-8">
+        <p className="text-sm links-footer-text text-slate-400 mb-8">
           © {currentYear} Aformix. All rights reserved.
         </p>
 
         {/* Back to Top */}
         <button
           onClick={scrollToTop}
-          className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-primary transition-colors group"
+          className="flex items-center gap-2 text-sm font-medium links-footer-text text-slate-500 hover:text-primary transition-colors group"
         >
-          <div className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 group-hover:bg-primary/10 transition-colors">
+          <div className="links-back-top-icon p-2 rounded-full bg-slate-100 group-hover:bg-primary/10 transition-colors">
             <ArrowUp className="w-4 h-4" />
           </div>
           Back to Top

@@ -49,8 +49,8 @@ const SocialProof: React.FC = () => {
   return (
     <section className="px-6 pb-16 w-full max-w-3xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Trusted by Leaders</h2>
-        <p className="text-slate-500 dark:text-slate-400 text-sm">Don't just take our word for it.</p>
+        <h2 className="text-2xl font-bold links-section-title text-slate-900 mb-2">Trusted by Leaders</h2>
+        <p className="links-section-subtitle text-slate-500 text-sm">Don't just take our word for it.</p>
       </div>
 
       <motion.div
@@ -64,35 +64,35 @@ const SocialProof: React.FC = () => {
           <motion.div
             key={index}
             variants={itemVariants}
-            className="p-6 rounded-2xl bg-white dark:bg-slate-900 shadow-sm border border-slate-100 dark:border-white/5 relative overflow-hidden"
+            className="testimonial-card p-6 rounded-2xl bg-white shadow-sm border border-slate-100 relative overflow-hidden"
           >
             {/* Quote watermark */}
-            <div className="absolute -top-4 -right-4 text-slate-100 dark:text-slate-800/50 text-8xl font-serif leading-none pointer-events-none select-none">
+            <div className="absolute -top-4 -right-4 text-slate-100 text-8xl font-serif leading-none pointer-events-none select-none">
               "
             </div>
-            
+
             <div className="relative z-10">
               <div className="flex gap-1 mb-4">
                 {[...Array(testimonial.rating)].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
                 ))}
               </div>
-              
-              <p className="text-slate-600 dark:text-slate-300 italic mb-6">
+
+              <p className="testimonial-review text-slate-600 italic mb-6">
                 "{testimonial.review}"
               </p>
-              
+
               <div className="flex items-center gap-4">
                 <img
                   src={testimonial.avatar}
                   alt={testimonial.name}
-                  className="w-12 h-12 rounded-full object-cover border-2 border-slate-100 dark:border-slate-800"
+                  className="w-12 h-12 rounded-full object-cover border-2 border-slate-100"
                 />
                 <div>
-                  <h4 className="font-bold text-sm text-slate-900 dark:text-white">
+                  <h4 className="testimonial-name font-bold text-sm text-slate-900">
                     {testimonial.name}
                   </h4>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="testimonial-role text-xs text-slate-500">
                     {testimonial.role}, {testimonial.company}
                   </p>
                 </div>
