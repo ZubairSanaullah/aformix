@@ -33,6 +33,12 @@ const UnsubscribePage = lazy(() => import("./Pages/Unsubscribe"));
 const NewsletterDashboard = lazy(() => import("./Pages/Admin/NewsletterDashboard"));
 const ServicePage = lazy(() => import("./Pages/ServicePage"));
 const LinkInBio = lazy(() => import("./Pages/LinkInBio"));
+const InternalWorkspace = lazy(() => import("./Pages/InternalWorkspace"));
+const ProjectsModule = lazy(() => import("./features/projects/ProjectsModule"));
+const SchedulerModule = lazy(() => import("./features/scheduler/SchedulerModule"));
+const NotesModule = lazy(() => import("./features/notes/NotesModule"));
+const TasksModule = lazy(() => import("./features/tasks/TasksModule"));
+const CRMModule = lazy(() => import("./features/crm/CRMModule"));
 
 const HomeContent: React.FC = () => (
   <>
@@ -137,6 +143,12 @@ const App: React.FC = () => {
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/services/:serviceId" element={<ServicePage />} />
               <Route path="/links" element={<LinkInBio />} />
+              <Route path="/workspace" element={<InternalWorkspace />} />
+              <Route path="/workspace/projects" element={<ProjectsModule />} />
+              <Route path="/workspace/scheduler" element={<SchedulerModule />} />
+              <Route path="/workspace/notes" element={<NotesModule />} />
+              <Route path="/workspace/tasks" element={<TasksModule />} />
+              <Route path="/workspace/crm" element={<CRMModule />} />
 
             </Routes>
           </Suspense>
