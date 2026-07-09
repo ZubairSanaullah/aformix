@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense, lazy } from "react";
+﻿import React, { useState, useEffect, Suspense, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router";
 import LoadingSpinner from "./components/LoadingSpinner";
 import Navbar from "./components/Navbar";
@@ -34,12 +34,21 @@ const NewsletterDashboard = lazy(() => import("./Pages/Admin/NewsletterDashboard
 const ServicePage = lazy(() => import("./Pages/ServicePage"));
 const LinkInBio = lazy(() => import("./Pages/LinkInBio"));
 const InternalWorkspace = lazy(() => import("./Pages/InternalWorkspace"));
+const WorkspaceDashboard = lazy(() => import("./Pages/WorkspaceDashboard"));
 const ProjectsModule = lazy(() => import("./features/projects/ProjectsModule"));
 const SchedulerModule = lazy(() => import("./features/scheduler/SchedulerModule"));
 const NotesModule = lazy(() => import("./features/notes/NotesModule"));
 const TasksModule = lazy(() => import("./features/tasks/TasksModule"));
 const CRMModule = lazy(() => import("./features/crm/CRMModule"));
 const ContentPlannerModule = lazy(() => import("./features/content/ContentPlannerModule"));
+const SEOWorkspaceModule = lazy(() => import("./features/seo/SEOWorkspaceModule"));
+const FinanceModule = lazy(() => import("./features/finance/FinanceModule"));
+const AssetsModule = lazy(() => import("./features/assets/AssetsModule"));
+const KnowledgeBaseModule = lazy(() => import("./features/knowledge/KnowledgeBaseModule"));
+const BookmarksModule = lazy(() => import("./features/bookmarks/BookmarksModule"));
+const GoalsModule = lazy(() => import("./features/goals/GoalsModule"));
+const AnalyticsModule = lazy(() => import("./features/analytics/AnalyticsModule"));
+const SettingsModule = lazy(() => import("./features/settings/SettingsModule"));
 
 const HomeContent: React.FC = () => (
   <>
@@ -81,7 +90,6 @@ const App: React.FC = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Smooth scroll for all anchor links
   useEffect(() => {
     const handleAnchorClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
@@ -144,14 +152,23 @@ const App: React.FC = () => {
               <Route path="/about-us" element={<AboutUs />} />
               <Route path="/services/:serviceId" element={<ServicePage />} />
               <Route path="/links" element={<LinkInBio />} />
-              <Route path="/workspace" element={<InternalWorkspace />} />
-              <Route path="/workspace/projects" element={<ProjectsModule />} />
-              <Route path="/workspace/scheduler" element={<SchedulerModule />} />
-              <Route path="/workspace/notes" element={<NotesModule />} />
-              <Route path="/workspace/tasks" element={<TasksModule />} />
-              <Route path="/workspace/crm" element={<CRMModule />} />
-              <Route path="/workspace/content" element={<ContentPlannerModule />} />
-
+              <Route path="/workspace/*" element={<InternalWorkspace />}>
+                <Route index element={<WorkspaceDashboard />} />
+                <Route path="projects" element={<ProjectsModule />} />
+                <Route path="scheduler" element={<SchedulerModule />} />
+                <Route path="notes" element={<NotesModule />} />
+                <Route path="tasks" element={<TasksModule />} />
+                <Route path="crm" element={<CRMModule />} />
+                <Route path="content" element={<ContentPlannerModule />} />
+                <Route path="seo" element={<SEOWorkspaceModule />} />
+                <Route path="finance" element={<FinanceModule />} />
+                <Route path="assets" element={<AssetsModule />} />
+                <Route path="knowledge" element={<KnowledgeBaseModule />} />
+                <Route path="bookmarks" element={<BookmarksModule />} />
+                <Route path="goals" element={<GoalsModule />} />
+                <Route path="analytics" element={<AnalyticsModule />} />
+                <Route path="settings" element={<SettingsModule />} />
+              </Route>
             </Routes>
           </Suspense>
         </main>
@@ -167,8 +184,7 @@ const App: React.FC = () => {
             className={`fixed right-8 bottom-28 z-90 w-12 h-12 bg-primary text-white rounded-full flex items-center justify-center shadow-lg shadow-primary/25 transition-all duration-300 ease-out hover:scale-110 active:scale-95 ${showScrollTop
                 ? "opacity-100 translate-y-0 pointer-events-auto"
                 : "opacity-0 translate-y-4 pointer-events-none"
-              }`}
-          >
+              }`}>
             <ArrowUp size={24} />
           </button>
         )}

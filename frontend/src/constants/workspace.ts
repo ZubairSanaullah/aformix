@@ -1,4 +1,4 @@
-import {
+﻿import {
   BarChart3,
   Bookmark,
   CalendarDays,
@@ -17,21 +17,21 @@ import {
 } from "lucide-react";
 
 export const workspaceModules = [
-  { id: "dashboard", label: "Dashboard", icon: LayoutGrid, active: true },
-  { id: "projects", label: "Projects", icon: FolderKanban },
-  { id: "scheduler", label: "Scheduler", icon: CalendarDays },
-  { id: "tasks", label: "Tasks", icon: CheckSquare },
-  { id: "notes", label: "Notes", icon: PenTool },
-  { id: "crm", label: "CRM", icon: Users },
-  { id: "content", label: "Content Planner", icon: MessageSquareText },
-  { id: "seo", label: "SEO Workspace", icon: Search },
-  { id: "finance", label: "Finance", icon: Wallet },
-  { id: "knowledge", label: "Knowledge Base", icon: Library },
-  { id: "assets", label: "Assets", icon: Sparkles },
-  { id: "bookmarks", label: "Bookmarks", icon: Bookmark },
-  { id: "goals", label: "Goals", icon: Target },
-  { id: "analytics", label: "Analytics", icon: BarChart3 },
-  { id: "settings", label: "Settings", icon: Settings },
+  { id: "dashboard", label: "Dashboard", icon: LayoutGrid, path: "/workspace" },
+  { id: "projects", label: "Projects", icon: FolderKanban, path: "/workspace/projects" },
+  { id: "scheduler", label: "Scheduler", icon: CalendarDays, path: "/workspace/scheduler" },
+  { id: "tasks", label: "Tasks", icon: CheckSquare, path: "/workspace/tasks" },
+  { id: "notes", label: "Notes", icon: PenTool, path: "/workspace/notes" },
+  { id: "crm", label: "CRM", icon: Users, path: "/workspace/crm" },
+  { id: "content", label: "Content Planner", icon: MessageSquareText, path: "/workspace/content" },
+  { id: "seo", label: "SEO Workspace", icon: Search, path: "/workspace/seo" },
+  { id: "finance", label: "Finance", icon: Wallet, path: "/workspace/finance" },
+  { id: "knowledge", label: "Knowledge Base", icon: Library, path: "/workspace/knowledge" },
+  { id: "assets", label: "Assets", icon: Sparkles, path: "/workspace/assets" },
+  { id: "bookmarks", label: "Bookmarks", icon: Bookmark, path: "/workspace/bookmarks" },
+  { id: "goals", label: "Goals", icon: Target, path: "/workspace/goals" },
+  { id: "analytics", label: "Analytics", icon: BarChart3, path: "/workspace/analytics" },
+  { id: "settings", label: "Settings", icon: Settings, path: "/workspace/settings" },
 ];
 
 export const priorities = [
