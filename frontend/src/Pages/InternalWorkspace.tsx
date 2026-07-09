@@ -20,6 +20,7 @@ import SchedulerModule from "../features/scheduler/SchedulerModule";
 import NotesModule from "../features/notes/NotesModule";
 import TasksModule from "../features/tasks/TasksModule";
 import CRMModule from "../features/crm/CRMModule";
+import ContentPlannerModule from "../features/content/ContentPlannerModule";
 
 const InternalWorkspace: React.FC = () => {
   return (
@@ -235,6 +236,7 @@ const InternalWorkspace: React.FC = () => {
             <NotesModule />
             <TasksModule />
             <CRMModule />
+            <ContentPlannerModule />
 
             <section className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-[0_8px_30px_rgba(15,23,42,0.04)]">
               <div className="flex flex-wrap items-center justify-between gap-3">

@@ -39,6 +39,7 @@ const SchedulerModule = lazy(() => import("./features/scheduler/SchedulerModule"
 const NotesModule = lazy(() => import("./features/notes/NotesModule"));
 const TasksModule = lazy(() => import("./features/tasks/TasksModule"));
 const CRMModule = lazy(() => import("./features/crm/CRMModule"));
+const ContentPlannerModule = lazy(() => import("./features/content/ContentPlannerModule"));
 
 const HomeContent: React.FC = () => (
   <>
@@ -149,6 +150,7 @@ const App: React.FC = () => {
               <Route path="/workspace/notes" element={<NotesModule />} />
               <Route path="/workspace/tasks" element={<TasksModule />} />
               <Route path="/workspace/crm" element={<CRMModule />} />
+              <Route path="/workspace/content" element={<ContentPlannerModule />} />
 
             </Routes>
           </Suspense>
