@@ -31,7 +31,6 @@ const SchedulesPage: React.FC = () => {
   const [filterStatus, setFilterStatus] = useState<string>("all");
   const [filterType, setFilterType] = useState<string>("all");
   const [filterPriority, setFilterPriority] = useState<string>("all");
-  const [viewMode, setViewMode] = useState<"list" | "calendar">("list");
   const [sortBy, setSortBy] = useState<string>("earliest");
 
   const [formData, setFormData] = useState({

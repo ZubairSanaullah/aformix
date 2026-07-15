@@ -15,6 +15,7 @@ interface Project {
   category: string;
   tags: string[];
   createdAt: string;
+  budget: number;
 }
 
 const ProjectsPage: React.FC = () => {
